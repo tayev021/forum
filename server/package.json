@@ -4,7 +4,7 @@
   "description": "Server-side API for the forum",
   "main": "server.js",
   "scripts": {
-    "dev": "ts-node src/server.ts",
+    "dev": "nodemon --watch ./src --ext ts --exec ts-node ./src/server.ts",
     "lint": "eslint .",
     "build": "tsc",
     "start": "node dist/server.js"
@@ -13,14 +13,26 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cookie-parser": "^1.4.7",
     "dotenv": "^17.2.3",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.1",
+    "mysql2": "^3.15.3",
+    "sequelize": "^6.37.7",
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "@eslint/js": "^9.38.0",
+    "@types/cookie-parser": "^1.4.10",
     "@types/express": "^5.0.5",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/morgan": "^1.9.10",
     "@types/node": "^24.9.2",
+    "@types/sequelize": "^4.28.20",
     "eslint": "^9.38.0",
+    "nodemon": "^3.1.10",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.46.2"
