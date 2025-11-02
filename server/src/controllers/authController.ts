@@ -1,0 +1,73 @@
+import bcrypt from 'bcryptjs';
+import { Request, Response } from 'express';
+import { catchAsync } from '../utils/catchAsync';
+import { User } from '../models/UserModel';
+import { AppError } from '../utils/AppError';
+import { signToken } from '../utils/signToken';
+
+export const signup = catchAsync(async (req: Request, res: Response) => {
+  const { username, email, password } = req.body;
+
+  const existingUser = await User.findOne({ where: { email } });
+
+  if (existingUser) {
+    throw new AppError(401, 'A user with this email address already exists.');
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  const user = await User.create({
+    username,
+    email,
+    password: hashedPassword,
+  });
+
+  res.status(201).json({
+    user: {
+      username: user.dataValues.username,
+    },
+  });
+});
+
+export const signin = catchAsync(async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+
+  const user = await User.findOne({ where: { email } });
+
+  if (!user) {
+    throw new AppError(401, 'Wrong email address or password.');
+  }
+
+  const isCorrectPassword = await bcrypt.compare(
+    password,
+    user.dataValues.password
+  );
+
+  if (!isCorrectPassword) {
+    throw new AppError(401, 'Wrong email address or password.');
+  }
+
+  const token = signToken({ id: user.dataValues.id });
+
+  const cookieOptions = {
+    expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+    httpOnly: true,
+  };
+
+  user.lastSignIn = new Date();
+  await user.save();
+
+  res.cookie('jwt', token, cookieOptions);
+  res.status(200).json({
+    token,
+    user: {
+      id: user.dataValues.id,
+      username: user.dataValues.username,
+      email: user.dataValues.email,
+      avatar: user.dataValues.avatar,
+      role: user.dataValues.role,
+      lastSignIn: user.dataValues.lastSignIn,
+      createdAt: user.dataValues.createdAt,
+    },
+  });
+});
