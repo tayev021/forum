@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import { Request, Response } from 'express';
 import { catchAsync } from '../utils/catchAsync';
-import { User } from '../models/UserModel';
+import { User } from '../models';
 import { AppError } from '../utils/AppError';
 import { signToken } from '../utils/signToken';
 
@@ -59,7 +59,6 @@ export const signin = catchAsync(async (req: Request, res: Response) => {
     httpOnly: true,
   });
   res.status(200).json({
-    token,
     user: {
       id: user.dataValues.id,
       username: user.dataValues.username,
@@ -70,4 +69,12 @@ export const signin = catchAsync(async (req: Request, res: Response) => {
       createdAt: user.dataValues.createdAt,
     },
   });
+});
+
+export const signout = catchAsync(async (req: Request, res: Response) => {
+  res.cookie('jwt', 'sign out', {
+    expires: new Date(Date.now() + 1000),
+    httpOnly: true,
+  });
+  res.status(200).json({});
 });
