@@ -1,5 +1,5 @@
 import { app } from './app';
-import { database } from './config/database';
+import { database } from './models';
 
 const PORT = process.env.PORT || 3000;
 
