@@ -4,7 +4,9 @@ import { database } from '../config/database';
 export class Post extends Model {
   public id!: number;
   public authorId!: number;
+  public threadId!: number;
   public content!: string;
+  public createdAt!: string;
 }
 
 Post.init(
@@ -24,6 +26,7 @@ Post.init(
     sequelize: database,
     modelName: 'Post',
     tableName: 'posts',
+    freezeTableName: true,
     timestamps: true,
   }
 );
