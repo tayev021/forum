@@ -4,8 +4,9 @@ import { Post } from '../models';
 
 export const createPost = catchAsync(async (req: Request, res: Response) => {
   const post = await Post.create({
-    content: req.body.content,
     authorId: req.user?.id,
+    threadId: req.threadId,
+    content: req.body.content,
   });
 
   res.status(200).json({ post });
