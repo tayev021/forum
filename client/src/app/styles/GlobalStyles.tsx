@@ -39,6 +39,10 @@ export const GlobalStyles = createGlobalStyle`
   --color-rose-800: #9f1239;
   --color-rose-900: #881337;
   --color-rose-950: #4c0519;
+
+  --shadow-small: 2px 2px 4px rgba(0,0,0, 0.3)
+  --shadow-medium: 4px 4px 8px rgba(0,0,0, 0.3)
+  --shadow-large: 5px 5px 10px rgba(0,0,0, 0.3)
 }
 
 *,
