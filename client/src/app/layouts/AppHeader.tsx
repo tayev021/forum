@@ -4,6 +4,7 @@ import LogoImage from '../../shared/assets/logo.png';
 
 const Header = styled.header`
   background-color: var(--color-primary);
+  z-index: 200;
 `;
 
 const StyledContainer = styled(Container)`
