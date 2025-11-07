@@ -1,15 +1,12 @@
-import styled from 'styled-components';
+import { Providers } from './providers';
 import { GlobalStyles } from './styles/GlobalStyles';
-
-const Header = styled.h1`
-  color: var(--color-emerald-500);
-`;
+import { AppRouter } from './routes';
 
 export function App() {
   return (
-    <div>
+    <Providers>
       <GlobalStyles />
-      <Header>Hello React</Header>
-    </div>
+      <AppRouter />
+    </Providers>
   );
 }
