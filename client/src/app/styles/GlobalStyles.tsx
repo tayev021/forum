@@ -8,6 +8,7 @@ export const GlobalStyles = createGlobalStyle`
     --color-text-secondary: #ecfdf5;
     --color-text-tertiary: #6ee7b7;
     --color-bg: #ecfdf5;
+    --color-bg-secondary: #ffffff;
 
     --color-grey-0: #ffffff;
     --color-grey-50: #fafafa;
@@ -47,8 +48,9 @@ export const GlobalStyles = createGlobalStyle`
     --color-rose-900: #881337;
     --color-rose-950: #4c0519;
 
-    --shadow-top-medium: 0 -4px 4px rgba(0,0,0, 0.3);
-    --shadow-bottom-medium: 0 4px 4px rgba(0,0,0, 0.3);
+    --shadow-medium: 2px 4px 6px rgba(0,0,0, 0.3);
+    --shadow-top-medium: 0 -4px 6px rgba(0,0,0, 0.3);
+    --shadow-bottom-medium: 0 4px 6px rgba(0,0,0, 0.3);
   }
 
   &.dark-theme {
@@ -57,6 +59,7 @@ export const GlobalStyles = createGlobalStyle`
     --color-text-secondary: #ecfdf5;
     --color-text-tertiary: #6ee7b7;
     --color-bg: #27272a;
+    --color-bg-secondary: #3f3f46;
 
     --color-grey-999: #ffffff;
     --color-grey-950: #fafafa;
@@ -96,8 +99,9 @@ export const GlobalStyles = createGlobalStyle`
     --color-rose-100: #881337;
     --color-rose-50: #4c0519;
 
-    --shadow-top-medium: 0 -4px 4px rgba(255,255,255, 0.2);
-    --shadow-bottom-medium: 0 4px 4px rgba(255,255,255, 0.2);
+    --shadow-medium: 2px 4px 6px rgba(255,255,255, 0.2);
+    --shadow-top-medium: 0 -4px 6px rgba(255,255,255, 0.2);
+    --shadow-bottom-medium: 0 4px 6px rgba(255,255,255, 0.2);
   }
 }
 
