@@ -1,4 +1,6 @@
+import type { Theme } from './Theme';
+
 export interface ThemeContextType {
-  isLightTheme: boolean;
+  theme: Theme;
   toggleTheme: () => void;
 }
