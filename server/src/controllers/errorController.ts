@@ -8,9 +8,11 @@ export async function globalErrorHandler(
   _next: NextFunction
 ) {
   if (error.statusCode) {
-    res.status(error.statusCode).json({
-      message: error.message,
-    });
+    if (error.errors.length > 0) {
+      res.status(error.statusCode).json(error.errors);
+    } else {
+      res.status(error.statusCode).json({ message: error.message });
+    }
   } else {
     await ErrorLog.create({
       message: error.message,
