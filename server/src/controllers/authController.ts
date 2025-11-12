@@ -11,7 +11,12 @@ export const signup = catchAsync(async (req: Request, res: Response) => {
   const existingUser = await User.findOne({ where: { email } });
 
   if (existingUser) {
-    throw new AppError(401, 'A user with this email address already exists.');
+    throw new AppError(401, 'Signup error!', [
+      {
+        field: 'email',
+        message: 'A user with this email address already exists.',
+      },
+    ]);
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
