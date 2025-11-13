@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs';
 import { Request, Response } from 'express';
 import { catchAsync } from '../utils/catchAsync';
+import { Op } from 'sequelize';
 import { User } from '../models';
 import { AppError } from '../utils/AppError';
 import { signToken } from '../utils/signToken';
@@ -8,15 +9,28 @@ import { signToken } from '../utils/signToken';
 export const signup = catchAsync(async (req: Request, res: Response) => {
   const { username, email, password } = req.body;
 
-  const existingUser = await User.findOne({ where: { email } });
+  const existingUser = await User.findOne({
+    where: {
+      [Op.or]: [{ username }, { email }],
+    },
+  });
 
   if (existingUser) {
-    throw new AppError(401, 'Signup error!', [
-      {
-        field: 'email',
-        message: 'A user with this email address already exists.',
-      },
-    ]);
+    if (existingUser.dataValues.username === username) {
+      throw new AppError(401, 'Signup error!', [
+        {
+          field: 'username',
+          message: 'A user with this username already exists.',
+        },
+      ]);
+    } else {
+      throw new AppError(401, 'Signup error!', [
+        {
+          field: 'email',
+          message: 'A user with this email address already exists.',
+        },
+      ]);
+    }
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -27,11 +41,34 @@ export const signup = catchAsync(async (req: Request, res: Response) => {
     password: hashedPassword,
   });
 
-  res.status(201).json({
+  const token = signToken({ id: user.dataValues.id });
+
+  user.lastSignIn = new Date();
+  await user.save();
+
+  const expiresInHours = Number(process.env.JWT_EXPIRES_IN_HOURS);
+
+  res.cookie('jwt', token, {
+    expires: new Date(Date.now() + expiresInHours * 60 * 60 * 1000),
+    httpOnly: true,
+  });
+  res.status(200).json({
     user: {
+      id: user.dataValues.id,
       username: user.dataValues.username,
+      email: user.dataValues.email,
+      avatar: user.dataValues.avatar,
+      role: user.dataValues.role,
+      lastSignIn: user.dataValues.lastSignIn,
+      createdAt: user.dataValues.createdAt,
     },
   });
+
+  // res.status(201).json({
+  //   user: {
+  //     username: user.dataValues.username,
+  //   },
+  // });
 });
 
 export const signin = catchAsync(async (req: Request, res: Response) => {
