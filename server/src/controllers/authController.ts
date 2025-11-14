@@ -63,12 +63,6 @@ export const signup = catchAsync(async (req: Request, res: Response) => {
       createdAt: user.dataValues.createdAt,
     },
   });
-
-  // res.status(201).json({
-  //   user: {
-  //     username: user.dataValues.username,
-  //   },
-  // });
 });
 
 export const signin = catchAsync(async (req: Request, res: Response) => {
@@ -77,7 +71,12 @@ export const signin = catchAsync(async (req: Request, res: Response) => {
   const user = await User.findOne({ where: { email } });
 
   if (!user) {
-    throw new AppError(401, 'Wrong email address or password.');
+    throw new AppError(401, 'Signup error!', [
+      {
+        field: 'credentials',
+        message: 'Wrong email address or password.',
+      },
+    ]);
   }
 
   const isCorrectPassword = await bcrypt.compare(
@@ -86,7 +85,12 @@ export const signin = catchAsync(async (req: Request, res: Response) => {
   );
 
   if (!isCorrectPassword) {
-    throw new AppError(401, 'Wrong email address or password.');
+    throw new AppError(401, 'Signup error!', [
+      {
+        field: 'credentials',
+        message: 'Wrong email address or password.',
+      },
+    ]);
   }
 
   const token = signToken({ id: user.dataValues.id });
