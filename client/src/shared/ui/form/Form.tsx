@@ -4,7 +4,7 @@ import { Heading } from './Heading';
 import { Row } from './Row';
 import { Label } from './Label';
 import { Input } from './Input';
-import { Error } from './Error';
+import { Error, InputError } from './Error';
 import { Submit } from './Submit';
 import { Loader } from './Loader';
 
@@ -34,6 +34,7 @@ Form.Heading = Heading;
 Form.Row = Row;
 Form.Label = Label;
 Form.Input = Input;
+Form.InputError = InputError;
 Form.Error = Error;
 Form.Submit = Submit;
 Form.Loader = Loader;
