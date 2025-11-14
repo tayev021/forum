@@ -79,7 +79,7 @@ export function SignupForm() {
             defaultValue: 'test',
           })}
         />
-        <Form.Error message={errors['username']} />
+        <Form.InputError message={errors['username']} />
       </Form.Row>
 
       <Form.Row hasError={!!errors['email']}>
@@ -96,7 +96,7 @@ export function SignupForm() {
             defaultValue: 'test@test.com',
           })}
         />
-        <Form.Error message={errors['email']} />
+        <Form.InputError message={errors['email']} />
       </Form.Row>
 
       <Form.Row hasError={!!errors['password']}>
@@ -113,7 +113,7 @@ export function SignupForm() {
             defaultValue: 'test',
           })}
         />
-        <Form.Error message={errors['password']} />
+        <Form.InputError message={errors['password']} />
       </Form.Row>
 
       <Form.Row
@@ -135,7 +135,7 @@ export function SignupForm() {
             defaultValue: 'test',
           })}
         />
-        <Form.Error message={errors['confirmPassword']} />
+        <Form.InputError message={errors['confirmPassword']} />
       </Form.Row>
 
       <Form.Submit disabled={isLoading}>Sign Up</Form.Submit>
