@@ -20,8 +20,7 @@ export const signup = createAsyncThunk<User, SignupData, { rejectValue: any }>(
     }
 
     const json: { user: User } = await response.json();
-    const user = json.user;
 
-    return user;
+    return json.user;
   }
 );

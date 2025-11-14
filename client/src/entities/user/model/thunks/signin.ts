@@ -1,11 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { API_URL } from '../../../../shared/constants';
 import type { User } from '../types/User';
-
-interface SigninData {
-  email: string;
-  password: string;
-}
+import type { SigninData } from '../types/SigninData';
+import { API_URL } from '../../../../shared/constants';
 
 export const signin = createAsyncThunk<User, SigninData, { rejectValue: any }>(
   'user/signin',
@@ -23,8 +19,8 @@ export const signin = createAsyncThunk<User, SigninData, { rejectValue: any }>(
       return thunkAPI.rejectWithValue(errors);
     }
 
-    const user: User = await response.json();
+    const json: { user: User } = await response.json();
 
-    return user;
+    return json.user;
   }
 );
