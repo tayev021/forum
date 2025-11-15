@@ -6,6 +6,22 @@ import { User } from '../models';
 import { AppError } from '../utils/AppError';
 import { signToken } from '../utils/signToken';
 
+export const me = catchAsync(async (req: Request, res: Response) => {
+  const user = req.user!;
+
+  res.status(200).json({
+    user: {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      avatar: user.avatar,
+      role: user.role,
+      lastSignIn: user.lastSignIn,
+      createdAt: user.createdAt,
+    },
+  });
+});
+
 export const signup = catchAsync(async (req: Request, res: Response) => {
   const { username, email, password } = req.body;
 
@@ -48,19 +64,19 @@ export const signup = catchAsync(async (req: Request, res: Response) => {
 
   const expiresInHours = Number(process.env.JWT_EXPIRES_IN_HOURS);
 
-  res.cookie('jwt', token, {
-    expires: new Date(Date.now() + expiresInHours * 60 * 60 * 1000),
+  res.cookie('token', token, {
     httpOnly: true,
+    expires: new Date(Date.now() + expiresInHours * 60 * 60 * 1000),
   });
   res.status(200).json({
     user: {
-      id: user.dataValues.id,
-      username: user.dataValues.username,
-      email: user.dataValues.email,
-      avatar: user.dataValues.avatar,
-      role: user.dataValues.role,
-      lastSignIn: user.dataValues.lastSignIn,
-      createdAt: user.dataValues.createdAt,
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      avatar: user.avatar,
+      role: user.role,
+      lastSignIn: user.lastSignIn,
+      createdAt: user.createdAt,
     },
   });
 });
@@ -100,27 +116,28 @@ export const signin = catchAsync(async (req: Request, res: Response) => {
 
   const expiresInHours = Number(process.env.JWT_EXPIRES_IN_HOURS);
 
-  res.cookie('jwt', token, {
-    expires: new Date(Date.now() + expiresInHours * 60 * 60 * 1000),
+  res.cookie('token', token, {
     httpOnly: true,
+    expires: new Date(Date.now() + expiresInHours * 60 * 60 * 1000),
   });
   res.status(200).json({
     user: {
-      id: user.dataValues.id,
-      username: user.dataValues.username,
-      email: user.dataValues.email,
-      avatar: user.dataValues.avatar,
-      role: user.dataValues.role,
-      lastSignIn: user.dataValues.lastSignIn,
-      createdAt: user.dataValues.createdAt,
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      avatar: user.avatar,
+      role: user.role,
+      lastSignIn: user.lastSignIn,
+      createdAt: user.createdAt,
     },
   });
 });
 
 export const signout = catchAsync(async (req: Request, res: Response) => {
-  res.cookie('jwt', 'sign out', {
-    expires: new Date(Date.now() + 1000),
+  res.clearCookie('token', {
     httpOnly: true,
+    secure: false,
+    sameSite: 'none',
   });
   res.status(200).json({});
 });
