@@ -4,7 +4,7 @@ import { verifyJwtAsync } from '../utils/verifyJwtAsync';
 import { User } from '../models';
 
 export async function protect(req: Request, res: Response, next: NextFunction) {
-  const token = req.cookies.jwt;
+  const token = req.cookies.token;
 
   if (!token) {
     throw new AppError(
@@ -21,6 +21,6 @@ export async function protect(req: Request, res: Response, next: NextFunction) {
   }
 
   currentUser.dataValues.password = '';
-  req.user = currentUser.dataValues;
+  req.user = currentUser;
   next();
 }
