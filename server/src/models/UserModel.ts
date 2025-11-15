@@ -11,6 +11,7 @@ export class User extends Model {
   public avatar!: string;
   public role!: UserRole;
   public lastSignIn!: Date;
+  public createdAt!: Date;
 }
 
 User.init(
