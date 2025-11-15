@@ -8,6 +8,7 @@ export const signin = createAsyncThunk<User, SigninData, { rejectValue: any }>(
   async function (signinData, thunkAPI) {
     const response = await fetch(`${API_URL}/auth/signin`, {
       method: 'post',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },

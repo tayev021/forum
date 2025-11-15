@@ -6,9 +6,7 @@ export const signout = createAsyncThunk<void, void, { rejectValue: any }>(
   async function (_, thunkAPI) {
     const response = await fetch(`${API_URL}/auth/signout`, {
       method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      credentials: 'include',
     });
 
     if (!response.ok) {
