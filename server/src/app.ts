@@ -12,7 +12,7 @@ const app = express();
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
+app.use(cors({ origin: process.env.ORIGIN, credentials: true }));
 
 app.use('/api/v1/', rootRouter);
 
