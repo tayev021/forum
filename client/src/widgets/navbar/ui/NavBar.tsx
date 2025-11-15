@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { Container } from '../../../shared/ui/Container';
+import { useUser } from '../../../entities/user/lib/hooks/useUser';
 import { NavList } from './NavList';
+import { UserPanel } from './UserPanel';
 import { AuthPanel } from './AuthPanel';
 import { ThemeToggler } from '../../../shared/ui/ThemeToggler';
 
@@ -26,12 +28,14 @@ const Group = styled.div`
 `;
 
 export function NavBar() {
+  const { user, isLoading } = useUser();
+
   return (
     <Nav>
       <StyledContainer>
         <NavList />
         <Group>
-          <AuthPanel />
+          {isLoading ? null : user ? <UserPanel /> : <AuthPanel />}
           <ThemeToggler />
         </Group>
       </StyledContainer>
