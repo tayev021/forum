@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components';
+import spinnerBg from '../assets/spinner-bg.png';
 
 const spin = keyframes`
   0% {
@@ -10,12 +11,24 @@ const spin = keyframes`
   }
 `;
 
+const SpinnerContainer = styled.div`
+  width: 6rem;
+  height: 6rem;
+  position: relative;
+`;
+
+const SpinnerBackground = styled.img`
+  width: 100%;
+  height: 100%;
+`;
+
 const StyledSpinner = styled.span`
   width: 6rem;
   height: 6rem;
   display: inline-block;
-  position: relative;
-  border: 4px solid var(--color-rose-500);
+  position: absolute;
+  top: 0;
+  left: 0;
   border-radius: 50%;
   animation: ${spin} 1s linear infinite;
   user-select: none;
@@ -25,8 +38,8 @@ const StyledSpinner = styled.span`
     width: 14px;
     height: 14px;
     position: absolute;
-    right: 7px;
-    bottom: 7px;
+    right: 13px;
+    bottom: 13px;
     border: 4px solid var(--color-rose-500);
     border-radius: 50%;
   }
@@ -36,13 +49,18 @@ const StyledSpinner = styled.span`
     width: 14px;
     height: 14px;
     position: absolute;
-    left: 7px;
-    top: 7px;
+    left: 13px;
+    top: 13px;
     border: 4px solid var(--color-rose-500);
     border-radius: 50%;
   }
 `;
 
 export function Spinner() {
-  return <StyledSpinner></StyledSpinner>;
+  return (
+    <SpinnerContainer>
+      <SpinnerBackground src={spinnerBg} />
+      <StyledSpinner />
+    </SpinnerContainer>
+  );
 }
