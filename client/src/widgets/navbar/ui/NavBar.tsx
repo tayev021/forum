@@ -4,7 +4,7 @@ import { useUser } from '../../../entities/user/lib/hooks/useUser';
 import { NavList } from './NavList';
 import { UserPanel } from './UserPanel';
 import { AuthPanel } from './AuthPanel';
-import { ThemeToggler } from '../../../shared/ui/ThemeToggler';
+import { ThemeToggler } from '../../../features/toggleTheme';
 
 const Nav = styled.nav`
   position: sticky;

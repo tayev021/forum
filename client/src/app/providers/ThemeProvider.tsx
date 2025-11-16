@@ -1,7 +1,7 @@
 import { useEffect, type ReactElement } from 'react';
 import { useLocalStorage } from '../../shared/lib/hooks/useLocalStorage';
-import type { Theme } from '../../shared/lib/types/Theme';
-import { ThemeContext } from '../../shared/lib/context/ThemeContext';
+import type { Theme } from '../../features/toggleTheme/lib/types/Theme';
+import { ThemeContext } from '../../features/toggleTheme/lib/context/ThemeContext';
 
 interface ThemeProviderProps {
   children: ReactElement | ReactElement[];
