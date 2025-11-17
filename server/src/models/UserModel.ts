@@ -1,7 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import { database } from '../config/database';
-
-type UserRole = 'user' | 'moderator' | 'admin';
+import { UserRole } from '../types/UserRole';
 
 export class User extends Model {
   public id!: number;
