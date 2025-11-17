@@ -17,6 +17,18 @@ Post.init(
       autoIncrement: true,
       allowNull: false,
     },
+    authorId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: { model: 'users', key: 'id' },
+      onDelete: 'CASCADE',
+    },
+    threadId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: { model: 'thread', key: 'id' },
+      onDelete: 'CASCADE',
+    },
     content: {
       type: DataTypes.TEXT,
       allowNull: false,
