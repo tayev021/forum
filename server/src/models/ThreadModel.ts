@@ -16,6 +16,18 @@ Thread.init(
       autoIncrement: true,
       allowNull: false,
     },
+    authorId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: { model: 'users', key: 'id' },
+      onDelete: 'CASCADE',
+    },
+    forumId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: { model: 'forums', key: 'id' },
+      onDelete: 'CASCADE',
+    },
     title: {
       type: DataTypes.STRING,
       allowNull: false,
