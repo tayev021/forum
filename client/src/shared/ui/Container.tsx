@@ -1,9 +1,9 @@
-import type { ReactElement } from 'react';
+import type { ReactNode } from 'react';
 import styled from 'styled-components';
 
 interface ContainerProps {
   className?: string;
-  children: ReactElement | ReactElement[];
+  children: ReactNode | ReactNode[];
 }
 
 const StyledContainer = styled.div`
