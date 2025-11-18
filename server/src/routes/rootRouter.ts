@@ -1,18 +1,20 @@
 import { Router } from 'express';
 import { authRouter } from './authRouter';
-import { forumRouter } from './forumRouter';
-import { threadRouter } from './threadRouter';
 import { postRouter } from './postRouter';
-import { notFound } from '../controllers/notFoundController';
+import { threadRouter } from './threadRouter';
+import { forumRouter } from './forumRouter';
 import { categoryRouter } from './categoryRouter';
+import { statisticRouter } from './statisticRouter';
+import { notFound } from '../controllers/notFoundController';
 
 const rootRouter = Router();
 
 rootRouter.use('/auth', authRouter);
-rootRouter.use('/forums', forumRouter);
-rootRouter.use('/threads', threadRouter);
 rootRouter.use('/posts', postRouter);
+rootRouter.use('/threads', threadRouter);
+rootRouter.use('/forums', forumRouter);
 rootRouter.use('/categories', categoryRouter);
+rootRouter.use('/statistic', statisticRouter);
 rootRouter.use(notFound);
 
 export { rootRouter };
