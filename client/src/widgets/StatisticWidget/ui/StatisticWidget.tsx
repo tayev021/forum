@@ -1,24 +1,9 @@
 import styled from 'styled-components';
 import { useStatistic } from '../../../entities/statistic';
-import { HiChartBar } from 'react-icons/hi2';
+import { WidgetContainer } from '../../../shared/ui/WidgetContainer';
 import { Loader } from './Loader';
-
-const WidgetContainer = styled.div`
-  position: relative;
-  border: 1px solid var(--color-grey-300);
-  border-radius: 0.4rem;
-  background-color: var(--color-bg-secondary);
-  box-shadow: var(--shadow-small);
-`;
-
-const Header = styled.header`
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem;
-  border-bottom: 1px solid var(--color-grey-400);
-  line-height: 1;
-`;
+import { WidgetHeader } from '../../../shared/ui/WidgetHeader';
+import { HiChartBar } from 'react-icons/hi2';
 
 const Heading = styled.h4`
   font-size: 1.6rem;
@@ -48,10 +33,10 @@ export function StatisticWidget() {
   return (
     <WidgetContainer>
       {isLoading && <Loader />}
-      <Header>
+      <WidgetHeader>
         <HiChartBar />
         <Heading>Forum Statistic</Heading>
-      </Header>
+      </WidgetHeader>
       <List>
         <Row>
           <span>Posts:</span>
