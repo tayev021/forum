@@ -2,6 +2,12 @@ import { Request, Response } from 'express';
 import { catchAsync } from '../utils/catchAsync';
 import { Category } from '../models';
 
+export const getCategories = catchAsync(async (req: Request, res: Response) => {
+  const categories = await Category.findAll({ attributes: ['id', 'title'] });
+
+  res.status(200).json({ categories });
+});
+
 export const createCategory = catchAsync(
   async (req: Request, res: Response) => {
     const user = req.user!;
