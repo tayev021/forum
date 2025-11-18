@@ -7,7 +7,7 @@ import { Category } from './CategoryModel';
 import { User } from './UserModel';
 
 User.hasMany(Post, { foreignKey: 'authorId' });
-Post.belongsTo(User, { foreignKey: 'authorId' });
+Post.belongsTo(User, { foreignKey: 'authorId', as: 'author' });
 
 User.hasMany(Thread, { foreignKey: 'authorId' });
 Thread.belongsTo(User, { foreignKey: 'authorId' });
@@ -19,7 +19,7 @@ User.hasMany(Category, { foreignKey: 'authorId' });
 Category.belongsTo(User, { foreignKey: 'authorId' });
 
 Thread.hasMany(Post, { foreignKey: 'threadId' });
-Post.belongsTo(Thread, { foreignKey: 'threadId' });
+Post.belongsTo(Thread, { foreignKey: 'threadId', as: 'thread' });
 
 Forum.hasMany(Thread, { foreignKey: 'forumId' });
 Thread.belongsTo(Forum, { foreignKey: 'forumId' });
