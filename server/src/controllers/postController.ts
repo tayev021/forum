@@ -1,8 +1,33 @@
 import { Request, Response } from 'express';
 import { catchAsync } from '../utils/catchAsync';
-import { Thread } from '../models';
+import { Post, Thread, User } from '../models';
 import { AppError } from '../utils/AppError';
-import { Post } from '../models';
+
+export const getLatestPosts = catchAsync(
+  async (req: Request, res: Response) => {
+    const limit = Number(req.query.limit) || 5;
+
+    const posts = await Post.findAll({
+      order: [['createdAt', 'DESC']],
+      limit: limit > 10 ? 10 : limit,
+      attributes: ['id', 'content', 'createdAt'],
+      include: [
+        {
+          model: Thread,
+          as: 'thread',
+          attributes: ['title'],
+        },
+        {
+          model: User,
+          as: 'author',
+          attributes: [['username', 'name'], 'avatar'],
+        },
+      ],
+    });
+
+    res.status(200).json({ posts });
+  }
+);
 
 export const createPost = catchAsync(async (req: Request, res: Response) => {
   const user = req.user;
