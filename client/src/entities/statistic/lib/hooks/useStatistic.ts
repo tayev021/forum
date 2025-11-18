@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import { useAppSelector } from '../../../shared/lib/hooks/useAppSelector';
-import { useAppDispatch } from '../../../shared/lib/hooks/useAppDispatch';
-import { getStatistic } from '../model/thunks/getStatistic';
+import { useAppSelector } from '../../../../shared/lib/hooks/useAppSelector';
+import { useAppDispatch } from '../../../../shared/lib/hooks/useAppDispatch';
+import { getStatistic } from '../../model/thunks/getStatistic';
 
 export function useStatistic() {
   const { posts, threads, forums, members, isLoading } = useAppSelector(
