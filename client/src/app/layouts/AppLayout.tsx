@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Outlet } from 'react-router';
 import { AppHeader } from './AppHeader';
-import { NavBar } from '../../widgets/navbar';
+import { NavBarWidget } from '../../widgets/NavBarWidget';
 import { AppFooter } from './AppFooter';
 
 const App = styled.div`
@@ -19,7 +19,7 @@ export function AppLayout() {
   return (
     <App>
       <AppHeader />
-      <NavBar />
+      <NavBarWidget />
       <Main>
         <Outlet />
       </Main>

@@ -27,7 +27,7 @@ const Group = styled.div`
   gap: 2rem;
 `;
 
-export function NavBar() {
+export function NavBarWidget() {
   const { user, isLoading } = useUser();
 
   return (
