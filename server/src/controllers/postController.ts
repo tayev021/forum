@@ -15,17 +15,22 @@ export const getLatestPosts = catchAsync(
         {
           model: Thread,
           as: 'thread',
-          attributes: ['title'],
+          attributes: ['id', 'title'],
         },
         {
           model: User,
           as: 'author',
-          attributes: [['username', 'name'], 'avatar'],
+          attributes: ['username', 'avatar'],
         },
       ],
     });
 
-    res.status(200).json({ posts });
+    const sortByDateAscending = posts.sort(
+      (a, b) =>
+        new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+    );
+
+    res.status(200).json({ posts: sortByDateAscending });
   }
 );
 
