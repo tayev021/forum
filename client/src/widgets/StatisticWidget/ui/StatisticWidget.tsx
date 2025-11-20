@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import { useStatistic } from '../../../entities/statistic';
 import { WidgetContainer } from '../../../shared/ui/WidgetContainer';
-import { Loader } from './Loader';
 import { WidgetHeader } from '../../../shared/ui/WidgetHeader';
 import { HiChartBar } from 'react-icons/hi2';
+import { WidgetLoader } from '../../../shared/ui/WidgetLoader';
 
 const Heading = styled.h4`
   font-size: 1.6rem;
@@ -32,7 +32,7 @@ export function StatisticWidget() {
 
   return (
     <WidgetContainer>
-      {isLoading && <Loader />}
+      {isLoading && <WidgetLoader />}
       <WidgetHeader>
         <HiChartBar />
         <Heading>Forum Statistic</Heading>

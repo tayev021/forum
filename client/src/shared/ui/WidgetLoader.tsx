@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { Spinner } from '../../../shared/ui/Spinner';
+import { Spinner } from './Spinner';
 
-const StyledLoader = styled.div`
+const Loader = styled.div`
   width: 100%;
   height: 100%;
   position: absolute;
@@ -13,10 +13,10 @@ const StyledLoader = styled.div`
   backdrop-filter: blur(4px);
 `;
 
-export function Loader() {
+export function WidgetLoader() {
   return (
-    <StyledLoader>
+    <Loader>
       <Spinner />
-    </StyledLoader>
+    </Loader>
   );
 }
