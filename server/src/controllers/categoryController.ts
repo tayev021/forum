@@ -1,9 +1,18 @@
 import { Request, Response } from 'express';
 import { catchAsync } from '../utils/catchAsync';
-import { Category } from '../models';
+import { Category, Forum } from '../models';
 
 export const getCategories = catchAsync(async (req: Request, res: Response) => {
-  const categories = await Category.findAll({ attributes: ['id', 'title'] });
+  const categories = await Category.findAll({
+    attributes: ['id', 'title'],
+    include: [
+      {
+        model: Forum,
+        as: 'forums',
+        attributes: ['id', 'title'],
+      },
+    ],
+  });
 
   res.status(200).json({ categories });
 });
