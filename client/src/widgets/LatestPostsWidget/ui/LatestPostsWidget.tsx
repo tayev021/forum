@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 import { useLatestPosts } from '../../../entities/post/lib/hooks/useLatestPosts';
 import { WidgetContainer } from '../../../shared/ui/WidgetContainer';
+import { WidgetLoader } from '../../../shared/ui/WidgetLoader';
 import { WidgetHeader } from '../../../shared/ui/WidgetHeader';
 import { HiOutlineChatBubbleBottomCenterText } from 'react-icons/hi2';
+import { NoLatestPosts } from './NoLatestPosts';
 import { LatestPost } from './LatestPost';
-import { WidgetLoader } from '../../../shared/ui/WidgetLoader';
 
 const Heading = styled.h4`
   font-size: 1.6rem;
@@ -29,6 +30,7 @@ export function LatestPostsWidget() {
         <Heading>Latest Posts</Heading>
       </WidgetHeader>
       <List>
+        {latestPosts.length === 0 && <NoLatestPosts />}
         {latestPosts.map((post) => (
           <LatestPost key={post.id} post={post} />
         ))}
