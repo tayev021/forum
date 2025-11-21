@@ -24,7 +24,7 @@ export function LatestPostsWidget() {
 
   return (
     <WidgetContainer>
-      {isLoading && <WidgetLoader />}
+      {isLoading && <WidgetLoader position="top" />}
       <WidgetHeader>
         <HiOutlineChatBubbleBottomCenterText />
         <Heading>Latest Posts</Heading>

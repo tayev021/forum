@@ -1,7 +1,15 @@
 import styled from 'styled-components';
 import { Spinner } from './Spinner';
 
-const Loader = styled.div`
+interface WidgetLoaderProps {
+  position?: 'top' | 'center';
+}
+
+interface LoaderProps {
+  $position: 'top' | 'center';
+}
+
+const Loader = styled.div<LoaderProps>`
   width: 100%;
   height: 100%;
   position: absolute;
@@ -9,13 +17,15 @@ const Loader = styled.div`
   left: 0;
   display: flex;
   justify-content: center;
-  align-items: center;
+  ${(props) => props.$position === 'center' && 'align-items: center;'}
+  ${(props) => props.$position === 'top' && 'padding-top: 2rem;'}
   backdrop-filter: blur(4px);
+  z-index: 10;
 `;
 
-export function WidgetLoader() {
+export function WidgetLoader({ position = 'center' }: WidgetLoaderProps) {
   return (
-    <Loader>
+    <Loader $position={position}>
       <Spinner />
     </Loader>
   );
