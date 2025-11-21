@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import { useUser } from '../../../entities/user/lib/hooks/useUser';
 import { useAppDispatch } from '../../../shared/lib/hooks/useAppDispatch';
 import { useForm } from '../../../shared/lib/hooks/useForm';
 import { Form } from '../../../shared/ui/form';
@@ -9,7 +8,7 @@ import { validate } from '../../../shared/lib/utils/validate';
 import { emailSchema } from '../../../shared/lib/validators/emailSchema';
 import { passwordSchema } from '../../../shared/lib/validators/passwordSchema';
 import type { SigninData } from '../../../entities/user/model/types/SigninData';
-import { signin } from '../../../entities/user';
+import { signin, useUser } from '../../../entities/user';
 
 export function SigninForm() {
   const navigate = useNavigate();

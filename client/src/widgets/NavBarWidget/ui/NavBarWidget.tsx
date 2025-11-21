@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Container } from '../../../shared/ui/Container';
-import { useUser } from '../../../entities/user/lib/hooks/useUser';
+import { useUser } from '../../../entities/user';
 import { NavList } from './NavList';
 import { UserPanel } from './UserPanel';
 import { AuthPanel } from './AuthPanel';

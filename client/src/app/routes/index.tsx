@@ -1,4 +1,4 @@
-import { useUser } from '../../entities/user/lib/hooks/useUser';
+import { useUser } from '../../entities/user';
 import { AppLoader } from '../../shared/ui/AppLoader';
 import { BrowserRouter, Route, Routes } from 'react-router';
 import { AppLayout } from '../layouts/AppLayout';

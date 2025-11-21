@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router';
-import { useUser } from '../../../entities/user/lib/hooks/useUser';
+import { useUser } from '../../../entities/user';
 import { UserAvatar } from '../../../entities/user/ui/UserAvatar';
 import { Signout } from '../../../features/signout';
 

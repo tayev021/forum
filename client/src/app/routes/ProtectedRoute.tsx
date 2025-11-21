@@ -1,6 +1,6 @@
 import { useEffect, type ReactElement } from 'react';
 import { useNavigate } from 'react-router';
-import { useUser } from '../../entities/user/lib/hooks/useUser';
+import { useUser } from '../../entities/user';
 
 interface ProtectedRouteProps {
   children: ReactElement | ReactElement[];

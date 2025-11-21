@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
-import { useUser } from '../../../entities/user/lib/hooks/useUser';
 import { useAppDispatch } from '../../../shared/lib/hooks/useAppDispatch';
 import { useForm } from '../../../shared/lib/hooks/useForm';
-import { signup, type SignupData } from '../../../entities/user';
+import { signup, useUser, type SignupData } from '../../../entities/user';
 import { Form } from '../../../shared/ui/form';
 import { validate } from '../../../shared/lib/utils/validate';
 import { emailSchema } from '../../../shared/lib/validators/emailSchema';
