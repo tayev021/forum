@@ -5,6 +5,7 @@ import { validate } from '../middleware/validate';
 import { categorySchema } from '../validators/categoryValidator';
 import {
   createCategory,
+  deleteCategory,
   getCategories,
 } from '../controllers/categoryController';
 
@@ -17,6 +18,12 @@ categoryRouter.post(
   restrictTo('admin', 'moderator'),
   validate(categorySchema),
   createCategory
+);
+categoryRouter.delete(
+  '/:categoryId',
+  protect,
+  restrictTo('admin'),
+  deleteCategory
 );
 
 export { categoryRouter };
