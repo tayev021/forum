@@ -33,10 +33,6 @@ const StyledWindow = styled.div<StyledWindowProps>`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: var(--color-bg-secondary);
-  border-radius: 0.6rem;
-  box-shadow: var(--shadow-medium);
-  padding: 4rem;
   transition: all 0.5s;
 `;
 
