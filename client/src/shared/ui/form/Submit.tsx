@@ -8,7 +8,7 @@ interface SubmitProps {
 
 const Button = styled.button`
   width: 100%;
-  padding: 0.2rem;
+  padding: 0.5rem 1rem;
   border-radius: 0.6rem;
   text-transform: uppercase;
   color: var(--color-text-secondary);
