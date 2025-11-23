@@ -5,7 +5,7 @@ export const GlobalStyles = createGlobalStyle`
   &.light-theme {
     --color-primary: #059669;
     --color-text-primary: #022c22;
-    --color-text-secondary: #ecfdf5;
+    --color-text-secondary: #d1fae5;
     --color-text-tertiary: #6ee7b7;
     --color-bg: #ecfdf5;
     --color-bg-secondary: #ffffff;
@@ -48,7 +48,7 @@ export const GlobalStyles = createGlobalStyle`
     --color-rose-900: #881337;
     --color-rose-950: #4c0519;
 
-    --shadow-small: 1px 2px 4px rgba(0,0,0, 0.3);
+    --shadow-small: 1px 2px 2px rgba(0,0,0, 0.3);
     --shadow-medium: 2px 4px 8px rgba(0,0,0, 0.3);
     --shadow-top-medium: 0 -4px 6px rgba(0,0,0, 0.3);
     --shadow-bottom-medium: 0 4px 6px rgba(0,0,0, 0.3);
@@ -57,7 +57,7 @@ export const GlobalStyles = createGlobalStyle`
   &.dark-theme {
     --color-primary: #059669;
     --color-text-primary: #ecfdf5;
-    --color-text-secondary: #ecfdf5;
+    --color-text-secondary: #d1fae5;
     --color-text-tertiary: #6ee7b7;
     --color-bg: #27272a;
     --color-bg-secondary: #3f3f46;
@@ -100,7 +100,7 @@ export const GlobalStyles = createGlobalStyle`
     --color-rose-100: #881337;
     --color-rose-50: #4c0519;
 
-    --shadow-small: 1px 2px 4px rgba(255,255,255, 0.2);
+    --shadow-small: 1px 2px 2px rgba(255,255,255, 0.2);
     --shadow-medium: 2px 4px 8px rgba(255,255,255, 0.2);
     --shadow-top-medium: 0 -4px 6px rgba(255,255,255, 0.2);
     --shadow-bottom-medium: 0 4px 6px rgba(255,255,255, 0.2);
@@ -138,6 +138,7 @@ select {
 
 button {
   border: none;
+  line-height: 1;
   background: none;
 }
 
