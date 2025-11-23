@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { userReducer } from '../../entities/user';
 import { postReducer } from '../../entities/post';
+import { forumReducer } from '../../entities/forum';
 import { categoryReducer } from '../../entities/category';
 import { statisticReducer } from '../../entities/statistic';
 
@@ -8,6 +9,7 @@ export const store = configureStore({
   reducer: {
     user: userReducer,
     post: postReducer,
+    forum: forumReducer,
     category: categoryReducer,
     statistic: statisticReducer,
   },
