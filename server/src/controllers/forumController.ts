@@ -2,11 +2,11 @@ import { Request, Response } from 'express';
 import { catchAsync } from '../utils/catchAsync';
 import { Category, Forum } from '../models';
 import { AppError } from '../utils/AppError';
+import { capitalize } from '../utils/capitalize';
 
 export const createForum = catchAsync(async (req: Request, res: Response) => {
   const user = req.user!;
-  const title = req.body.title;
-  const categoryId = Number(req.query.categoryId);
+  const { categoryId, title } = req.body;
 
   const category = await Category.findByPk(categoryId);
 
@@ -20,7 +20,7 @@ export const createForum = catchAsync(async (req: Request, res: Response) => {
   const forum = await Forum.create({
     authorId: user.id,
     categoryId: category.id,
-    title,
+    title: capitalize(title),
   });
 
   res.status(200).json({
