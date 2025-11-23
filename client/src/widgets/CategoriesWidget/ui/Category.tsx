@@ -9,6 +9,7 @@ import {
   DeleteCategoryButton,
   DeleteCategory,
 } from '../../../features/deleteCategory';
+import { AddForumButton, AddForumForm } from '../../../features/addForum';
 
 interface CategoryProps {
   category: Category;
@@ -30,14 +31,26 @@ const ForumsList = styled.ul`
   padding: 1rem;
 `;
 
+const Footer = styled.footer`
+  display: flex;
+  justify-content: end;
+  padding: 1rem 3rem;
+  border-top: 1px solid var(--color-grey-400);
+
+  &:empty {
+    display: none;
+  }
+`;
+
 export function Category({ category }: CategoryProps) {
-  const hasPermission = useRestrictTo(['admin']);
+  const hasAdminsPermissions = useRestrictTo(['admin']);
+  const hasModeratePermissions = useRestrictTo(['admin', 'moderator']);
 
   return (
     <WidgetContainer>
       <Header>
         {category.title}
-        {hasPermission && (
+        {hasAdminsPermissions && (
           <>
             <Modal.Open windowName={`deleteCategory-${category.id}`}>
               <DeleteCategoryButton />
@@ -57,6 +70,18 @@ export function Category({ category }: CategoryProps) {
           <ForumLink key={forum.id} forum={forum} />
         ))}
       </ForumsList>
+      <Footer>
+        {hasModeratePermissions && (
+          <>
+            <Modal.Open windowName={`addForumToCategory-${category.id}`}>
+              <AddForumButton />
+            </Modal.Open>
+            <Modal.Window name={`addForumToCategory-${category.id}`}>
+              <AddForumForm categoryId={category.id} />
+            </Modal.Window>
+          </>
+        )}
+      </Footer>
     </WidgetContainer>
   );
 }
