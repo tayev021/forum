@@ -9,9 +9,7 @@ export async function globalErrorHandler(
   _next: NextFunction
 ) {
   if (error instanceof AppError) {
-    res.status(error.statusCode).json({
-      details: error.details,
-    });
+    res.status(error.statusCode).json(error.details);
   } else {
     await ErrorLog.create({
       message: error.message,
