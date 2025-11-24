@@ -12,10 +12,11 @@ export const createThread = catchAsync(async (req: Request, res: Response) => {
   const forum = await Forum.findByPk(forumId);
 
   if (!forum) {
-    throw new AppError(
-      403,
-      'You are trying to create a thread in a forum that does not exist'
-    );
+    throw new AppError(400, 'Failed to create thread!', {
+      type: 'general',
+      message:
+        'You are trying to create a thread in a forum that does not exist',
+    });
   }
 
   const thread = await Thread.create({
@@ -30,7 +31,7 @@ export const createThread = catchAsync(async (req: Request, res: Response) => {
     content,
   });
 
-  res.status(200).json({
+  res.status(201).json({
     thread: {
       id: thread.id,
       title: thread.title,

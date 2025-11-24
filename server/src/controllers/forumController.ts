@@ -11,10 +11,11 @@ export const createForum = catchAsync(async (req: Request, res: Response) => {
   const category = await Category.findByPk(categoryId);
 
   if (!category) {
-    throw new AppError(
-      403,
-      'You are trying to create a forum in a category that does not exist'
-    );
+    throw new AppError(400, 'Failed to create forum!', {
+      type: 'general',
+      message:
+        'You are trying to create a forum in a category that does not exist',
+    });
   }
 
   const forum = await Forum.create({
@@ -23,7 +24,7 @@ export const createForum = catchAsync(async (req: Request, res: Response) => {
     title: capitalize(title),
   });
 
-  res.status(200).json({
+  res.status(201).json({
     forum: {
       id: forum.id,
       title: forum.title,

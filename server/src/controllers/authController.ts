@@ -32,21 +32,18 @@ export const signup = catchAsync(async (req: Request, res: Response) => {
   });
 
   if (existingUser) {
-    if (existingUser.dataValues.username === username) {
-      throw new AppError(401, 'Signup error!', [
+    const field =
+      existingUser.dataValues.username === username ? 'username' : 'email';
+
+    throw new AppError(400, 'Fail to sign up!', {
+      type: 'validation',
+      fields: [
         {
-          field: 'username',
-          message: 'A user with this username already exists.',
+          field: field,
+          message: `A user with this ${field} already exists`,
         },
-      ]);
-    } else {
-      throw new AppError(401, 'Signup error!', [
-        {
-          field: 'email',
-          message: 'A user with this email address already exists.',
-        },
-      ]);
-    }
+      ],
+    });
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -68,7 +65,7 @@ export const signup = catchAsync(async (req: Request, res: Response) => {
     httpOnly: true,
     expires: new Date(Date.now() + expiresInHours * 60 * 60 * 1000),
   });
-  res.status(200).json({
+  res.status(201).json({
     user: {
       id: user.id,
       username: user.username,
@@ -87,12 +84,10 @@ export const signin = catchAsync(async (req: Request, res: Response) => {
   const user = await User.findOne({ where: { email } });
 
   if (!user) {
-    throw new AppError(401, 'Signup error!', [
-      {
-        field: 'credentials',
-        message: 'Wrong email address or password.',
-      },
-    ]);
+    throw new AppError(400, 'Fail to sign in!', {
+      type: 'general',
+      message: 'Wrong email address or password.',
+    });
   }
 
   const isCorrectPassword = await bcrypt.compare(
@@ -101,12 +96,10 @@ export const signin = catchAsync(async (req: Request, res: Response) => {
   );
 
   if (!isCorrectPassword) {
-    throw new AppError(401, 'Signup error!', [
-      {
-        field: 'credentials',
-        message: 'Wrong email address or password.',
-      },
-    ]);
+    throw new AppError(400, 'Fail to sign in!', {
+      type: 'general',
+      message: 'Wrong email address or password.',
+    });
   }
 
   const token = signToken({ id: user.dataValues.id });

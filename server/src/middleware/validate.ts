@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { ZodType } from 'zod';
+import { AppError } from '../utils/AppError';
 
 export function validate(...schemas: ZodType<any>[]) {
   return (req: Request, res: Response, next: NextFunction) => {
@@ -7,12 +8,15 @@ export function validate(...schemas: ZodType<any>[]) {
       const result = schema.safeParse(req.body);
 
       if (!result.success) {
-        const errors = result.error.issues.map((e) => ({
+        const fields = result.error.issues.map((e) => ({
           field: e.path.join('.'),
           message: e.message,
         }));
 
-        return res.status(400).json({ errors });
+        throw new AppError(400, 'Validation fail!', {
+          type: 'validation',
+          fields,
+        });
       }
     }
 

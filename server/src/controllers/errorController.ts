@@ -1,18 +1,17 @@
 import { NextFunction, Request, Response } from 'express';
 import { ErrorLog } from '../models/ErrorLogModel';
+import { AppError } from '../utils/AppError';
 
 export async function globalErrorHandler(
-  error: any,
+  error: AppError | Error,
   req: Request,
   res: Response,
   _next: NextFunction
 ) {
-  if (error.statusCode) {
-    if (error.errors.length > 0) {
-      res.status(error.statusCode).json(error.errors);
-    } else {
-      res.status(error.statusCode).json({ message: error.message });
-    }
+  if (error instanceof AppError) {
+    res.status(error.statusCode).json({
+      details: error.details,
+    });
   } else {
     await ErrorLog.create({
       message: error.message,
@@ -20,6 +19,7 @@ export async function globalErrorHandler(
     });
 
     res.status(500).json({
+      type: 'general',
       message: 'Something went wrong!',
     });
   }

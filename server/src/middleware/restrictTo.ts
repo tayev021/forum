@@ -7,9 +7,10 @@ export function restrictTo(...roles: UserRole[]) {
     const user = req.user!;
 
     if (!roles.includes(user.role)) {
-      return next(
-        new AppError(403, "You don't have permission to perform this action.")
-      );
+      throw new AppError(403, 'Failed to pass protection!', {
+        type: 'general',
+        message: 'You do not have permission to perform this action',
+      });
     }
 
     next();

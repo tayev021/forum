@@ -42,10 +42,11 @@ export const createPost = catchAsync(async (req: Request, res: Response) => {
   const thread = await Thread.findByPk(threadId);
 
   if (!thread) {
-    throw new AppError(
-      403,
-      'You are trying to post in a thread that does not exist.'
-    );
+    throw new AppError(400, 'Failed to create post!', {
+      type: 'general',
+      message:
+        'You are trying to create a post in a thread that does not exist',
+    });
   }
 
   const post = await Post.create({
@@ -54,5 +55,5 @@ export const createPost = catchAsync(async (req: Request, res: Response) => {
     content,
   });
 
-  res.status(200).json({ post });
+  res.status(201).json({ post });
 });
