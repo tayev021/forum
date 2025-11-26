@@ -3,9 +3,15 @@ import { useForm } from '../../../shared/lib/hooks/useForm';
 import { validate } from '../../../shared/lib/utils/validate';
 import { Form } from '../../../shared/ui/form';
 import { titleSchema } from '../lib/validators/titleSchema';
-import { addCategory, useCategories } from '../../../entities/category';
+import {
+  addCategory,
+  clearCategoryError,
+  useCategories,
+} from '../../../entities/category';
 import { useAppDispatch } from '../../../shared/lib/hooks/useAppDispatch';
 import type { CategoryData } from '../../../entities/category/model/types/CategoryData';
+import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 
 interface CategoryFormProps {
   closeModal?: () => void;
@@ -16,20 +22,34 @@ const Container = styled.div`
 `;
 
 export function AddCategoryForm({ closeModal = () => {} }: CategoryFormProps) {
+  const [isAdded, setIsAdded] = useState<boolean>(false);
   const dispatch = useAppDispatch();
-  const { isLoading } = useCategories();
-  const { register, getValues, getErrors, handleSubmit } = useForm();
+  const { isLoading, error: serverError } = useCategories();
+  const { register, getValues, getErrors, setError, handleSubmit } = useForm();
   const values = getValues();
   const errors = getErrors();
 
-  function submit(formData: CategoryData) {
-    dispatch(
-      addCategory({
-        title: formData.title,
-      })
-    );
+  useEffect(() => {
+    if (serverError?.type === 'validation') {
+      for (const err of serverError.fields) {
+        setError(err.field, err.message);
+      }
+    }
+  }, [serverError]);
 
-    closeModal();
+  useEffect(() => {
+    if (serverError?.type === 'general') {
+      toast.error(serverError.message);
+      dispatch(clearCategoryError());
+      setIsAdded(false);
+    } else if (!serverError && !isLoading && isAdded) {
+      closeModal();
+    }
+  }, [serverError, isLoading, isAdded]);
+
+  function submit(formData: CategoryData) {
+    dispatch(addCategory({ title: formData.title }));
+    setIsAdded(true);
   }
 
   return (
