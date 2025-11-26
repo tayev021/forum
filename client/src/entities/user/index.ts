@@ -1,4 +1,4 @@
-import { userReducer } from './model/slice/userSlice';
+import { clearUserError, userReducer } from './model/slice/userSlice';
 import { signup } from './model/thunks/signup';
 import { signin } from './model/thunks/signin';
 import { signout } from './model/thunks/signout';
@@ -8,6 +8,7 @@ import { useRestrictTo } from './lib/hooks/useRestrictTo';
 
 export {
   userReducer,
+  clearUserError,
   signup,
   signin,
   signout,
