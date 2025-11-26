@@ -8,11 +8,12 @@ import { validate } from '../../../shared/lib/utils/validate';
 import { emailSchema } from '../../../shared/lib/validators/emailSchema';
 import { passwordSchema } from '../../../shared/lib/validators/passwordSchema';
 import type { SigninData } from '../../../entities/user/model/types/SigninData';
-import { signin, useUser } from '../../../entities/user';
+import { clearUserError, signin, useUser } from '../../../entities/user';
+import toast from 'react-hot-toast';
 
 export function SigninForm() {
   const navigate = useNavigate();
-  const { user, isLoading, errors: serverSideErrors } = useUser();
+  const { user, isLoading, error: serverError } = useUser();
   const dispatch = useAppDispatch();
   const { register, getValues, getErrors, setError, handleSubmit } = useForm();
   const values = getValues();
@@ -25,18 +26,15 @@ export function SigninForm() {
   }, [user]);
 
   useEffect(() => {
-    if (serverSideErrors) {
-      for (const err of serverSideErrors) {
-        if ('field' in err) {
-          setError(err.field, err.message);
-        }
+    if (serverError?.type === 'validation') {
+      for (const err of serverError.fields) {
+        setError(err.field, err.message);
       }
+    } else if (serverError?.type === 'general') {
+      toast.error(serverError.message);
+      dispatch(clearUserError());
     }
-  }, [serverSideErrors]);
-
-  useEffect(() => {
-    setError('credentials', '');
-  }, [values.email, values.password]);
+  }, [serverError]);
 
   function submit(formData: SigninData) {
     dispatch(
@@ -50,11 +48,6 @@ export function SigninForm() {
   return (
     <Form onSubmit={handleSubmit(submit)}>
       <Form.Heading>Sign in</Form.Heading>
-
-      <Form.Error
-        message={errors['credentials']}
-        {...register('credentials')}
-      />
 
       <Form.Row hasError={!!errors['email']}>
         <HiEnvelope />
