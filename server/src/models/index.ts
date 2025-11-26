@@ -21,7 +21,7 @@ Category.belongsTo(User, { foreignKey: 'authorId', as: 'author' });
 Thread.hasMany(Post, { foreignKey: 'threadId', as: 'posts' });
 Post.belongsTo(Thread, { foreignKey: 'threadId', as: 'thread' });
 
-Forum.hasMany(Thread, { foreignKey: 'forumId', as: 'treads' });
+Forum.hasMany(Thread, { foreignKey: 'forumId', as: 'threads' });
 Thread.belongsTo(Forum, { foreignKey: 'forumId', as: 'forum' });
 
 Category.hasMany(Forum, { foreignKey: 'categoryId', as: 'forums' });
