@@ -1,12 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { API_URL } from '../../../../shared/constants';
-import type { CategoryData } from '../types/CategoryData';
 import type { Category } from '../types/Category';
+import type { CategoryData } from '../types/CategoryData';
+import type { ServerError } from '../../../../shared/types/ServerError';
+import { API_URL } from '../../../../shared/constants';
 
 export const addCategory = createAsyncThunk<
   Category[],
   CategoryData,
-  { rejectValue: any }
+  { rejectValue: ServerError }
 >('category/addCategory', async function (categoryData, thunkAPI) {
   const response = await fetch(`${API_URL}/categories`, {
     method: 'post',
@@ -18,8 +19,8 @@ export const addCategory = createAsyncThunk<
   });
 
   if (!response.ok) {
-    const errors = await response.json();
-    return thunkAPI.rejectWithValue(errors);
+    const error = await response.json();
+    return thunkAPI.rejectWithValue(error);
   }
 
   const json: { categories: Category[] } = await response.json();
