@@ -1,7 +1,12 @@
 import { useEffect } from 'react';
 import { useAppDispatch } from '../../../shared/lib/hooks/useAppDispatch';
 import { useForm } from '../../../shared/lib/hooks/useForm';
-import { signup, useUser, type SignupData } from '../../../entities/user';
+import {
+  clearUserError,
+  signup,
+  useUser,
+  type SignupData,
+} from '../../../entities/user';
 import { Form } from '../../../shared/ui/form';
 import { validate } from '../../../shared/lib/utils/validate';
 import { emailSchema } from '../../../shared/lib/validators/emailSchema';
@@ -14,10 +19,11 @@ import {
   HiUserCircle,
 } from 'react-icons/hi2';
 import { useNavigate } from 'react-router';
+import toast from 'react-hot-toast';
 
 export function SignupForm() {
   const navigate = useNavigate();
-  const { user, isLoading, errors: serverSideErrors } = useUser();
+  const { user, isLoading, error: serverError } = useUser();
   const dispatch = useAppDispatch();
   const { register, getValues, getErrors, setError, handleSubmit } = useForm();
   const values = getValues();
@@ -30,14 +36,15 @@ export function SignupForm() {
   }, [user]);
 
   useEffect(() => {
-    if (serverSideErrors) {
-      for (const err of serverSideErrors) {
-        if ('field' in err) {
-          setError(err.field, err.message);
-        }
+    if (serverError?.type === 'validation') {
+      for (const err of serverError.fields) {
+        setError(err.field, err.message);
       }
+    } else if (serverError?.type === 'general') {
+      toast.error(serverError.message);
+      dispatch(clearUserError());
     }
-  }, [serverSideErrors]);
+  }, [serverError]);
 
   const hasConfirmPasswordError =
     !errors['confirmPassword'] &&
