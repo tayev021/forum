@@ -18,6 +18,17 @@ export const createForum = catchAsync(async (req: Request, res: Response) => {
     });
   }
 
+  const existingForum = await Forum.findOne({
+    where: { title: capitalize(title) },
+  });
+
+  if (existingForum) {
+    throw new AppError(400, 'Failed to create forum!', {
+      type: 'general',
+      message: 'A forum with this title already exists',
+    });
+  }
+
   const forum = await Forum.create({
     authorId: user.id,
     categoryId: category.id,
