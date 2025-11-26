@@ -1,6 +1,12 @@
 import styled from 'styled-components';
+import { useEffect, useState } from 'react';
 import { useAppDispatch } from '../../../shared/lib/hooks/useAppDispatch';
-import { deleteCategory } from '../../../entities/category';
+import {
+  clearCategoryError,
+  deleteCategory,
+  useCategories,
+} from '../../../entities/category';
+import toast from 'react-hot-toast';
 
 interface DeleteCategoryFormProps {
   categoryId: number;
@@ -61,11 +67,23 @@ export function DeleteCategory({
   categoryTitle,
   closeModal = () => {},
 }: DeleteCategoryFormProps) {
+  const [isDeleted, setIsDeleted] = useState<boolean>(false);
+  const { isLoading, error: serverError } = useCategories();
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (serverError?.type === 'general') {
+      toast.error(serverError.message);
+      dispatch(clearCategoryError());
+      setIsDeleted(false);
+    } else if (!serverError && !isLoading && isDeleted) {
+      closeModal();
+    }
+  }, [serverError, isLoading, isDeleted]);
 
   function confirm() {
     dispatch(deleteCategory({ categoryId }));
-    closeModal();
+    setIsDeleted(true);
   }
 
   return (
