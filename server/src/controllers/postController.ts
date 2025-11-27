@@ -25,12 +25,7 @@ export const getLatestPosts = catchAsync(
       ],
     });
 
-    const sortByDateAscending = posts.sort(
-      (a, b) =>
-        new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-    );
-
-    res.status(200).json({ posts: sortByDateAscending });
+    res.status(200).json({ posts });
   }
 );
 
