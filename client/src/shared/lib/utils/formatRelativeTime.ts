@@ -26,9 +26,9 @@ export function formatRelativeTime(inputTime: Date | number | string): string {
   } else if (diffHours < 12) {
     return `${diffHours} hours ago`;
   } else if (time >= startOfToday) {
-    return `today at ${time.getMinutes()}:${time.getHours()}`;
+    return `today at ${time.getHours()}:${time.getMinutes()}`;
   } else if (time >= startOfYesterday) {
-    return `yesterday at ${time.getMinutes()}:${time.getHours()}`;
+    return `yesterday at ${time.getHours()}:${time.getMinutes()}`;
   } else {
     return `${new Intl.DateTimeFormat('en-US', {
       year: 'numeric',
