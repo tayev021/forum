@@ -21,7 +21,7 @@ const StyledLink = styled(Link)`
 export function ForumLink({ forum }: ForumLinkProps) {
   return (
     <li>
-      <StyledLink to={`/forums/${forum.id}`}>{forum.title}</StyledLink>
+      <StyledLink to={`/forums/${forum.id}?page=1`}>{forum.title}</StyledLink>
     </li>
   );
 }
