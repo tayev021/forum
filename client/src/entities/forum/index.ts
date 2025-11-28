@@ -1,6 +1,14 @@
 import { clearForumError, forumReducer } from './model/slice/forumSlice';
+import { useForum } from './lib/hooks/useForum';
+import { getForum } from './model/thunks/getForum';
 import { addForum } from './model/thunks/addForum';
-import { useForm } from '../../shared/lib/hooks/useForm';
 import { type ForumData } from './model/types/ForumData';
 
-export { forumReducer, clearForumError, addForum, useForm, type ForumData };
+export {
+  forumReducer,
+  useForum,
+  clearForumError,
+  getForum,
+  addForum,
+  type ForumData,
+};
