@@ -3,10 +3,15 @@ import { protect } from '../middleware/protect';
 import { restrictTo } from '../middleware/restrictTo';
 import { validate } from '../middleware/validate';
 import { forumSchema } from '../validators/forumValidator';
-import { createForum } from '../controllers/forumController';
+import {
+  getForum,
+  createForum,
+  deleteForum,
+} from '../controllers/forumController';
 
 const forumRouter = Router();
 
+forumRouter.get('/:forumId', getForum);
 forumRouter.post(
   '/',
   protect,
@@ -14,5 +19,6 @@ forumRouter.post(
   validate(forumSchema),
   createForum
 );
+forumRouter.delete('/:categoryId', protect, restrictTo('admin'), deleteForum);
 
 export { forumRouter };
