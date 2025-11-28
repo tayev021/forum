@@ -1,8 +1,55 @@
 import { Request, Response } from 'express';
 import { catchAsync } from '../utils/catchAsync';
-import { Category, Forum } from '../models';
+import { Category, Forum, Post, Thread } from '../models';
 import { AppError } from '../utils/AppError';
 import { capitalize } from '../utils/capitalize';
+import sequelize from 'sequelize';
+
+export const getForum = catchAsync(async (req: Request, res: Response) => {
+  const forumId = req.params.forumId;
+  const page = Number(req.query.page) || 1;
+  const limit = Number(req.query.limit) || 10;
+  const offset = (page - 1) * limit;
+
+  const forum = await Forum.findByPk(forumId);
+
+  if (!forum) {
+    throw new AppError(400, 'Failed to get forum!', {
+      type: 'general',
+      message: 'You are trying to get a forum that does not exist',
+    });
+  }
+
+  const threads = await Thread.findAll({
+    where: { forumId },
+    attributes: [
+      'id',
+      'title',
+      'createdAt',
+      [sequelize.fn('COUNT', sequelize.col('posts.id')), 'postsCount'],
+    ],
+    include: [
+      {
+        model: Post,
+        as: 'posts',
+        attributes: [],
+      },
+    ],
+    group: ['Thread.id'],
+  });
+
+  res.status(200).json({
+    forum: {
+      id: forum.id,
+      title: forum.title,
+      createdAt: forum.createdAt,
+      threads: threads.slice(offset, offset + limit),
+      totalThreads: threads.length,
+      page: page,
+      totalPages: Math.ceil(threads.length / limit),
+    },
+  });
+});
 
 export const createForum = catchAsync(async (req: Request, res: Response) => {
   const user = req.user!;
@@ -41,4 +88,30 @@ export const createForum = catchAsync(async (req: Request, res: Response) => {
       title: forum.title,
     },
   });
+});
+
+export const deleteForum = catchAsync(async (req: Request, res: Response) => {
+  const forumId = req.params.forumId;
+
+  const forum = await Forum.findByPk(forumId);
+
+  if (!forum) {
+    throw new AppError(400, 'Failed to delete forum!', {
+      type: 'general',
+      message: 'You are trying to delete a forum that does not exist',
+    });
+  }
+
+  const threadsCount = await Thread.count({ where: { forumId } });
+
+  if (threadsCount > 0) {
+    throw new AppError(400, 'Failed to delete forum!', {
+      type: 'general',
+      message: 'You cannot delete a forum that contains threads',
+    });
+  }
+
+  await forum.destroy();
+
+  res.status(204).json({});
 });
