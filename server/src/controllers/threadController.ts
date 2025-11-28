@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { catchAsync } from '../utils/catchAsync';
 import { Forum, Post, Thread } from '../models';
 import { AppError } from '../utils/AppError';
+import { capitalize } from '../utils/capitalize';
 
 export const createThread = catchAsync(async (req: Request, res: Response) => {
   const user = req.user!;
@@ -19,10 +20,21 @@ export const createThread = catchAsync(async (req: Request, res: Response) => {
     });
   }
 
+  const existingThread = await Thread.findOne({
+    where: { title: capitalize(title) },
+  });
+
+  if (existingThread) {
+    throw new AppError(400, 'Failed to create thread!', {
+      type: 'general',
+      message: 'A thread with this title already exists',
+    });
+  }
+
   const thread = await Thread.create({
     authorId: user.id,
     forumId: forum.id,
-    title,
+    title: capitalize(title),
   });
 
   const post = await Post.create({
