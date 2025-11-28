@@ -5,8 +5,9 @@ import { AppLayout } from '../layouts/AppLayout';
 import { HomePage } from '../../pages/HomePage/ui/HomePage';
 import { SigninPage } from '../../pages/SigninPage';
 import { SignupPage } from '../../pages/SignupPage';
-import { PageNotFound } from '../../pages/PageNotFound';
 import { ProtectedRoute } from './ProtectedRoute';
+import { ForumPage } from '../../pages/ForumPage';
+import { PageNotFound } from '../../pages/PageNotFound';
 
 export function AppRouter() {
   const { initialized } = useUser();
@@ -28,6 +29,8 @@ export function AppRouter() {
               </ProtectedRoute>
             }
           />
+          <Route path="forums/:forumId" element={<ForumPage />} />
+          <Route path="threads/:threadId" element={<div>Thread Page</div>} />
           <Route path="*" element={<PageNotFound />} />
         </Route>
       </Routes>
