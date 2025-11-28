@@ -1,7 +1,7 @@
 import { useAppSelector } from '../../../../shared/lib/hooks/useAppSelector';
 
 export function useForum() {
-  const { isLoading, error } = useAppSelector((state) => state.forum);
+  const { forum, isLoading, error } = useAppSelector((state) => state.forum);
 
-  return { isLoading, error };
+  return { forum, isLoading, error };
 }
