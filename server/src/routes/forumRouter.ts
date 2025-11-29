@@ -19,6 +19,6 @@ forumRouter.post(
   validate(forumSchema),
   createForum
 );
-forumRouter.delete('/:categoryId', protect, restrictTo('admin'), deleteForum);
+forumRouter.delete('/:forumId', protect, restrictTo('admin'), deleteForum);
 
 export { forumRouter };
