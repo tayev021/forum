@@ -1,3 +1,7 @@
+function padStart(value: number) {
+  return String(value).padStart(2, '0');
+}
+
 export function formatRelativeTime(inputTime: Date | number | string): string {
   const time =
     typeof inputTime === 'number' || typeof inputTime === 'string'
@@ -26,9 +30,13 @@ export function formatRelativeTime(inputTime: Date | number | string): string {
   } else if (diffHours < 12) {
     return `${diffHours} hours ago`;
   } else if (time >= startOfToday) {
-    return `today at ${time.getHours()}:${time.getMinutes()}`;
+    return `today at ${padStart(time.getHours())}:${padStart(
+      time.getMinutes()
+    )}`;
   } else if (time >= startOfYesterday) {
-    return `yesterday at ${time.getHours()}:${time.getMinutes()}`;
+    return `yesterday at ${padStart(time.getHours())}:${padStart(
+      time.getMinutes()
+    )}`;
   } else {
     return `${new Intl.DateTimeFormat('en-US', {
       year: 'numeric',
