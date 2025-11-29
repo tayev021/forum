@@ -12,6 +12,7 @@ import { validate } from '../../../shared/lib/utils/validate';
 import { titleSchema } from '../lib/validators/titleSchema';
 import { useForum } from '../../../entities/forum/lib/hooks/useForum';
 import toast from 'react-hot-toast';
+import { getCategories } from '../../../entities/category';
 
 interface AddForumFormProps {
   categoryId: number;
@@ -39,12 +40,14 @@ export function AddForumForm({
       dispatch(clearForumError());
       setIsAdded(false);
     } else if (!serverError && !isLoading && isAdded) {
+      dispatch(getCategories());
       closeModal();
     }
   }, [serverError, isLoading, isAdded]);
 
   function submit(formData: ForumData) {
     dispatch(addForum({ categoryId, title: formData.title }));
+    setIsAdded(true);
   }
 
   return (
