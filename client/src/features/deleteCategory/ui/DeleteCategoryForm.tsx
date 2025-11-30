@@ -62,7 +62,7 @@ const Button = styled.button`
   }
 `;
 
-export function DeleteCategory({
+export function DeleteCategoryForm({
   categoryId,
   categoryTitle,
   closeModal = () => {},
