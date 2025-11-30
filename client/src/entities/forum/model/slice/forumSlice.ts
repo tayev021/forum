@@ -3,6 +3,7 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { ServerError } from '../../../../shared/types/ServerError';
 import { getForum } from '../thunks/getForum';
 import { addForum } from '../thunks/addForum';
+import { deleteForum } from '../thunks/deleteForum';
 
 interface forumState {
   forum: Forum | null;
@@ -55,6 +56,24 @@ const forumSlice = createSlice({
       state.isLoading = false;
     });
     builder.addCase(addForum.rejected, (state, action) => {
+      state.isLoading = false;
+
+      if (action.payload) {
+        state.error = action.payload;
+      } else {
+        state.error = { type: 'general', message: 'Unknown error!' };
+      }
+    });
+
+    builder.addCase(deleteForum.pending, (state, _action) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(deleteForum.fulfilled, (state, _action) => {
+      state.forum = null;
+      state.isLoading = false;
+    });
+    builder.addCase(deleteForum.rejected, (state, action) => {
       state.isLoading = false;
 
       if (action.payload) {
