@@ -7,7 +7,7 @@ import { useRestrictTo } from '../../../entities/user';
 import { Modal } from '../../../shared/ui/modal';
 import {
   DeleteCategoryButton,
-  DeleteCategory,
+  DeleteCategoryForm,
 } from '../../../features/deleteCategory';
 import { AddForumButton, AddForumForm } from '../../../features/addForum';
 
@@ -50,13 +50,13 @@ export function Category({ category }: CategoryProps) {
     <WidgetContainer>
       <Header>
         {category.title}
-        {hasAdminsPermissions && (
+        {hasAdminsPermissions && category.forums.length === 0 && (
           <>
             <Modal.Open windowName={`deleteCategory-${category.id}`}>
               <DeleteCategoryButton />
             </Modal.Open>
             <Modal.Window name={`deleteCategory-${category.id}`}>
-              <DeleteCategory
+              <DeleteCategoryForm
                 categoryId={category.id}
                 categoryTitle={category.title}
               />
