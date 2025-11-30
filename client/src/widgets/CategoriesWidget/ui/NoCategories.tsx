@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { WidgetContainer } from '../../../shared/ui/WidgetContainer';
+import { WidgetContainer } from '../../../shared/ui/widget-kit/WidgetContainer';
 
 const Container = styled(WidgetContainer)`
   padding: 2rem;

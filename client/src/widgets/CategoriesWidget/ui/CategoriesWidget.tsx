@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useCategories } from '../../../entities/category';
-import { WidgetLoader } from '../../../shared/ui/WidgetLoader';
+import { WidgetLoader } from '../../../shared/ui/widget-kit/WidgetLoader';
 import { NoCategories } from './NoCategories';
 import { Category } from './Category';
 import { Modal } from '../../../shared/ui/modal';

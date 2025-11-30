@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import { useStatistic } from '../../../entities/statistic';
-import { WidgetContainer } from '../../../shared/ui/WidgetContainer';
-import { WidgetHeader } from '../../../shared/ui/WidgetHeader';
+import { WidgetContainer } from '../../../shared/ui/widget-kit/WidgetContainer';
+import { WidgetHeader } from '../../../shared/ui/widget-kit/WidgetHeader';
 import { HiChartBar } from 'react-icons/hi2';
-import { WidgetLoader } from '../../../shared/ui/WidgetLoader';
+import { WidgetLoader } from '../../../shared/ui/widget-kit/WidgetLoader';
 
 const Heading = styled.h4`
   font-size: 1.6rem;

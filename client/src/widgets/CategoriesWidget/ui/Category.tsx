@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import type { Category } from '../../../entities/category/model/types/Category';
-import { WidgetContainer } from '../../../shared/ui/WidgetContainer';
+import { WidgetContainer } from '../../../shared/ui/widget-kit/WidgetContainer';
 import { ForumLink } from './ForumLink';
 import { NoForums } from './NoForums';
 import { useRestrictTo } from '../../../entities/user';

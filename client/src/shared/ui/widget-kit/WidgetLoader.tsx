@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Spinner } from './Spinner';
+import { Spinner } from '../Spinner';
 
 interface WidgetLoaderProps {
   position?: 'top' | 'center';

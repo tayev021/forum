@@ -1,5 +1,5 @@
 import { HiOutlineTrash } from 'react-icons/hi2';
-import { WidgetDeleteButton } from '../../../shared/ui/WidgetDeleteButton';
+import { WidgetDeleteButton } from '../../../shared/ui/widget-kit/WidgetDeleteButton';
 
 interface DeleteCategoryButtonProps {
   onClick?: () => void;

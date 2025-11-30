@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { WidgetContainer } from '../../../shared/ui/WidgetContainer';
-import { WidgetLoader } from '../../../shared/ui/WidgetLoader';
+import { WidgetContainer } from '../../../shared/ui/widget-kit/WidgetContainer';
+import { WidgetLoader } from '../../../shared/ui/widget-kit/WidgetLoader';
 import { useCurrentForum } from '../lib/hooks/useCurrentForum';
 import { useRestrictTo } from '../../../entities/user';
 import { NoThreads } from './NoThreads';

@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { useLatestPosts } from '../../../entities/post/lib/hooks/useLatestPosts';
-import { WidgetContainer } from '../../../shared/ui/WidgetContainer';
-import { WidgetLoader } from '../../../shared/ui/WidgetLoader';
-import { WidgetHeader } from '../../../shared/ui/WidgetHeader';
+import { WidgetContainer } from '../../../shared/ui/widget-kit/WidgetContainer';
+import { WidgetLoader } from '../../../shared/ui/widget-kit/WidgetLoader';
+import { WidgetHeader } from '../../../shared/ui/widget-kit/WidgetHeader';
 import { HiOutlineChatBubbleBottomCenterText } from 'react-icons/hi2';
 import { NoLatestPosts } from './NoLatestPosts';
 import { LatestPost } from './LatestPost';
