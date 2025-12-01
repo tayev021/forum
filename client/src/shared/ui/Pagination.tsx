@@ -61,18 +61,18 @@ export function Pagination({
 }: PaginationProps) {
   if (totalPages === 1) return null;
 
-  const links = paginate(currentPage, totalPages).map((pageNumber) => {
-    if (pageNumber === null) {
-      return <PageLinkPlaceholder>...</PageLinkPlaceholder>;
+  const links = paginate(currentPage, totalPages).map((page) => {
+    if (page.type === 'placeholder') {
+      return <PageLinkPlaceholder key={page.id}>...</PageLinkPlaceholder>;
     }
 
     return (
       <PageLink
-        key={pageNumber}
-        $current={pageNumber === currentPage}
-        to={`${baseUrl}?page=${pageNumber}`}
+        key={page.num}
+        $current={page.num === currentPage}
+        to={`${baseUrl}?page=${page.num}`}
       >
-        {pageNumber}
+        {page.num}
       </PageLink>
     );
   });
