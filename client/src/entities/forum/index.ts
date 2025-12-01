@@ -3,6 +3,7 @@ import { useForum } from './lib/hooks/useForum';
 import { getForum } from './model/thunks/getForum';
 import { addForum } from './model/thunks/addForum';
 import { deleteForum } from './model/thunks/deleteForum';
+import { type Forum } from './model/types/Forum';
 import { type ForumData } from './model/types/ForumData';
 
 export {
@@ -12,5 +13,6 @@ export {
   getForum,
   addForum,
   deleteForum,
+  type Forum,
   type ForumData,
 };
