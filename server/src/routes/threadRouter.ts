@@ -3,10 +3,11 @@ import { protect } from '../middleware/protect';
 import { validate } from '../middleware/validate';
 import { threadSchema } from '../validators/threadValidator';
 import { postSchema } from '../validators/postValidator';
-import { createThread } from '../controllers/threadController';
+import { createThread, getThread } from '../controllers/threadController';
 
 const threadRouter = Router();
 
+threadRouter.get('/:threadId', getThread);
 threadRouter.post(
   '/',
   protect,
