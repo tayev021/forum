@@ -39,6 +39,7 @@ export const getThread = catchAsync(async (req: Request, res: Response) => {
       id: thread.id,
       title: thread.title,
       authorId: thread.authorId,
+      forumId: thread.forumId,
       createdAt: thread.createdAt,
       posts: posts,
       totalPosts: count,
