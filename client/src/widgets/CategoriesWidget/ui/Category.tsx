@@ -15,7 +15,7 @@ interface CategoryProps {
   category: Category;
 }
 
-const Header = styled.header`
+const Header = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 2rem;
@@ -31,7 +31,7 @@ const ForumsList = styled.ul`
   padding: 1rem;
 `;
 
-const Footer = styled.footer`
+const Footer = styled.div`
   display: flex;
   justify-content: end;
   padding: 1rem 3rem;

@@ -14,7 +14,7 @@ import {
   DeleteForumForm,
 } from '../../../features/deleteForum';
 
-const Header = styled.header`
+const Header = styled.div`
   display: grid;
   grid-template-columns: min-content 1fr min-content;
   align-items: center;

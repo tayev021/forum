@@ -12,7 +12,7 @@ const ThreadContainer = styled.div`
   gap: 2rem;
 `;
 
-const ThreadHeader = styled.header`
+const ThreadHeader = styled.div`
   display: grid;
   grid-template-columns: min-content 1fr min-content;
   align-items: center;

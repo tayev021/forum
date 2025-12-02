@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const WidgetHeader = styled.header`
+export const WidgetHeader = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;

@@ -12,7 +12,7 @@ const StyledPost = styled.li`
   line-height: 1;
 `;
 
-const Header = styled.header`
+const Header = styled.div`
   display: grid;
   grid-template-columns: min-content 1fr;
   gap: 0.5rem;
