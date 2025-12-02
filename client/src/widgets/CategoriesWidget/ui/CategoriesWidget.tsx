@@ -5,7 +5,7 @@ import { NoCategories } from './NoCategories';
 import { Category } from './Category';
 import { Modal } from '../../../shared/ui/modal';
 import { useRestrictTo } from '../../../entities/user';
-import { AddCategoryForm } from '../../../features/addCategory';
+import { CreateCategoryForm } from '../../../features/createCategory';
 
 const Container = styled.div`
   position: relative;
@@ -14,7 +14,7 @@ const Container = styled.div`
   gap: 2rem;
 `;
 
-const AddButton = styled.button`
+const CreateButton = styled.button`
   align-self: flex-end;
   padding: 1rem 2rem;
   border-radius: 0.4rem;
@@ -48,11 +48,11 @@ export function CategoriesWidget() {
       ))}
       {hasPermissions && (
         <>
-          <Modal.Open windowName="addCategory">
-            <AddButton>Add Category</AddButton>
+          <Modal.Open windowName="createCategory">
+            <CreateButton>Create Category</CreateButton>
           </Modal.Open>
-          <Modal.Window name="addCategory">
-            <AddCategoryForm />
+          <Modal.Window name="createCategory">
+            <CreateCategoryForm />
           </Modal.Window>
         </>
       )}

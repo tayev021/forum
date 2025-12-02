@@ -3,11 +3,11 @@ import type { ForumData } from '../types/ForumData';
 import type { ServerError } from '../../../../shared/types/ServerError';
 import { API_URL } from '../../../../shared/constants';
 
-export const addForum = createAsyncThunk<
+export const createForum = createAsyncThunk<
   void,
   ForumData,
   { rejectValue: ServerError }
->('forum/addForum', async function (forumData, thunkAPI) {
+>('forum/createForum', async function (forumData, thunkAPI) {
   const response = await fetch(`${API_URL}/forums`, {
     method: 'post',
     credentials: 'include',

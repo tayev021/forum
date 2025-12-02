@@ -4,7 +4,7 @@ import { validate } from '../../../shared/lib/utils/validate';
 import { Form } from '../../../shared/ui/form';
 import { titleSchema } from '../lib/validators/titleSchema';
 import {
-  addCategory,
+  createCategory,
   clearCategoryError,
   useCategories,
 } from '../../../entities/category';
@@ -21,8 +21,10 @@ const Container = styled.div`
   background-color: var(--color-bg);
 `;
 
-export function AddCategoryForm({ closeModal = () => {} }: CategoryFormProps) {
-  const [isAdded, setIsAdded] = useState<boolean>(false);
+export function CreateCategoryForm({
+  closeModal = () => {},
+}: CategoryFormProps) {
+  const [isCreated, setIsCreated] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const { isLoading, error: serverError } = useCategories();
   const { register, getValues, getErrors, setError, handleSubmit } = useForm();
@@ -41,21 +43,21 @@ export function AddCategoryForm({ closeModal = () => {} }: CategoryFormProps) {
     if (serverError?.type === 'general') {
       toast.error(serverError.message);
       dispatch(clearCategoryError());
-      setIsAdded(false);
-    } else if (!serverError && !isLoading && isAdded) {
+      setIsCreated(false);
+    } else if (!serverError && !isLoading && isCreated) {
       closeModal();
     }
-  }, [serverError, isLoading, isAdded]);
+  }, [serverError, isLoading, isCreated]);
 
   function submit(formData: CategoryData) {
-    dispatch(addCategory({ title: formData.title }));
-    setIsAdded(true);
+    dispatch(createCategory({ title: formData.title }));
+    setIsCreated(true);
   }
 
   return (
     <Container>
       <Form onSubmit={handleSubmit(submit)}>
-        <Form.Heading>Add New Category</Form.Heading>
+        <Form.Heading>Create Category</Form.Heading>
 
         <Form.Row hasError={!!errors['title']}>
           <Form.Label htmlFor="title" hasValue={!!values['title']}>
@@ -70,7 +72,7 @@ export function AddCategoryForm({ closeModal = () => {} }: CategoryFormProps) {
           <Form.InputError message={errors['title']} />
         </Form.Row>
 
-        <Form.Submit disabled={isLoading}>Add</Form.Submit>
+        <Form.Submit disabled={isLoading}>Create</Form.Submit>
 
         <Form.Loader isLoading={isLoading} />
       </Form>

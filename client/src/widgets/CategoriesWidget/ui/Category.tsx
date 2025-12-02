@@ -9,7 +9,10 @@ import {
   DeleteCategoryButton,
   DeleteCategoryForm,
 } from '../../../features/deleteCategory';
-import { AddForumButton, AddForumForm } from '../../../features/addForum';
+import {
+  CreateForumButton,
+  CreateForumForm,
+} from '../../../features/createForum';
 
 interface CategoryProps {
   category: Category;
@@ -73,11 +76,11 @@ export function Category({ category }: CategoryProps) {
       <Footer>
         {hasModeratePermissions && (
           <>
-            <Modal.Open windowName={`addForumToCategory-${category.id}`}>
-              <AddForumButton />
+            <Modal.Open windowName={`createForumInCategory-${category.id}`}>
+              <CreateForumButton />
             </Modal.Open>
-            <Modal.Window name={`addForumToCategory-${category.id}`}>
-              <AddForumForm categoryId={category.id} />
+            <Modal.Window name={`createForumInCategory-${category.id}`}>
+              <CreateForumForm categoryId={category.id} />
             </Modal.Window>
           </>
         )}

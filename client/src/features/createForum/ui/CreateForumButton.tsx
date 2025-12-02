@@ -1,7 +1,7 @@
 import { HiPlus } from 'react-icons/hi2';
 import styled from 'styled-components';
 
-interface AddForumButtonProps {
+interface CreateForumButtonProps {
   onClick?: () => void;
 }
 
@@ -18,10 +18,12 @@ const Button = styled.button`
   }
 `;
 
-export function AddForumButton({ onClick = () => {} }: AddForumButtonProps) {
+export function CreateForumButton({
+  onClick = () => {},
+}: CreateForumButtonProps) {
   return (
     <Button onClick={onClick}>
-      <HiPlus /> Add Forum
+      <HiPlus /> Create Forum
     </Button>
   );
 }

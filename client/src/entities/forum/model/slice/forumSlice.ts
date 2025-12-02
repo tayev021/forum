@@ -2,7 +2,7 @@ import type { Forum } from '../types/Forum';
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { ServerError } from '../../../../shared/types/ServerError';
 import { getForum } from '../thunks/getForum';
-import { addForum } from '../thunks/addForum';
+import { createForum } from '../thunks/createForum';
 import { deleteForum } from '../thunks/deleteForum';
 
 interface forumState {
@@ -48,14 +48,14 @@ const forumSlice = createSlice({
       }
     });
 
-    builder.addCase(addForum.pending, (state, _action) => {
+    builder.addCase(createForum.pending, (state, _action) => {
       state.isLoading = true;
       state.error = null;
     });
-    builder.addCase(addForum.fulfilled, (state, _action) => {
+    builder.addCase(createForum.fulfilled, (state, _action) => {
       state.isLoading = false;
     });
-    builder.addCase(addForum.rejected, (state, action) => {
+    builder.addCase(createForum.rejected, (state, action) => {
       state.isLoading = false;
 
       if (action.payload) {

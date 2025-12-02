@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import {
-  addForum,
+  createForum,
   clearForumError,
   type ForumData,
 } from '../../../entities/forum';
@@ -14,7 +14,7 @@ import { useForum } from '../../../entities/forum/lib/hooks/useForum';
 import toast from 'react-hot-toast';
 import { getCategories } from '../../../entities/category';
 
-interface AddForumFormProps {
+interface CreateForumFormProps {
   categoryId: number;
   closeModal?: () => void;
 }
@@ -23,11 +23,11 @@ const Container = styled.div`
   background-color: var(--color-bg);
 `;
 
-export function AddForumForm({
+export function CreateForumForm({
   categoryId,
   closeModal = () => {},
-}: AddForumFormProps) {
-  const [isAdded, setIsAdded] = useState<boolean>(false);
+}: CreateForumFormProps) {
+  const [isCreated, setIsCreated] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const { isLoading, error: serverError } = useForum();
   const { register, getValues, getErrors, handleSubmit } = useForm();
@@ -38,22 +38,22 @@ export function AddForumForm({
     if (serverError?.type === 'general') {
       toast.error(serverError.message);
       dispatch(clearForumError());
-      setIsAdded(false);
-    } else if (!serverError && !isLoading && isAdded) {
+      setIsCreated(false);
+    } else if (!serverError && !isLoading && isCreated) {
       dispatch(getCategories());
       closeModal();
     }
-  }, [serverError, isLoading, isAdded]);
+  }, [serverError, isLoading, isCreated]);
 
   function submit(formData: ForumData) {
-    dispatch(addForum({ categoryId, title: formData.title }));
-    setIsAdded(true);
+    dispatch(createForum({ categoryId, title: formData.title }));
+    setIsCreated(true);
   }
 
   return (
     <Container>
       <Form onSubmit={handleSubmit(submit)}>
-        <Form.Heading>Add New Forum</Form.Heading>
+        <Form.Heading>Create Forum</Form.Heading>
 
         <Form.Row hasError={!!errors['title']}>
           <Form.Label htmlFor="title" hasValue={!!values['title']}>
@@ -68,7 +68,7 @@ export function AddForumForm({
           <Form.InputError message={errors['title']} />
         </Form.Row>
 
-        <Form.Submit disabled={isLoading}>Add</Form.Submit>
+        <Form.Submit disabled={isLoading}>Create</Form.Submit>
 
         <Form.Loader isLoading={isLoading} />
       </Form>

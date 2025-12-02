@@ -4,7 +4,7 @@ import {
 } from './model/slice/categorySlice';
 import { useCategories } from './lib/hooks/useCategories';
 import { getCategories } from './model/thunks/getCategories';
-import { addCategory } from './model/thunks/addCategory';
+import { createCategory } from './model/thunks/createCategory';
 import { deleteCategory } from './model/thunks/deleteCategory';
 
 export {
@@ -12,6 +12,6 @@ export {
   clearCategoryError,
   useCategories,
   getCategories,
-  addCategory,
+  createCategory,
   deleteCategory,
 };

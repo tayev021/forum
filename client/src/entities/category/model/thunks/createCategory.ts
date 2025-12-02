@@ -4,11 +4,11 @@ import type { CategoryData } from '../types/CategoryData';
 import type { ServerError } from '../../../../shared/types/ServerError';
 import { API_URL } from '../../../../shared/constants';
 
-export const addCategory = createAsyncThunk<
+export const createCategory = createAsyncThunk<
   Category[],
   CategoryData,
   { rejectValue: ServerError }
->('category/addCategory', async function (categoryData, thunkAPI) {
+>('category/createCategory', async function (categoryData, thunkAPI) {
   const response = await fetch(`${API_URL}/categories`, {
     method: 'post',
     credentials: 'include',

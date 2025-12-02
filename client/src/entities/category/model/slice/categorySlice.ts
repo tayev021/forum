@@ -1,7 +1,7 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { Category } from '../types/Category';
 import { getCategories } from '../thunks/getCategories';
-import { addCategory } from '../thunks/addCategory';
+import { createCategory } from '../thunks/createCategory';
 import { deleteCategory } from '../thunks/deleteCategory';
 import type { ServerError } from '../../../../shared/types/ServerError';
 
@@ -41,17 +41,17 @@ const categorySlice = createSlice({
       state.isLoading = false;
     });
 
-    builder.addCase(addCategory.pending, (state, _action) => {
+    builder.addCase(createCategory.pending, (state, _action) => {
       state.isLoading = true;
     });
     builder.addCase(
-      addCategory.fulfilled,
+      createCategory.fulfilled,
       (state, action: PayloadAction<Category[]>) => {
         state.categories = action.payload;
         state.isLoading = false;
       }
     );
-    builder.addCase(addCategory.rejected, (state, action) => {
+    builder.addCase(createCategory.rejected, (state, action) => {
       state.isLoading = false;
 
       if (action.payload) {
