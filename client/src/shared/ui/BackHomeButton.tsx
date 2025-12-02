@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 
 interface BackButtonProps {
+  url?: string;
   children: ReactNode;
 }
 
@@ -12,8 +13,8 @@ const Button = styled.button`
   align-items: center;
 `;
 
-export function BackHomeButton({ children }: BackButtonProps) {
+export function BackHomeButton({ url, children }: BackButtonProps) {
   const navigate = useNavigate();
 
-  return <Button onClick={() => navigate('/')}>{children}</Button>;
+  return <Button onClick={() => navigate(url || '/')}>{children}</Button>;
 }
