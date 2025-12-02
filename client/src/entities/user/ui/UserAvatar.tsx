@@ -4,6 +4,7 @@ interface UserAvatarProps {
   username: string;
   avatar: string | null;
   size?: number;
+  className?: string;
 }
 
 interface AvatarProps {
@@ -30,9 +31,14 @@ const Image = styled.img`
   width: 100%;
 `;
 
-export function UserAvatar({ username, avatar, size = 2 }: UserAvatarProps) {
+export function UserAvatar({
+  username,
+  avatar,
+  size = 2,
+  className,
+}: UserAvatarProps) {
   return (
-    <Avatar $size={size}>
+    <Avatar $size={size} className={className}>
       {avatar ? (
         <Image src={avatar} alt={`${username} avatar`} />
       ) : (
