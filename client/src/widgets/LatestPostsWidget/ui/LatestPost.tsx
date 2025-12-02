@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import type { Post } from '../../../entities/post/model/types/Post';
+import type { LatestPost } from '../../../entities/post/model/types/LatestPost';
 import { UserAvatar } from '../../../entities/user/ui/UserAvatar';
 import { Link } from 'react-router';
 import { formatRelativeTime } from '../../../shared/lib/utils/formatRelativeTime';
 
 interface LatestPostProps {
-  post: Post;
+  post: LatestPost;
 }
 
 const StyledPost = styled.li`
