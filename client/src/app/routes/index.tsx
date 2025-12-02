@@ -7,6 +7,7 @@ import { SigninPage } from '../../pages/SigninPage';
 import { SignupPage } from '../../pages/SignupPage';
 import { ProtectedRoute } from './ProtectedRoute';
 import { ForumPage } from '../../pages/ForumPage';
+import { ThreadPage } from '../../pages/ThreadPage';
 import { PageNotFound } from '../../pages/PageNotFound';
 
 export function AppRouter() {
@@ -30,7 +31,7 @@ export function AppRouter() {
             }
           />
           <Route path="forums/:forumId" element={<ForumPage />} />
-          <Route path="threads/:threadId" element={<div>Thread Page</div>} />
+          <Route path="threads/:threadId" element={<ThreadPage />} />
           <Route path="*" element={<PageNotFound />} />
         </Route>
       </Routes>
