@@ -46,7 +46,7 @@ export function ThreadItem({ thread }: ThreadRowProps) {
   const navigate = useNavigate();
 
   return (
-    <Li onClick={() => navigate(`/threads/${thread.id}`)}>
+    <Li onClick={() => navigate(`/threads/${thread.id}?page=1`)}>
       <TitleCell>{thread.title}</TitleCell>
       <Cell>Posts: {thread.postsCount}</Cell>
       <Cell>{formatRelativeTime(thread.createdAt)}</Cell>
