@@ -1,9 +1,9 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type { Post } from '../types/Post';
+import type { LatestPost } from '../types/LatestPost';
 import { getLatestPosts } from '../thunks/getLatestPosts';
 
 interface PostState {
-  latestPosts: Post[];
+  latestPosts: LatestPost[];
   isLoading: boolean;
 }
 
@@ -22,7 +22,7 @@ const postSlice = createSlice({
     });
     builder.addCase(
       getLatestPosts.fulfilled,
-      (state, action: PayloadAction<Post[]>) => {
+      (state, action: PayloadAction<LatestPost[]>) => {
         state.latestPosts = action.payload;
         state.isLoading = false;
       }

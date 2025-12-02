@@ -8,7 +8,7 @@ interface Thread {
   title: string;
 }
 
-export interface Post {
+export interface LatestPost {
   id: number;
   author: Author;
   thread: Thread;

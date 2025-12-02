@@ -1,9 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { Post } from '../types/Post';
+import type { LatestPost } from '../types/LatestPost';
 import { API_URL } from '../../../../shared/constants';
 
 export const getLatestPosts = createAsyncThunk<
-  Post[],
+  LatestPost[],
   void,
   { rejectValue: any }
 >('post/getLatestPosts', async function (_, thunkAPI) {
@@ -16,7 +16,7 @@ export const getLatestPosts = createAsyncThunk<
     return thunkAPI.rejectWithValue(errors);
   }
 
-  const json: { posts: Post[] } = await response.json();
+  const json: { posts: LatestPost[] } = await response.json();
 
   return json.posts;
 });
