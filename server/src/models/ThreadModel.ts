@@ -4,6 +4,7 @@ import { database } from '../config/database';
 export class Thread extends Model {
   public id!: number;
   public authorId!: number;
+  public forumId!: number;
   public title!: string;
   public createdAt!: string;
 }
