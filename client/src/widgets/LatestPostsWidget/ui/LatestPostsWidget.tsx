@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useLatestPosts } from '../../../entities/post/lib/hooks/useLatestPosts';
+import { useLatestPosts } from '../../../entities/post';
 import { WidgetContainer } from '../../../shared/ui/widget-kit/WidgetContainer';
 import { WidgetLoader } from '../../../shared/ui/widget-kit/WidgetLoader';
 import { WidgetHeader } from '../../../shared/ui/widget-kit/WidgetHeader';
