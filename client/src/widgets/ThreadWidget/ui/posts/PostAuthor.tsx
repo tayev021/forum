@@ -21,8 +21,11 @@ const StyledUserAvatar = styled(UserAvatar)`
 `;
 
 const UserName = styled.p`
-  margin-bottom: 4rem;
   font-size: 1.8rem;
+
+  & + p {
+    margin-top: 4rem;
+  }
 `;
 
 const SignInTime = styled.p`
@@ -40,8 +43,12 @@ export function PostAuthor({ author }: PostAuthorProps) {
         size={8}
       />
       <UserName>{author.username}</UserName>
-      <SignInTime>last sign in:</SignInTime>
-      <SignInTime>{formatRelativeTime(author.lastSignIn)}</SignInTime>
+      {author.lastSignIn && (
+        <>
+          <SignInTime>last sign in:</SignInTime>
+          <SignInTime>{formatRelativeTime(author.lastSignIn)}</SignInTime>
+        </>
+      )}
     </StyledPostAuthor>
   );
 }
