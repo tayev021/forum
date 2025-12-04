@@ -5,6 +5,7 @@ import { HiArrowLeft } from 'react-icons/hi2';
 import { BackHomeButton } from '../../../shared/ui/BackHomeButton';
 import { Pagination } from '../../../shared/ui/Pagination';
 import { PostsList } from './posts/PostsList';
+import { PostCreate } from './posts/PostCreate';
 
 const ThreadContainer = styled.div`
   display: flex;
@@ -66,6 +67,7 @@ export function ThreadWidget() {
         currentPage={thread.page}
         totalPages={thread.totalPages}
       />
+      <PostCreate />
     </>
   );
 }
