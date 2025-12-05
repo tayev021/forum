@@ -1,13 +1,21 @@
 import styled from 'styled-components';
+import { WidgetHeader } from '../../../shared/ui/widget-kit/WidgetHeader';
+import { WidgetTitle } from '../../../shared/ui/widget-kit/WidgetTitle';
 import { useStatistic } from '../../../entities/statistic';
 import { WidgetContainer } from '../../../shared/ui/widget-kit/WidgetContainer';
-import { WidgetHeader } from '../../../shared/ui/widget-kit/WidgetHeader';
-import { HiChartBar } from 'react-icons/hi2';
 import { WidgetLoader } from '../../../shared/ui/widget-kit/WidgetLoader';
+import { HiChartBar } from 'react-icons/hi2';
 
-const Heading = styled.h4`
+const StyledWidgetHeader = styled(WidgetHeader)`
+  padding: 1rem;
+`;
+
+const StyledWidgetTitle = styled(WidgetTitle)`
+  display: flex;
+  gap: 1rem;
   font-size: 1.6rem;
   font-weight: 500;
+  color: var(--color-secondary);
 `;
 
 const List = styled.ul`
@@ -33,10 +41,12 @@ export function StatisticWidget() {
   return (
     <WidgetContainer>
       {isLoading && <WidgetLoader />}
-      <WidgetHeader>
-        <HiChartBar />
-        <Heading>Forum Statistic</Heading>
-      </WidgetHeader>
+      <StyledWidgetHeader>
+        <StyledWidgetTitle>
+          <HiChartBar />
+          Forum Statistic
+        </StyledWidgetTitle>
+      </StyledWidgetHeader>
       <List>
         <Row>
           <span>Posts:</span>
