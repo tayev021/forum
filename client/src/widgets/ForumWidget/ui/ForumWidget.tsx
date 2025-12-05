@@ -1,49 +1,18 @@
-import styled from 'styled-components';
-import { WidgetContainer } from '../../../shared/ui/widget-kit/WidgetContainer';
-import { WidgetLoader } from '../../../shared/ui/widget-kit/WidgetLoader';
 import { useCurrentForum } from '../lib/hooks/useCurrentForum';
 import { useRestrictTo } from '../../../entities/user';
+import { WidgetLoader } from '../../../shared/ui/widget-kit/WidgetLoader';
+import { WidgetContainer } from '../../../shared/ui/widget-kit/WidgetContainer';
+import { WidgetHeader } from '../../../shared/ui/widget-kit/WidgetHeader';
+import { WidgetHeaderGroup } from '../../../shared/ui/widget-kit/WidgetHeaderGroup';
+import { WidgetBackButton } from '../../../shared/ui/widget-kit/WidgetBackButton';
+import { WidgetTitle } from '../../../shared/ui/widget-kit/WidgetTitle';
+import { Modal } from '../../../shared/ui/modal';
+import { WidgetDeleteButton } from '../../../shared/ui/widget-kit/WidgetDeleteButton';
+import { WidgetConfirm } from '../../../shared/ui/widget-kit/WidgetConfirm';
+import { DeleteForum } from '../../../features/deleteForum';
 import { NoThreads } from './NoThreads';
 import { ThreadsList } from './ThreadsList';
-import { BackHomeButton } from '../../../shared/ui/BackHomeButton';
-import { HiArrowLeft } from 'react-icons/hi2';
 import { Pagination } from '../../../shared/ui/Pagination';
-import { Modal } from '../../../shared/ui/modal';
-import {
-  DeleteForumButton,
-  DeleteForumForm,
-} from '../../../features/deleteForum';
-
-const Header = styled.div`
-  display: grid;
-  grid-template-columns: min-content 1fr min-content;
-  align-items: center;
-  gap: 2rem;
-  padding: 1rem 2rem 1rem 1rem;
-  border-bottom: 1px solid var(--color-grey-400);
-`;
-
-const BackIcon = styled(HiArrowLeft)`
-  width: 2rem;
-  height: 2rem;
-  color: var(--color-primary);
-  cursor: pointer;
-
-  &:hover {
-    color: var(--color-rose-500);
-  }
-`;
-
-const Heading = styled.h3`
-  font-size: 2rem;
-  font-weight: 600;
-  line-height: 1;
-  color: var(--color-primary);
-`;
-
-const HeaderActions = styled.div`
-  justify-self: flex-end;
-`;
 
 export function ForumWidget() {
   const { forum, isLoading } = useCurrentForum();
@@ -56,27 +25,28 @@ export function ForumWidget() {
   return (
     <>
       <WidgetContainer>
-        <Header>
-          <BackHomeButton>
-            <BackIcon />
-          </BackHomeButton>
-          <Heading>{forum?.title} Forum</Heading>
-          <HeaderActions>
+        <WidgetHeader>
+          <WidgetHeaderGroup>
+            <WidgetBackButton />
+            <WidgetTitle>{forum?.title} Forum</WidgetTitle>
+          </WidgetHeaderGroup>
+          <WidgetHeaderGroup>
             {hasAdminsPermissions && forum.threads.length === 0 && (
               <>
                 <Modal.Open windowName={`deleteForum-${forum.id}`}>
-                  <DeleteForumButton />
+                  <WidgetDeleteButton />
                 </Modal.Open>
                 <Modal.Window name={`deleteForum-${forum.id}`}>
-                  <DeleteForumForm
-                    forumId={forum.id}
-                    forumTitle={forum.title}
-                  />
+                  <DeleteForum forumId={forum.id}>
+                    <WidgetConfirm title="Delete Forum">
+                      Are you sure you want to delete the "{forum.title}" forum?
+                    </WidgetConfirm>
+                  </DeleteForum>
                 </Modal.Window>
               </>
             )}
-          </HeaderActions>
-        </Header>
+          </WidgetHeaderGroup>
+        </WidgetHeader>
         {!forum || forum.threads.length === 0 ? (
           <NoThreads />
         ) : (
