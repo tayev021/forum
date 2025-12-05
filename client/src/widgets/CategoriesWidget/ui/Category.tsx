@@ -1,48 +1,25 @@
-import styled from 'styled-components';
 import type { Category } from '../../../entities/category/model/types/Category';
-import { WidgetContainer } from '../../../shared/ui/widget-kit/WidgetContainer';
-import { ForumLink } from './ForumLink';
-import { NoForums } from './NoForums';
+import styled from 'styled-components';
 import { useRestrictTo } from '../../../entities/user';
+import { WidgetContainer } from '../../../shared/ui/widget-kit/WidgetContainer';
+import { WidgetHeader } from '../../../shared/ui/widget-kit/WidgetHeader';
+import { WidgetHeaderGroup } from '../../../shared/ui/widget-kit/WidgetHeaderGroup';
+import { WidgetTitle } from '../../../shared/ui/widget-kit/WidgetTitle';
 import { Modal } from '../../../shared/ui/modal';
-import {
-  DeleteCategoryButton,
-  DeleteCategoryForm,
-} from '../../../features/deleteCategory';
-import {
-  CreateForumButton,
-  CreateForumForm,
-} from '../../../features/createForum';
+import { WidgetDeleteButton } from '../../../shared/ui/widget-kit/WidgetDeleteButton';
+import { WidgetConfirm } from '../../../shared/ui/widget-kit/WidgetConfirm';
+import { DeleteCategory } from '../../../features/deleteCategory';
+import { NoForums } from './NoForums';
+import { ForumLink } from './ForumLink';
+import { CreateForumForm } from '../../../features/createForum';
+import { WidgetCreateButton } from '../../../shared/ui/widget-kit/WidgetCreateButton';
 
 interface CategoryProps {
   category: Category;
 }
 
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  gap: 2rem;
-  padding: 1rem 3rem;
-  border-bottom: 1px solid var(--color-grey-400);
-  font-size: 2rem;
-  font-weight: 600;
-  line-height: 1;
-  color: var(--color-primary);
-`;
-
 const ForumsList = styled.ul`
   padding: 1rem;
-`;
-
-const Footer = styled.div`
-  display: flex;
-  justify-content: end;
-  padding: 1rem 3rem;
-  border-top: 1px solid var(--color-grey-400);
-
-  &:empty {
-    display: none;
-  }
 `;
 
 export function Category({ category }: CategoryProps) {
@@ -51,40 +28,44 @@ export function Category({ category }: CategoryProps) {
 
   return (
     <WidgetContainer>
-      <Header>
-        {category.title}
-        {hasAdminsPermissions && category.forums.length === 0 && (
-          <>
-            <Modal.Open windowName={`deleteCategory-${category.id}`}>
-              <DeleteCategoryButton />
-            </Modal.Open>
-            <Modal.Window name={`deleteCategory-${category.id}`}>
-              <DeleteCategoryForm
-                categoryId={category.id}
-                categoryTitle={category.title}
-              />
-            </Modal.Window>
-          </>
-        )}
-      </Header>
+      <WidgetHeader>
+        <WidgetHeaderGroup>
+          <WidgetTitle>{category.title}</WidgetTitle>
+        </WidgetHeaderGroup>
+        <WidgetHeaderGroup>
+          {hasModeratePermissions && (
+            <>
+              <Modal.Open windowName={`createForumInCategory-${category.id}`}>
+                <WidgetCreateButton />
+              </Modal.Open>
+              <Modal.Window name={`createForumInCategory-${category.id}`}>
+                <CreateForumForm categoryId={category.id} />
+              </Modal.Window>
+            </>
+          )}
+          {hasAdminsPermissions && category.forums.length === 0 && (
+            <>
+              <Modal.Open windowName={`deleteCategory-${category.id}`}>
+                <WidgetDeleteButton />
+              </Modal.Open>
+              <Modal.Window name={`deleteCategory-${category.id}`}>
+                <DeleteCategory categoryId={category.id}>
+                  <WidgetConfirm title="Delete Category">
+                    Are you sure you want to delete the "{category.title}"
+                    category?
+                  </WidgetConfirm>
+                </DeleteCategory>
+              </Modal.Window>
+            </>
+          )}
+        </WidgetHeaderGroup>
+      </WidgetHeader>
       <ForumsList>
         {category.forums.length === 0 && <NoForums />}
         {category.forums.map((forum) => (
           <ForumLink key={forum.id} forum={forum} />
         ))}
       </ForumsList>
-      <Footer>
-        {hasModeratePermissions && (
-          <>
-            <Modal.Open windowName={`createForumInCategory-${category.id}`}>
-              <CreateForumButton />
-            </Modal.Open>
-            <Modal.Window name={`createForumInCategory-${category.id}`}>
-              <CreateForumForm categoryId={category.id} />
-            </Modal.Window>
-          </>
-        )}
-      </Footer>
     </WidgetContainer>
   );
 }
