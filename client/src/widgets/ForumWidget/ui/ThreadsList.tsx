@@ -7,7 +7,7 @@ interface ThreadsTableProps {
 }
 
 const List = styled.ul`
-  padding: 2rem;
+  padding: 1rem;
 `;
 
 export function ThreadsList({ threads }: ThreadsTableProps) {

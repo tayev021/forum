@@ -9,10 +9,7 @@ interface ThreadRowProps {
 
 const Li = styled.li`
   display: grid;
-  grid-template-columns:
-    minmax(20rem, 1fr)
-    minmax(min-content, 15rem)
-    minmax(min-content, 20rem);
+  grid-template-columns: minmax(20rem, 1fr) 10rem 15rem;
   padding: 0.5rem;
   border-radius: 0.5rem;
   cursor: pointer;
@@ -25,21 +22,19 @@ const Li = styled.li`
 const Cell = styled.div`
   padding: 0 0.5rem;
   font-size: 1.4rem;
-  text-align: center;
   white-space: nowrap;
+  text-overflow: ellipsis;
   color: var(--color-grey-500);
-
-  &:not(:last-child) {
-    border-right: 1px solid var(--color-grey-400);
-  }
+  overflow: hidden;
 `;
 
 const TitleCell = styled(Cell)`
   font-size: 1.6rem;
-  text-align: start;
-  text-overflow: ellipsis;
   color: var(--color-text-primary);
-  overflow: hidden;
+`;
+
+const TimeCell = styled(Cell)`
+  text-align: end;
 `;
 
 export function ThreadItem({ thread }: ThreadRowProps) {
@@ -48,8 +43,10 @@ export function ThreadItem({ thread }: ThreadRowProps) {
   return (
     <Li onClick={() => navigate(`/threads/${thread.id}?page=1`)}>
       <TitleCell>{thread.title}</TitleCell>
-      <Cell>Posts: {thread.postsCount}</Cell>
-      <Cell>{formatRelativeTime(thread.createdAt)}</Cell>
+      <Cell>
+        {thread.postsCount} {thread.postsCount > 1 ? 'posts' : 'post'}
+      </Cell>
+      <TimeCell>{formatRelativeTime(thread.createdAt)}</TimeCell>
     </Li>
   );
 }
