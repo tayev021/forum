@@ -1,15 +1,23 @@
 import styled from 'styled-components';
+import { WidgetHeader } from '../../../shared/ui/widget-kit/WidgetHeader';
+import { WidgetTitle } from '../../../shared/ui/widget-kit/WidgetTitle';
 import { useLatestPosts } from '../../../entities/post';
 import { WidgetContainer } from '../../../shared/ui/widget-kit/WidgetContainer';
 import { WidgetLoader } from '../../../shared/ui/widget-kit/WidgetLoader';
-import { WidgetHeader } from '../../../shared/ui/widget-kit/WidgetHeader';
 import { HiOutlineChatBubbleBottomCenterText } from 'react-icons/hi2';
 import { NoLatestPosts } from './NoLatestPosts';
 import { LatestPost } from './LatestPost';
 
-const Heading = styled.h4`
+const StyledWidgetHeader = styled(WidgetHeader)`
+  padding: 1rem;
+`;
+
+const StyledWidgetTitle = styled(WidgetTitle)`
+  display: flex;
+  gap: 1rem;
   font-size: 1.6rem;
   font-weight: 500;
+  color: var(--color-secondary);
 `;
 
 const List = styled.ul`
@@ -25,10 +33,12 @@ export function LatestPostsWidget() {
   return (
     <WidgetContainer>
       {isLoading && <WidgetLoader position="top" />}
-      <WidgetHeader>
-        <HiOutlineChatBubbleBottomCenterText />
-        <Heading>Latest Posts</Heading>
-      </WidgetHeader>
+      <StyledWidgetHeader>
+        <StyledWidgetTitle>
+          <HiOutlineChatBubbleBottomCenterText />
+          Latest Posts
+        </StyledWidgetTitle>
+      </StyledWidgetHeader>
       <List>
         {latestPosts.length === 0 && <NoLatestPosts />}
         {latestPosts.map((post) => (
