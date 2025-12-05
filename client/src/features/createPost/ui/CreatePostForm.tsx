@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { PrimaryButton } from '../../../shared/ui/PrimaryButton';
 import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react';
 import { HiChevronRight } from 'react-icons/hi2';
 import { useAppDispatch } from '../../../shared/lib/hooks/useAppDispatch';
@@ -7,14 +8,14 @@ import { getThread } from '../../../entities/thread';
 import { useParams, useSearchParams } from 'react-router';
 import toast from 'react-hot-toast';
 
-const StyledForm = styled.form`
+const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 1rem;
   padding: 1rem;
 `;
 
-const StyledTextarea = styled.textarea`
+const Textarea = styled.textarea`
   width: 100%;
   min-height: 12rem;
   padding: 1rem;
@@ -24,24 +25,21 @@ const StyledTextarea = styled.textarea`
   resize: none;
 `;
 
-const StyledButton = styled.button`
+const Button = styled(PrimaryButton)`
   align-self: flex-end;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 1rem 2rem;
-  border-radius: 0.4rem;
-  font-weight: 600;
-  color: var(--color-text-secondary);
-  background-color: var(--color-primary);
-  cursor: pointer;
+  box-shadow: none;
 
   &:hover {
     transform: translateX(-3px);
+    box-shadow: none;
   }
 
   &:active {
     transform: translateX(0);
+    box-shadow: none;
   }
 `;
 
@@ -78,8 +76,8 @@ export function CreatePostForm() {
   }
 
   return (
-    <StyledForm onSubmit={handleSubmit}>
-      <StyledTextarea
+    <Form onSubmit={handleSubmit}>
+      <Textarea
         name="content"
         minLength={1}
         maxLength={1024}
@@ -88,9 +86,9 @@ export function CreatePostForm() {
         value={content}
         onChange={handleChange}
       />
-      <StyledButton type="submit">
+      <Button type="submit">
         Post <HiChevronRight />
-      </StyledButton>
-    </StyledForm>
+      </Button>
+    </Form>
   );
 }
