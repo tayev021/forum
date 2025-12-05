@@ -1,4 +1,3 @@
-import { DeleteCategoryButton } from './ui/DeleteCategoryButton';
-import { DeleteCategoryForm } from './ui/DeleteCategoryForm';
+import { DeleteCategory } from './ui/DeleteCategory';
 
-export { DeleteCategoryButton, DeleteCategoryForm };
+export { DeleteCategory };
