@@ -1,23 +1,33 @@
-import type { ReactElement } from 'react';
 import styled from 'styled-components';
+import type { ReactElement } from 'react';
+import { WidgetButton } from './WidgetButton';
+import { HiOutlineTrash } from 'react-icons/hi2';
 
 interface DeleteButtonProps {
+  className?: string;
   onClick?: () => void;
-  children: ReactElement;
+  children?: ReactElement;
 }
 
-const DeleteButton = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: var(--color-grey-500);
-  cursor: pointer;
-
+const Button = styled(WidgetButton)`
   &:hover {
     color: var(--color-rose-500);
   }
 `;
 
-export function WidgetDeleteButton({ onClick, children }: DeleteButtonProps) {
-  return <DeleteButton onClick={onClick}>{children}</DeleteButton>;
+const Icon = styled(HiOutlineTrash)`
+  width: 100%;
+  height: 100%;
+`;
+
+export function WidgetDeleteButton({
+  className,
+  onClick = () => {},
+  children,
+}: DeleteButtonProps) {
+  return (
+    <Button className={className} onClick={onClick}>
+      {children || <Icon />}
+    </Button>
+  );
 }
