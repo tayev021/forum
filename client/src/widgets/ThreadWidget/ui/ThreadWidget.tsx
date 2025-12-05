@@ -1,10 +1,12 @@
 import styled from 'styled-components';
-import { WidgetLoader } from '../../../shared/ui/widget-kit/WidgetLoader';
+import { WidgetHeader } from '../../../shared/ui/widget-kit/WidgetHeader';
 import { useCurrentThread } from '../lib/hooks/useCurrentThread';
-import { HiArrowLeft } from 'react-icons/hi2';
-import { BackHomeButton } from '../../../shared/ui/BackHomeButton';
-import { Pagination } from '../../../shared/ui/Pagination';
+import { WidgetLoader } from '../../../shared/ui/widget-kit/WidgetLoader';
+import { WidgetHeaderGroup } from '../../../shared/ui/widget-kit/WidgetHeaderGroup';
+import { WidgetBackButton } from '../../../shared/ui/widget-kit/WidgetBackButton';
+import { WidgetTitle } from '../../../shared/ui/widget-kit/WidgetTitle';
 import { PostsList } from './posts/PostsList';
+import { Pagination } from '../../../shared/ui/Pagination';
 import { PostCreate } from './posts/PostCreate';
 
 const ThreadContainer = styled.div`
@@ -13,35 +15,11 @@ const ThreadContainer = styled.div`
   gap: 2rem;
 `;
 
-const ThreadHeader = styled.div`
-  display: grid;
-  grid-template-columns: min-content 1fr min-content;
-  align-items: center;
-  gap: 2rem;
-  padding: 1rem 2rem 1rem 1rem;
-  border: 1px solid var(--color-grey-300);
+const StyledWidgetHeader = styled(WidgetHeader)`
   border-top-left-radius: 0.4rem;
   border-top-right-radius: 0.4rem;
   background-color: var(--color-bg-secondary);
   box-shadow: var(--shadow-small);
-`;
-
-const BackIcon = styled(HiArrowLeft)`
-  width: 2rem;
-  height: 2rem;
-  color: var(--color-primary);
-  cursor: pointer;
-
-  &:hover {
-    color: var(--color-rose-500);
-  }
-`;
-
-const Heading = styled.h3`
-  font-size: 2rem;
-  font-weight: 600;
-  line-height: 1;
-  color: var(--color-primary);
 `;
 
 export function ThreadWidget() {
@@ -54,12 +32,12 @@ export function ThreadWidget() {
   return (
     <>
       <ThreadContainer>
-        <ThreadHeader>
-          <BackHomeButton url={`/forums/${thread.forumId}`}>
-            <BackIcon />
-          </BackHomeButton>
-          <Heading>{thread.title} Thread</Heading>
-        </ThreadHeader>
+        <StyledWidgetHeader>
+          <WidgetHeaderGroup>
+            <WidgetBackButton url={`/forums/${thread.forumId}`} />
+            <WidgetTitle>{thread.title} Thread</WidgetTitle>
+          </WidgetHeaderGroup>
+        </StyledWidgetHeader>
         <PostsList posts={thread.posts} />
       </ThreadContainer>
       <Pagination
