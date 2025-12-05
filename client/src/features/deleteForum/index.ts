@@ -1,4 +1,3 @@
-import { DeleteForumForm } from './ui/DeleteForumForm';
-import { DeleteForumButton } from './ui/DeleteForumButton';
+import { DeleteForum } from './ui/DeleteForum';
 
-export { DeleteForumForm, DeleteForumButton };
+export { DeleteForum };
