@@ -82,24 +82,35 @@ export const createThread = catchAsync(async (req: Request, res: Response) => {
     title: capitalize(title),
   });
 
-  const post = await Post.create({
+  const createdPost = await Post.create({
     authorId: user.id,
     threadId: thread.id,
     content,
   });
 
-  res.status(201).json({
+  const post = await Post.findOne({
+    where: { id: createdPost.id },
+    attributes: ['id', 'threadId', 'content', 'createdAt', 'updatedAt'],
+    include: [
+      {
+        model: User,
+        as: 'author',
+        attributes: ['id', 'username', 'avatar', 'lastSignIn'],
+      },
+    ],
+  });
+
+  res.status(200).json({
     thread: {
       id: thread.id,
       title: thread.title,
-      posts: [
-        {
-          id: post.id,
-          content: post.content,
-          authorId: post.authorId,
-          createdAt: post.createdAt,
-        },
-      ],
+      authorId: thread.authorId,
+      forumId: thread.forumId,
+      createdAt: thread.createdAt,
+      posts: [post],
+      totalPosts: 1,
+      page: 1,
+      totalPages: 1,
     },
   });
 });
