@@ -7,6 +7,7 @@ import { SigninPage } from '../../pages/SigninPage';
 import { SignupPage } from '../../pages/SignupPage';
 import { ProtectedRoute } from './ProtectedRoute';
 import { ForumPage } from '../../pages/ForumPage';
+import { ThreadCreatePage } from '../../pages/ThreadCreatePage';
 import { ThreadPage } from '../../pages/ThreadPage';
 import { PageNotFound } from '../../pages/PageNotFound';
 
@@ -31,6 +32,14 @@ export function AppRouter() {
             }
           />
           <Route path="forums/:forumId" element={<ForumPage />} />
+          <Route
+            path="forums/:forumId/createThread"
+            element={
+              <ProtectedRoute>
+                <ThreadCreatePage />
+              </ProtectedRoute>
+            }
+          />
           <Route path="threads/:threadId" element={<ThreadPage />} />
           <Route path="*" element={<PageNotFound />} />
         </Route>
