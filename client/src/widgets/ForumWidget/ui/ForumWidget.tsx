@@ -1,11 +1,13 @@
 import { useCurrentForum } from '../lib/hooks/useCurrentForum';
-import { useRestrictTo } from '../../../entities/user';
+import { useRestrictTo, useUser } from '../../../entities/user';
+import { useNavigate } from 'react-router';
 import { WidgetLoader } from '../../../shared/ui/widget-kit/WidgetLoader';
 import { WidgetContainer } from '../../../shared/ui/widget-kit/WidgetContainer';
 import { WidgetHeader } from '../../../shared/ui/widget-kit/WidgetHeader';
 import { WidgetHeaderGroup } from '../../../shared/ui/widget-kit/WidgetHeaderGroup';
 import { WidgetBackButton } from '../../../shared/ui/widget-kit/WidgetBackButton';
 import { WidgetTitle } from '../../../shared/ui/widget-kit/WidgetTitle';
+import { WidgetCreateButton } from '../../../shared/ui/widget-kit/WidgetCreateButton';
 import { Modal } from '../../../shared/ui/modal';
 import { WidgetDeleteButton } from '../../../shared/ui/widget-kit/WidgetDeleteButton';
 import { WidgetConfirm } from '../../../shared/ui/widget-kit/WidgetConfirm';
@@ -16,7 +18,9 @@ import { Pagination } from '../../../shared/ui/Pagination';
 
 export function ForumWidget() {
   const { forum, isLoading } = useCurrentForum();
+  const { user } = useUser();
   const hasAdminsPermissions = useRestrictTo(['admin']);
+  const navigate = useNavigate();
 
   if (!forum || isLoading) {
     return <WidgetLoader />;
@@ -31,6 +35,11 @@ export function ForumWidget() {
             <WidgetTitle>{forum?.title} Forum</WidgetTitle>
           </WidgetHeaderGroup>
           <WidgetHeaderGroup>
+            {!!user && (
+              <WidgetCreateButton
+                onClick={() => navigate(`/forums/${forum.id}/createThread`)}
+              />
+            )}
             {hasAdminsPermissions && forum.threads.length === 0 && (
               <>
                 <Modal.Open windowName={`deleteForum-${forum.id}`}>
