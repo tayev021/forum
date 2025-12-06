@@ -26,9 +26,9 @@ export function formatRelativeTime(inputTime: Date | number | string): string {
   if (diffMins < 1) {
     return '1 minute ago';
   } else if (diffMins < 60) {
-    return `${diffMins} minutes ago`;
+    return `${diffMins} ${diffMins > 1 ? 'minutes' : 'minute'} ago`;
   } else if (diffHours < 12) {
-    return `${diffHours} hours ago`;
+    return `${diffHours} ${diffHours > 1 ? 'hours' : 'hour'} ago`;
   } else if (time >= startOfToday) {
     return `today at ${padStart(time.getHours())}:${padStart(
       time.getMinutes()
