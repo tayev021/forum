@@ -6,7 +6,7 @@ import { LatestPostsWidget } from '../../../widgets/LatestPostsWidget';
 
 const StyledContainer = styled(Container)`
   display: grid;
-  grid-template-columns: minmax(30rem, 1fr) 22rem;
+  grid-template-columns: minmax(28rem, 1fr) 24rem;
   gap: 2rem;
   padding: 4rem 2rem;
 `;

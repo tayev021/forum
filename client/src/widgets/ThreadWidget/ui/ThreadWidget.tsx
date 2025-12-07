@@ -18,6 +18,7 @@ const ThreadContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  margin-bottom: 2rem;
 `;
 
 const StyledWidgetHeader = styled(WidgetHeader)`
