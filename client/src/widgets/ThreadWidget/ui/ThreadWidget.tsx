@@ -1,10 +1,15 @@
 import styled from 'styled-components';
 import { WidgetHeader } from '../../../shared/ui/widget-kit/WidgetHeader';
 import { useCurrentThread } from '../lib/hooks/useCurrentThread';
+import { useRestrictTo } from '../../../entities/user';
 import { WidgetLoader } from '../../../shared/ui/widget-kit/WidgetLoader';
 import { WidgetHeaderGroup } from '../../../shared/ui/widget-kit/WidgetHeaderGroup';
 import { WidgetBackButton } from '../../../shared/ui/widget-kit/WidgetBackButton';
 import { WidgetTitle } from '../../../shared/ui/widget-kit/WidgetTitle';
+import { Modal } from '../../../shared/ui/modal';
+import { WidgetDeleteButton } from '../../../shared/ui/widget-kit/WidgetDeleteButton';
+import { DeleteThread } from '../../../features/deleteThread';
+import { WidgetConfirm } from '../../../shared/ui/widget-kit/WidgetConfirm';
 import { PostsList } from './posts/PostsList';
 import { Pagination } from '../../../shared/ui/Pagination';
 import { PostCreate } from './posts/PostCreate';
@@ -24,6 +29,7 @@ const StyledWidgetHeader = styled(WidgetHeader)`
 
 export function ThreadWidget() {
   const { thread, isLoading } = useCurrentThread();
+  const hasAdminsPermissions = useRestrictTo(['admin']);
 
   if (!thread || isLoading) {
     return <WidgetLoader />;
@@ -36,6 +42,23 @@ export function ThreadWidget() {
           <WidgetHeaderGroup>
             <WidgetBackButton url={`/forums/${thread.forumId}`} />
             <WidgetTitle>{thread.title} Thread</WidgetTitle>
+          </WidgetHeaderGroup>
+          <WidgetHeaderGroup>
+            {hasAdminsPermissions && (
+              <>
+                <Modal.Open windowName={`deleteThread-${thread.id}`}>
+                  <WidgetDeleteButton />
+                </Modal.Open>
+                <Modal.Window name={`deleteThread-${thread.id}`}>
+                  <DeleteThread forumId={thread.forumId} threadId={thread.id}>
+                    <WidgetConfirm title="Delete Thread">
+                      Are you sure you want to delete the "{thread.title}"
+                      thread?
+                    </WidgetConfirm>
+                  </DeleteThread>
+                </Modal.Window>
+              </>
+            )}
           </WidgetHeaderGroup>
         </StyledWidgetHeader>
         <PostsList posts={thread.posts} />
