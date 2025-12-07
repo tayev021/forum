@@ -121,9 +121,9 @@ export const deleteThread = catchAsync(async (req: Request, res: Response) => {
   const thread = await Thread.findByPk(threadId);
 
   if (!thread) {
-    throw new AppError(400, 'Failed to delete forum!', {
+    throw new AppError(400, 'Failed to delete thread!', {
       type: 'general',
-      message: 'You are trying to delete a forum that does not exist',
+      message: 'You are trying to delete a thread that does not exist',
     });
   }
 
