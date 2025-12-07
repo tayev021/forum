@@ -1,42 +1,49 @@
 import styled from 'styled-components';
 import type { LatestPost } from '../../../entities/post/model/types/LatestPost';
 import { UserAvatar } from '../../../entities/user/ui/UserAvatar';
-import { Link } from 'react-router';
 import { formatRelativeTime } from '../../../shared/lib/utils/formatRelativeTime';
+import { Link } from 'react-router';
 
 interface LatestPostProps {
   post: LatestPost;
 }
 
-const StyledPost = styled.li`
+const StyledLink = styled(Link)`
+  display: block;
+  padding: 1rem 0.5rem;
+  border-radius: 0.4rem;
   line-height: 1;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--color-grey-200);
+  }
 `;
 
 const Header = styled.div`
   display: grid;
   grid-template-columns: min-content 1fr;
   gap: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 `;
 
 const HeaderGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.4rem;
   overflow: hidden;
 `;
 
-const ThreadLink = styled(Link)`
+const Title = styled.h4`
   width: 100%;
   display: inline-block;
-  margin-bottom: 0.2rem;
-  border-bottom: 2px solid transparent;
   font-size: 1.6rem;
+  font-weight: 400;
   text-overflow: ellipsis;
   white-space: nowrap;
   color: var(--color-primary);
   overflow: hidden;
-
-  &:hover {
-    border-bottom: 2px solid var(--color-primary);
-  }
 `;
 
 const Time = styled.p`
@@ -53,21 +60,21 @@ const Main = styled.div`
 
 export function LatestPost({ post }: LatestPostProps) {
   return (
-    <StyledPost>
-      <Header>
-        <UserAvatar
-          username={post.author.username}
-          avatar={post.author.avatar}
-          size={4}
-        />
-        <HeaderGroup>
-          <ThreadLink to={`/threads/${post.thread.id}`}>
-            {post.thread.title}
-          </ThreadLink>
-          <Time>{formatRelativeTime(post.createdAt)}</Time>
-        </HeaderGroup>
-      </Header>
-      <Main>{post.content}</Main>
-    </StyledPost>
+    <li>
+      <StyledLink to={`/threads/${post.thread.id}`}>
+        <Header>
+          <UserAvatar
+            username={post.author.username}
+            avatar={post.author.avatar}
+            size={4}
+          />
+          <HeaderGroup>
+            <Title>{post.thread.title}</Title>
+            <Time>{formatRelativeTime(post.createdAt)}</Time>
+          </HeaderGroup>
+        </Header>
+        <Main>{post.content}</Main>
+      </StyledLink>
+    </li>
   );
 }
