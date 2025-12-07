@@ -3,7 +3,12 @@ import { protect } from '../middleware/protect';
 import { validate } from '../middleware/validate';
 import { threadSchema } from '../validators/threadValidator';
 import { postSchema } from '../validators/postValidator';
-import { createThread, getThread } from '../controllers/threadController';
+import {
+  createThread,
+  deleteThread,
+  getThread,
+} from '../controllers/threadController';
+import { restrictTo } from '../middleware/restrictTo';
 
 const threadRouter = Router();
 
@@ -14,5 +19,6 @@ threadRouter.post(
   validate(threadSchema, postSchema),
   createThread
 );
+threadRouter.delete('/:threadId', protect, restrictTo('admin'), deleteThread);
 
 export { threadRouter };
