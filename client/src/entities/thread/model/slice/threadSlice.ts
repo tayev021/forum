@@ -3,6 +3,7 @@ import type { ServerError } from '../../../../shared/types/ServerError';
 import type { Thread } from '../types/Thread';
 import { getThread } from '../thunks/getThread';
 import { createThread } from '../thunks/createThread';
+import { deleteThread } from '../thunks/deleteThread';
 
 interface ThreadState {
   thread: Thread | null;
@@ -60,6 +61,24 @@ const threadSlice = createSlice({
       }
     );
     builder.addCase(createThread.rejected, (state, action) => {
+      state.isLoading = false;
+
+      if (action.payload) {
+        state.error = action.payload;
+      } else {
+        state.error = { type: 'general', message: 'Unknown error!' };
+      }
+    });
+
+    builder.addCase(deleteThread.pending, (state, _action) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(deleteThread.fulfilled, (state, _action) => {
+      state.thread = null;
+      state.isLoading = false;
+    });
+    builder.addCase(deleteThread.rejected, (state, action) => {
       state.isLoading = false;
 
       if (action.payload) {
