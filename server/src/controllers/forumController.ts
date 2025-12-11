@@ -90,6 +90,58 @@ export const createForum = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+export const updateForum = catchAsync(async (req: Request, res: Response) => {
+  const forumId = req.params.forumId;
+  const title = capitalize(req.body.title);
+
+  const forum = await Forum.findByPk(forumId);
+
+  if (!forum) {
+    throw new AppError(400, 'Failed to update forum!', {
+      type: 'general',
+      message: 'You are trying to update a forum that does not exist',
+    });
+  }
+
+  forum.title = title;
+
+  await forum.save();
+
+  const page = Number(req.query.page) || 1;
+  const limit = Number(req.query.limit) || 10;
+  const offset = (page - 1) * limit;
+
+  const threads = await Thread.findAll({
+    where: { forumId },
+    attributes: [
+      'id',
+      'title',
+      'createdAt',
+      [sequelize.fn('COUNT', sequelize.col('posts.id')), 'postsCount'],
+    ],
+    include: [
+      {
+        model: Post,
+        as: 'posts',
+        attributes: [],
+      },
+    ],
+    group: ['Thread.id'],
+  });
+
+  res.status(200).json({
+    forum: {
+      id: forum.id,
+      title: forum.title,
+      createdAt: forum.createdAt,
+      threads: threads.slice(offset, offset + limit),
+      totalThreads: threads.length,
+      page: page,
+      totalPages: Math.ceil(threads.length / limit),
+    },
+  });
+});
+
 export const deleteForum = catchAsync(async (req: Request, res: Response) => {
   const forumId = req.params.forumId;
 
