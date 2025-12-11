@@ -52,3 +52,31 @@ export const createPost = catchAsync(async (req: Request, res: Response) => {
 
   res.status(201).json({ post });
 });
+
+export const updatePost = catchAsync(async (req: Request, res: Response) => {
+  const user = req.user!;
+  const postId = req.params.postId;
+  const content = req.body.content;
+
+  const post = await Post.findByPk(postId);
+
+  if (!post) {
+    throw new AppError(400, 'Failed to update post!', {
+      type: 'general',
+      message: 'You are trying to update a post that does not exist',
+    });
+  }
+
+  if (post.authorId !== user.id) {
+    throw new AppError(403, 'Failed to update post!', {
+      type: 'general',
+      message: 'You do not have permission to update this post',
+    });
+  }
+
+  post.content = content;
+
+  await post.save();
+
+  res.status(201).json({ post });
+});
