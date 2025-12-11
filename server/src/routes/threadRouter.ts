@@ -4,9 +4,10 @@ import { validate } from '../middleware/validate';
 import { threadSchema } from '../validators/threadValidator';
 import { postSchema } from '../validators/postValidator';
 import {
-  createThread,
-  deleteThread,
   getThread,
+  createThread,
+  updateThread,
+  deleteThread,
 } from '../controllers/threadController';
 import { restrictTo } from '../middleware/restrictTo';
 
@@ -19,6 +20,7 @@ threadRouter.post(
   validate(threadSchema, postSchema),
   createThread
 );
+threadRouter.patch('/:threadId', protect, validate(threadSchema), updateThread);
 threadRouter.delete('/:threadId', protect, restrictTo('admin'), deleteThread);
 
 export { threadRouter };
