@@ -53,6 +53,40 @@ export const createCategory = catchAsync(
   }
 );
 
+export const updateCategory = catchAsync(
+  async (req: Request, res: Response) => {
+    const categoryId = req.params.categoryId;
+    const title = capitalize(req.body.title);
+
+    const category = await Category.findByPk(categoryId);
+
+    if (!category) {
+      throw new AppError(400, 'Failed to update category!', {
+        type: 'general',
+        message: 'You are trying to update a category that does not exist',
+      });
+    }
+
+    category.title = title;
+
+    await category.save();
+
+    const updatedCategory = await Category.findOne({
+      where: { id: categoryId },
+      attributes: ['id', 'title'],
+      include: [
+        {
+          model: Forum,
+          as: 'forums',
+          attributes: ['id', 'title'],
+        },
+      ],
+    });
+
+    res.status(201).json({ category: updatedCategory });
+  }
+);
+
 export const deleteCategory = catchAsync(
   async (req: Request, res: Response) => {
     const categoryId = req.params.categoryId;
