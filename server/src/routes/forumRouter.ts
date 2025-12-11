@@ -6,6 +6,7 @@ import { forumSchema } from '../validators/forumValidator';
 import {
   getForum,
   createForum,
+  updateForum,
   deleteForum,
 } from '../controllers/forumController';
 
@@ -18,6 +19,13 @@ forumRouter.post(
   restrictTo('admin', 'moderator'),
   validate(forumSchema),
   createForum
+);
+forumRouter.patch(
+  '/:forumId',
+  protect,
+  restrictTo('admin', 'moderator'),
+  validate(forumSchema),
+  updateForum
 );
 forumRouter.delete('/:forumId', protect, restrictTo('admin'), deleteForum);
 
