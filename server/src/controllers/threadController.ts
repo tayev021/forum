@@ -115,6 +115,57 @@ export const createThread = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+export const updateThread = catchAsync(async (req: Request, res: Response) => {
+  const threadId = req.params.threadId;
+  const title = capitalize(req.body.title);
+
+  const thread = await Thread.findByPk(threadId);
+
+  if (!thread) {
+    throw new AppError(400, 'Failed to update thread!', {
+      type: 'general',
+      message: 'You are trying to update a thread that does not exist',
+    });
+  }
+
+  thread.title = title;
+
+  await thread.save();
+
+  const page = Number(req.query.page) || 1;
+  const limit = Number(req.query.limit) || 10;
+  const offset = (page - 1) * limit;
+
+  const { rows: posts, count } = await Post.findAndCountAll({
+    where: { threadId },
+    limit: limit,
+    offset: offset,
+    attributes: ['id', 'threadId', 'content', 'createdAt', 'updatedAt'],
+    include: [
+      {
+        model: User,
+        as: 'author',
+        attributes: ['id', 'username', 'avatar', 'lastSignIn'],
+      },
+    ],
+    order: [['createdAt', 'ASC']],
+  });
+
+  res.status(200).json({
+    thread: {
+      id: thread.id,
+      title: thread.title,
+      authorId: thread.authorId,
+      forumId: thread.forumId,
+      createdAt: thread.createdAt,
+      posts: posts,
+      totalPosts: count,
+      page: page,
+      totalPages: Math.ceil(count / limit),
+    },
+  });
+});
+
 export const deleteThread = catchAsync(async (req: Request, res: Response) => {
   const threadId = req.params.threadId;
 
