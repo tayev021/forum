@@ -4,6 +4,7 @@ import styled from 'styled-components';
 interface InputProps {
   id: string;
   type: 'text' | 'password';
+  autoFocus: boolean;
   value?: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
@@ -27,6 +28,7 @@ const StyledInput = styled.input`
 export function Input({
   id,
   type = 'text',
+  autoFocus = false,
   value,
   onChange,
   onBlur,
@@ -35,6 +37,7 @@ export function Input({
     <StyledInput
       id={id}
       type={type}
+      autoFocus={autoFocus}
       value={value}
       onChange={onChange}
       onBlur={onBlur}
