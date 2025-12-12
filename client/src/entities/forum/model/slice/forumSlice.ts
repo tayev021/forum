@@ -4,6 +4,7 @@ import type { ServerError } from '../../../../shared/types/ServerError';
 import { getForum } from '../thunks/getForum';
 import { createForum } from '../thunks/createForum';
 import { deleteForum } from '../thunks/deleteForum';
+import { updateForum } from '../thunks/updateForum';
 
 interface forumState {
   forum: Forum | null;
@@ -56,6 +57,26 @@ const forumSlice = createSlice({
       state.isLoading = false;
     });
     builder.addCase(createForum.rejected, (state, action) => {
+      state.isLoading = false;
+
+      if (action.payload) {
+        state.error = action.payload;
+      } else {
+        state.error = { type: 'general', message: 'Unknown error!' };
+      }
+    });
+
+    builder.addCase(updateForum.pending, (state, _action) => {
+      state.isLoading = true;
+    });
+    builder.addCase(
+      updateForum.fulfilled,
+      (state, action: PayloadAction<Forum>) => {
+        state.forum = action.payload;
+        state.isLoading = false;
+      }
+    );
+    builder.addCase(updateForum.rejected, (state, action) => {
       state.isLoading = false;
 
       if (action.payload) {
