@@ -9,7 +9,8 @@ interface WidgetHeaderGroupProps {
 const Group = styled.div`
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
+  overflow: hidden;
 `;
 
 export function WidgetHeaderGroup({
