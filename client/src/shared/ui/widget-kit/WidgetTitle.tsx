@@ -9,8 +9,11 @@ interface WidgetTitleProps {
 const Title = styled.h3`
   font-size: 2rem;
   font-weight: 600;
-  line-height: 1;
+  line-height: 1.4;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   color: var(--color-primary);
+  overflow: hidden;
 `;
 
 export function WidgetTitle({ className, children }: WidgetTitleProps) {
