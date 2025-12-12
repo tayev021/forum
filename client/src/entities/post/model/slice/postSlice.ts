@@ -3,6 +3,7 @@ import type { ServerError } from '../../../../shared/types/ServerError';
 import type { LatestPost } from '../types/LatestPost';
 import { getLatestPosts } from '../thunks/getLatestPosts';
 import { createPost } from '../thunks/createPost';
+import { updatePost } from '../thunks/updatePost';
 
 interface PostState {
   latestPosts: LatestPost[];
@@ -48,6 +49,23 @@ const postSlice = createSlice({
       state.isLoading = false;
     });
     builder.addCase(createPost.rejected, (state, action) => {
+      state.isLoading = false;
+
+      if (action.payload) {
+        state.error = action.payload;
+      } else {
+        state.error = { type: 'general', message: 'Unknown error!' };
+      }
+    });
+
+    builder.addCase(updatePost.pending, (state, _action) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(updatePost.fulfilled, (state, _action) => {
+      state.isLoading = false;
+    });
+    builder.addCase(updatePost.rejected, (state, action) => {
       state.isLoading = false;
 
       if (action.payload) {
