@@ -16,8 +16,10 @@ const Button = styled(WidgetButton)`
 `;
 
 const Icon = styled(HiOutlineTrash)`
-  width: 100%;
-  height: 100%;
+  max-width: 1.8rem;
+  max-height: 1.8rem;
+  min-width: 1rem;
+  min-height: 1rem;
 `;
 
 export function WidgetDeleteButton({
