@@ -3,14 +3,25 @@ import { PrimaryButton } from '../../../shared/ui/PrimaryButton';
 import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react';
 import { HiChevronRight } from 'react-icons/hi2';
 import { useAppDispatch } from '../../../shared/lib/hooks/useAppDispatch';
-import { clearPostError, createPost, usePost } from '../../../entities/post';
+import {
+  clearPostError,
+  createPost,
+  updatePost,
+  usePost,
+} from '../../../entities/post';
 import { getThread } from '../../../entities/thread';
 import { useParams, useSearchParams } from 'react-router';
 import toast from 'react-hot-toast';
 
+interface UpdatePostFormProps {
+  postId?: number;
+  postContent?: string;
+}
+
 const Form = styled.form`
-  display: flex;
-  flex-direction: column;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 1fr min-content;
   gap: 1rem;
   padding: 1rem;
 `;
@@ -26,7 +37,7 @@ const Textarea = styled.textarea`
 `;
 
 const Button = styled(PrimaryButton)`
-  align-self: flex-end;
+  justify-self: end;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -43,8 +54,11 @@ const Button = styled(PrimaryButton)`
   }
 `;
 
-export function CreatePostForm() {
-  const [content, setContent] = useState('');
+export function UpdatePostForm({
+  postId,
+  postContent = '',
+}: UpdatePostFormProps) {
+  const [content, setContent] = useState(postContent);
   const [isCreated, setIsCreated] = useState(false);
   const params = useParams();
   const [searchParams] = useSearchParams();
@@ -71,7 +85,12 @@ export function CreatePostForm() {
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
 
-    dispatch(createPost({ threadId, content }));
+    if (postId) {
+      dispatch(updatePost({ postId, content }));
+    } else {
+      dispatch(createPost({ threadId, content }));
+    }
+
     setIsCreated(true);
   }
 
@@ -87,7 +106,7 @@ export function CreatePostForm() {
         onChange={handleChange}
       />
       <Button type="submit">
-        Post <HiChevronRight />
+        {postId ? 'Edit' : 'Post'} <HiChevronRight />
       </Button>
     </Form>
   );
