@@ -1,9 +1,16 @@
 import styled from 'styled-components';
-import { CreatePostForm } from '../../../../features/createPost';
+import { UpdatePostForm } from '../../../../features/updatePost';
 import { useUser } from '../../../../entities/user';
 import { PostAuthor } from './PostAuthor';
+import type { Ref } from 'react';
 
-const StyledPostCreate = styled.li`
+interface PostUpdateProps {
+  ref?: Ref<any>;
+  postId?: number;
+  postContent?: string;
+}
+
+const StyledPostUpdate = styled.li`
   display: grid;
   grid-template-columns: 18rem minmax(32rem, 1fr);
   border: 1px solid var(--color-grey-300);
@@ -11,15 +18,15 @@ const StyledPostCreate = styled.li`
   box-shadow: var(--shadow-small);
 `;
 
-export function PostCreate() {
+export function PostUpdate({ ref, postId, postContent }: PostUpdateProps) {
   const { user } = useUser();
 
   if (!user) return null;
 
   return (
-    <StyledPostCreate>
+    <StyledPostUpdate ref={ref}>
       <PostAuthor author={{ ...user, lastSignIn: '' }} />
-      <CreatePostForm />
-    </StyledPostCreate>
+      <UpdatePostForm postId={postId} postContent={postContent} />
+    </StyledPostUpdate>
   );
 }
