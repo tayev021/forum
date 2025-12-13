@@ -3,7 +3,7 @@ import { useAppDispatch } from '../../../shared/lib/hooks/useAppDispatch';
 import {
   clearCategoryError,
   deleteCategory,
-  useCategories,
+  useCategory,
 } from '../../../entities/category';
 import toast from 'react-hot-toast';
 
@@ -24,7 +24,7 @@ export function DeleteCategory({
   children,
 }: DeleteCategoryProps) {
   const [isDeleted, setIsDeleted] = useState<boolean>(false);
-  const { isLoading, error: serverError } = useCategories();
+  const { isLoading, error: serverError } = useCategory();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
