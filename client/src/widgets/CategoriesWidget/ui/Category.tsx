@@ -5,6 +5,10 @@ import { WidgetContainer } from '../../../shared/ui/widget-kit/WidgetContainer';
 import { WidgetHeader } from '../../../shared/ui/widget-kit/WidgetHeader';
 import { WidgetHeaderGroup } from '../../../shared/ui/widget-kit/WidgetHeaderGroup';
 import { WidgetTitle } from '../../../shared/ui/widget-kit/WidgetTitle';
+import { InlineModal } from '../../../shared/ui/InlineModal';
+import { UpdateCategoryTitle } from '../../../features/updateCategoryTitle';
+import { WidgetTitleInput } from '../../../shared/ui/widget-kit/WidgetTitleInput';
+import { WidgetEditButton } from '../../../shared/ui/widget-kit/WidgetEditButton';
 import { Modal } from '../../../shared/ui/modal';
 import { WidgetDeleteButton } from '../../../shared/ui/widget-kit/WidgetDeleteButton';
 import { WidgetConfirm } from '../../../shared/ui/widget-kit/WidgetConfirm';
@@ -31,8 +35,19 @@ export function Category({ category }: CategoryProps) {
       <WidgetHeader>
         <WidgetHeaderGroup>
           <WidgetTitle>{category.title}</WidgetTitle>
+          <InlineModal.Window name={`editCategoryTitle-${category.id}`}>
+            <UpdateCategoryTitle categoryId={category.id}>
+              <WidgetTitleInput currentTitle={category.title} />
+            </UpdateCategoryTitle>
+          </InlineModal.Window>
         </WidgetHeaderGroup>
         <WidgetHeaderGroup>
+          {hasModeratePermissions && (
+            <InlineModal.Open windowName={`editCategoryTitle-${category.id}`}>
+              <WidgetEditButton />
+            </InlineModal.Open>
+          )}
+
           {hasModeratePermissions && (
             <>
               <Modal.Open windowName={`createForumInCategory-${category.id}`}>
