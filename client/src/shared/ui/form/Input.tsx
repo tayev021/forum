@@ -4,7 +4,7 @@ import styled from 'styled-components';
 interface InputProps {
   id: string;
   type: 'text' | 'password';
-  autoFocus: boolean;
+  autoFocus?: boolean;
   value?: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
