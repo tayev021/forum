@@ -62,6 +62,7 @@ export function CreateForumForm({
           <Form.Input
             id="title"
             type="text"
+            autoFocus={true}
             value={values['title']}
             {...register('title', { validate: validate(titleSchema) })}
           />
