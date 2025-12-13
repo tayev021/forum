@@ -1,6 +1,13 @@
 import styled from 'styled-components';
 import { PrimaryButton } from '../../../shared/ui/PrimaryButton';
-import { useCategories } from '../../../entities/category';
+import {
+  clearCategoryError,
+  getCategories,
+  useCategories,
+} from '../../../entities/category';
+import { useAppDispatch } from '../../../shared/lib/hooks/useAppDispatch';
+import { useEffect } from 'react';
+import toast from 'react-hot-toast';
 import { WidgetLoader } from '../../../shared/ui/widget-kit/WidgetLoader';
 import { NoCategories } from './NoCategories';
 import { Category } from './Category';
@@ -20,8 +27,20 @@ const CreateButton = styled(PrimaryButton)`
 `;
 
 export function CategoriesWidget() {
-  const { categories, isLoading } = useCategories();
+  const { categories, isLoading, error: serverError } = useCategories();
   const hasPermissions = useRestrictTo(['admin', 'moderator']);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getCategories());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (serverError?.type === 'general') {
+      toast.error(serverError.message);
+      dispatch(clearCategoryError());
+    }
+  }, [serverError]);
 
   return (
     <Container>
