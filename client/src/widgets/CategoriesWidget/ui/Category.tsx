@@ -9,7 +9,7 @@ import { InlineModal } from '../../../shared/ui/InlineModal';
 import { UpdateCategoryTitle } from '../../../features/updateCategoryTitle';
 import { WidgetTitleInput } from '../../../shared/ui/widget-kit/WidgetTitleInput';
 import { WidgetEditButton } from '../../../shared/ui/widget-kit/WidgetEditButton';
-import { Modal } from '../../../shared/ui/modal';
+import { Modal } from '../../../shared/ui/Modal';
 import { WidgetDeleteButton } from '../../../shared/ui/widget-kit/WidgetDeleteButton';
 import { WidgetConfirm } from '../../../shared/ui/widget-kit/WidgetConfirm';
 import { DeleteCategory } from '../../../features/deleteCategory';

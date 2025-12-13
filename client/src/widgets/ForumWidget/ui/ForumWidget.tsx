@@ -12,7 +12,7 @@ import { UpdateForumTitle } from '../../../features/updateForumTitle';
 import { WidgetTitleInput } from '../../../shared/ui/widget-kit/WidgetTitleInput';
 import { WidgetEditButton } from '../../../shared/ui/widget-kit/WidgetEditButton';
 import { WidgetCreateButton } from '../../../shared/ui/widget-kit/WidgetCreateButton';
-import { Modal } from '../../../shared/ui/modal';
+import { Modal } from '../../../shared/ui/Modal';
 import { WidgetDeleteButton } from '../../../shared/ui/widget-kit/WidgetDeleteButton';
 import { WidgetConfirm } from '../../../shared/ui/widget-kit/WidgetConfirm';
 import { DeleteForum } from '../../../features/deleteForum';

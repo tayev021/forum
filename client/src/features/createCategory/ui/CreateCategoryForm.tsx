@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useForm } from '../../../shared/lib/hooks/useForm';
 import { validate } from '../../../shared/lib/utils/validate';
-import { Form } from '../../../shared/ui/form';
+import { Form } from '../../../shared/ui/Form';
 import { titleSchema } from '../lib/validators/titleSchema';
 import {
   createCategory,

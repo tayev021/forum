@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { useAppDispatch } from '../../../shared/lib/hooks/useAppDispatch';
 import { useForm } from '../../../shared/lib/hooks/useForm';
-import { Form } from '../../../shared/ui/form';
+import { Form } from '../../../shared/ui/Form';
 import { HiEnvelope, HiLockClosed } from 'react-icons/hi2';
 import { validate } from '../../../shared/lib/utils/validate';
 import { emailSchema } from '../../../shared/lib/validators/emailSchema';

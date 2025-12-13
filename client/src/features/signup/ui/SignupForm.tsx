@@ -7,7 +7,7 @@ import {
   useUser,
   type SignupData,
 } from '../../../entities/user';
-import { Form } from '../../../shared/ui/form';
+import { Form } from '../../../shared/ui/Form';
 import { validate } from '../../../shared/lib/utils/validate';
 import { emailSchema } from '../../../shared/lib/validators/emailSchema';
 import { usernameSchema } from '../../../shared/lib/validators/usernameSchema';

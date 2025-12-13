@@ -7,7 +7,7 @@ import {
 } from '../../../entities/forum';
 import { useAppDispatch } from '../../../shared/lib/hooks/useAppDispatch';
 import { useForm } from '../../../shared/lib/hooks/useForm';
-import { Form } from '../../../shared/ui/form';
+import { Form } from '../../../shared/ui/Form';
 import { validate } from '../../../shared/lib/utils/validate';
 import { titleSchema } from '../lib/validators/titleSchema';
 import { useForum } from '../../../entities/forum/lib/hooks/useForum';
