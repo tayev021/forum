@@ -1,9 +1,12 @@
 import styled from 'styled-components';
 import type { Post } from '../../model/types/Post';
+import { WidgetEditButton } from '../../../../shared/ui/widget-kit/WidgetEditButton';
+import { useUser } from '../../../../entities/user';
 import { formatRelativeTime } from '../../../../shared/lib/utils/formatRelativeTime';
 
 interface PostContentProps {
   post: Post;
+  handleUpdate: () => void;
 }
 
 const StyledPostContent = styled.div`
@@ -11,31 +14,52 @@ const StyledPostContent = styled.div`
   grid-template-rows: min-content 1fr min-content;
 `;
 
-const PostHeader = styled.div`
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 0.5rem 1rem;
   border-bottom: 2px solid var(--color-grey-200);
+`;
+
+const Time = styled.p`
   font-size: 1.4rem;
   color: var(--color-grey-500);
 `;
 
-const PostMain = styled.div`
-  padding: 1rem;
+const StyledEditButton = styled(WidgetEditButton)`
+  width: 1.5rem;
+  height: 1.5rem;
 `;
 
-const PostFooter = styled.div`
+const Main = styled.div`
+  padding: 1rem;
+  word-break: break-all;
+`;
+
+const Footer = styled.div`
   padding: 0.5rem 1rem;
   border-top: 2px solid var(--color-grey-200);
   font-size: 1.4rem;
   color: var(--color-grey-500);
 `;
 
-export function PostContent({ post }: PostContentProps) {
+export function PostContent({ post, handleUpdate }: PostContentProps) {
+  const { user } = useUser();
+
   return (
     <StyledPostContent>
-      <PostHeader>{formatRelativeTime(post.createdAt)}</PostHeader>
-      <PostMain>{post.content}</PostMain>
+      <Header>
+        <Time>{formatRelativeTime(post.createdAt)}</Time>
+        <div>
+          {user?.id === post.author.id && (
+            <StyledEditButton onClick={handleUpdate} />
+          )}
+        </div>
+      </Header>
+      <Main>{post.content}</Main>
       {post.createdAt !== post.updatedAt && (
-        <PostFooter>updated {formatRelativeTime(post.updatedAt)}</PostFooter>
+        <Footer>updated {formatRelativeTime(post.updatedAt)}</Footer>
       )}
     </StyledPostContent>
   );

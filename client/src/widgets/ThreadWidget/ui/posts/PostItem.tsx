@@ -1,7 +1,10 @@
 import styled from 'styled-components';
 import type { Post } from '../../model/types/Post';
+import { useState } from 'react';
+import { PostUpdate } from './PostUpdate';
 import { PostAuthor } from './PostAuthor';
 import { PostContent } from './PostContent';
+import { useOutsideClick } from '../../../../shared/lib/hooks/useOutsideClick';
 
 interface PostItemProps {
   post: Post;
@@ -16,10 +19,20 @@ const StyledPostItem = styled.li`
 `;
 
 export function PostItem({ post }: PostItemProps) {
+  const [isUpdating, setIsUpdating] = useState(false);
+  const ref = useOutsideClick(() => setIsUpdating(false));
+
+  if (isUpdating) {
+    return <PostUpdate ref={ref} postId={post.id} postContent={post.content} />;
+  }
+
   return (
     <StyledPostItem>
       <PostAuthor author={post.author} />
-      <PostContent post={post} />
+      <PostContent
+        post={post}
+        handleUpdate={() => setIsUpdating((current) => !current)}
+      />
     </StyledPostItem>
   );
 }

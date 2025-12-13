@@ -6,13 +6,17 @@ import { WidgetLoader } from '../../../shared/ui/widget-kit/WidgetLoader';
 import { WidgetHeaderGroup } from '../../../shared/ui/widget-kit/WidgetHeaderGroup';
 import { WidgetBackButton } from '../../../shared/ui/widget-kit/WidgetBackButton';
 import { WidgetTitle } from '../../../shared/ui/widget-kit/WidgetTitle';
+import { InlineModal } from '../../../shared/ui/InlineModal';
+import { UpdateThreadTitle } from '../../../features/updateThreadTitle';
+import { WidgetTitleInput } from '../../../shared/ui/widget-kit/WidgetTitleInput';
+import { WidgetEditButton } from '../../../shared/ui/widget-kit/WidgetEditButton';
 import { Modal } from '../../../shared/ui/modal';
 import { WidgetDeleteButton } from '../../../shared/ui/widget-kit/WidgetDeleteButton';
 import { DeleteThread } from '../../../features/deleteThread';
 import { WidgetConfirm } from '../../../shared/ui/widget-kit/WidgetConfirm';
 import { PostsList } from './posts/PostsList';
 import { Pagination } from '../../../shared/ui/Pagination';
-import { PostCreate } from './posts/PostCreate';
+import { PostUpdate } from './posts/PostUpdate';
 
 const ThreadContainer = styled.div`
   display: flex;
@@ -31,6 +35,7 @@ const StyledWidgetHeader = styled(WidgetHeader)`
 export function ThreadWidget() {
   const { thread, isLoading } = useCurrentThread();
   const hasAdminsPermissions = useRestrictTo(['admin']);
+  const hasModeratePermissions = useRestrictTo(['admin', 'moderator']);
 
   if (!thread || isLoading) {
     return <WidgetLoader />;
@@ -43,8 +48,18 @@ export function ThreadWidget() {
           <WidgetHeaderGroup>
             <WidgetBackButton url={`/forums/${thread.forumId}`} />
             <WidgetTitle>{thread.title} Thread</WidgetTitle>
+            <InlineModal.Window name={`editThreadTitle-${thread.id}`}>
+              <UpdateThreadTitle threadId={thread.id}>
+                <WidgetTitleInput currentTitle={thread.title} />
+              </UpdateThreadTitle>
+            </InlineModal.Window>
           </WidgetHeaderGroup>
           <WidgetHeaderGroup>
+            {hasModeratePermissions && (
+              <InlineModal.Open windowName={`editThreadTitle-${thread.id}`}>
+                <WidgetEditButton />
+              </InlineModal.Open>
+            )}
             {hasAdminsPermissions && (
               <>
                 <Modal.Open windowName={`deleteThread-${thread.id}`}>
@@ -69,7 +84,7 @@ export function ThreadWidget() {
         currentPage={thread.page}
         totalPages={thread.totalPages}
       />
-      <PostCreate />
+      <PostUpdate />
     </>
   );
 }

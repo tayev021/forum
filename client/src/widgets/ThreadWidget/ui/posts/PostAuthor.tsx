@@ -8,6 +8,7 @@ interface PostAuthorProps {
 }
 
 const StyledPostAuthor = styled.div`
+  min-height: 23rem;
   display: grid;
   grid-template-rows: min-content 1fr min-content min-content;
   justify-items: center;
