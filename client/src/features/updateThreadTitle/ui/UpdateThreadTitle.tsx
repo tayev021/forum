@@ -9,6 +9,7 @@ import toast from 'react-hot-toast';
 
 interface UpdateThreadTitleProps {
   threadId: number;
+  page?: number;
   closeModal?: () => void;
   children: ReactElement;
 }
@@ -19,6 +20,7 @@ interface ChildElementProps {
 
 export function UpdateThreadTitle({
   threadId,
+  page,
   closeModal = () => {},
   children,
 }: UpdateThreadTitleProps) {
@@ -33,7 +35,7 @@ export function UpdateThreadTitle({
   }, [serverError, isLoading]);
 
   function submit(title: string) {
-    dispatch(updateThread({ threadId, title }));
+    dispatch(updateThread({ threadId, page, title }));
     closeModal();
   }
 
