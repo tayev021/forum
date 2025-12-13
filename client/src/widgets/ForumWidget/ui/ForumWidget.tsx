@@ -7,6 +7,10 @@ import { WidgetHeader } from '../../../shared/ui/widget-kit/WidgetHeader';
 import { WidgetHeaderGroup } from '../../../shared/ui/widget-kit/WidgetHeaderGroup';
 import { WidgetBackButton } from '../../../shared/ui/widget-kit/WidgetBackButton';
 import { WidgetTitle } from '../../../shared/ui/widget-kit/WidgetTitle';
+import { InlineModal } from '../../../shared/ui/InlineModal';
+import { UpdateForumTitle } from '../../../features/updateForumTitle';
+import { WidgetTitleInput } from '../../../shared/ui/widget-kit/WidgetTitleInput';
+import { WidgetEditButton } from '../../../shared/ui/widget-kit/WidgetEditButton';
 import { WidgetCreateButton } from '../../../shared/ui/widget-kit/WidgetCreateButton';
 import { Modal } from '../../../shared/ui/modal';
 import { WidgetDeleteButton } from '../../../shared/ui/widget-kit/WidgetDeleteButton';
@@ -20,6 +24,7 @@ export function ForumWidget() {
   const { forum, isLoading } = useCurrentForum();
   const { user } = useUser();
   const hasAdminsPermissions = useRestrictTo(['admin']);
+  const hasModeratePermissions = useRestrictTo(['admin', 'moderator']);
   const navigate = useNavigate();
 
   if (!forum || isLoading) {
@@ -33,8 +38,18 @@ export function ForumWidget() {
           <WidgetHeaderGroup>
             <WidgetBackButton />
             <WidgetTitle>{forum?.title} Forum</WidgetTitle>
+            <InlineModal.Window name={`editForumTitle-${forum.id}`}>
+              <UpdateForumTitle forumId={forum.id}>
+                <WidgetTitleInput currentTitle={forum.title} />
+              </UpdateForumTitle>
+            </InlineModal.Window>
           </WidgetHeaderGroup>
           <WidgetHeaderGroup>
+            {hasModeratePermissions && (
+              <InlineModal.Open windowName={`editForumTitle-${forum.id}`}>
+                <WidgetEditButton />
+              </InlineModal.Open>
+            )}
             {!!user && (
               <WidgetCreateButton
                 onClick={() => navigate(`/forums/${forum.id}/createThread`)}
