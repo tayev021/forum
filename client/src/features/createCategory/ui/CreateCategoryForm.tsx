@@ -6,7 +6,7 @@ import { titleSchema } from '../lib/validators/titleSchema';
 import {
   createCategory,
   clearCategoryError,
-  useCategories,
+  useCategory,
 } from '../../../entities/category';
 import { useAppDispatch } from '../../../shared/lib/hooks/useAppDispatch';
 import type { CategoryData } from '../../../entities/category/model/types/CategoryData';
@@ -26,7 +26,7 @@ export function CreateCategoryForm({
 }: CategoryFormProps) {
   const [isCreated, setIsCreated] = useState<boolean>(false);
   const dispatch = useAppDispatch();
-  const { isLoading, error: serverError } = useCategories();
+  const { isLoading, error: serverError } = useCategory();
   const { register, getValues, getErrors, setError, handleSubmit } = useForm();
   const values = getValues();
   const errors = getErrors();
