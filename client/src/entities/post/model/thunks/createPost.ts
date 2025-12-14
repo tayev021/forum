@@ -9,7 +9,7 @@ export const createPost = createAsyncThunk<
   { rejectValue: ServerError }
 >('post/createPost', async function ({ threadId, content }, thunkAPI) {
   const response = await fetch(`${API_URL}/posts?threadId=${threadId}`, {
-    method: 'post',
+    method: 'POST',
     credentials: 'include',
     headers: {
       'Content-Type': 'application/json',

@@ -10,7 +10,7 @@ export const createCategory = createAsyncThunk<
   { rejectValue: ServerError }
 >('category/createCategory', async function (categoryData, thunkAPI) {
   const response = await fetch(`${API_URL}/categories`, {
-    method: 'post',
+    method: 'POST',
     credentials: 'include',
     headers: {
       'Content-Type': 'application/json',

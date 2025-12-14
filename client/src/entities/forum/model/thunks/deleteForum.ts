@@ -8,7 +8,7 @@ export const deleteForum = createAsyncThunk<
   { rejectValue: ServerError }
 >('forum/deleteForum', async function ({ forumId }, thunkAPI) {
   const response = await fetch(`${API_URL}/forums/${forumId}`, {
-    method: 'delete',
+    method: 'DELETE',
     credentials: 'include',
   });
 

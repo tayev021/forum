@@ -12,7 +12,7 @@ export const createThread = createAsyncThunk<
   'thread/createThread',
   async function ({ forumId, title, content }, thunkAPI) {
     const response = await fetch(`${API_URL}/threads?forumId=${forumId}`, {
-      method: 'post',
+      method: 'POST',
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',

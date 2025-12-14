@@ -8,7 +8,7 @@ export const signout = createAsyncThunk<
   { rejectValue: ServerError }
 >('user/signout', async function (_, thunkAPI) {
   const response = await fetch(`${API_URL}/auth/signout`, {
-    method: 'post',
+    method: 'POST',
     credentials: 'include',
   });
 

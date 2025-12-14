@@ -9,7 +9,7 @@ export const createForum = createAsyncThunk<
   { rejectValue: ServerError }
 >('forum/createForum', async function (forumData, thunkAPI) {
   const response = await fetch(`${API_URL}/forums`, {
-    method: 'post',
+    method: 'POST',
     credentials: 'include',
     headers: {
       'Content-Type': 'application/json',

@@ -9,7 +9,7 @@ export const deleteCategory = createAsyncThunk<
   { rejectValue: ServerError }
 >('category/deleteCategory', async function ({ categoryId }, thunkAPI) {
   const response = await fetch(`${API_URL}/categories/${categoryId}`, {
-    method: 'delete',
+    method: 'DELETE',
     credentials: 'include',
   });
 

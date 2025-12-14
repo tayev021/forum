@@ -8,7 +8,7 @@ export const deleteThread = createAsyncThunk<
   { rejectValue: ServerError }
 >('thread/deleteThread', async function ({ threadId }, thunkAPI) {
   const response = await fetch(`${API_URL}/threads/${threadId}`, {
-    method: 'delete',
+    method: 'DELETE',
     credentials: 'include',
   });
 
