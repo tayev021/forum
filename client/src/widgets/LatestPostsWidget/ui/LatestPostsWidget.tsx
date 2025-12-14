@@ -10,13 +10,16 @@ import { LatestPost } from './LatestPost';
 
 const StyledWidgetHeader = styled(WidgetHeader)`
   padding: 1rem;
+  grid-template-columns: 1fr;
 `;
 
 const StyledWidgetTitle = styled(WidgetTitle)`
   display: flex;
+  align-items: center;
   gap: 1rem;
   font-size: 1.6rem;
   font-weight: 500;
+  line-height: 1;
   color: var(--color-secondary);
 `;
 

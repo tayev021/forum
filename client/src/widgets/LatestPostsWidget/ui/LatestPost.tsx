@@ -11,7 +11,7 @@ interface LatestPostProps {
 const StyledLink = styled(Link)`
   display: block;
   padding: 1rem 0.5rem;
-  border-radius: 0.4rem;
+  border-radius: 0.6rem;
   line-height: 1;
   cursor: pointer;
 
