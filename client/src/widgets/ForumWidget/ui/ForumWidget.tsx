@@ -33,6 +33,7 @@ export function ForumWidget() {
 
   return (
     <>
+      <title>{`Forum | ${forum.title}`}</title>
       <WidgetContainer>
         <WidgetHeader>
           <WidgetHeaderGroup>

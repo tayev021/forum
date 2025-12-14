@@ -37,12 +37,15 @@ export function PageNotFound() {
   const navigate = useNavigate();
 
   return (
-    <StyledContainer>
-      <Heading>Page Not Found</Heading>
-      <Text>Oops! The page you're looking for doesn't exist.</Text>
-      <Button onClick={() => navigate('/')}>
-        <HiArrowLeft /> Go back to Home Page
-      </Button>
-    </StyledContainer>
+    <>
+      <title>{`Forum | Page Not Found`}</title>
+      <StyledContainer>
+        <Heading>Page Not Found</Heading>
+        <Text>Oops! The page you're looking for doesn't exist.</Text>
+        <Button onClick={() => navigate('/')}>
+          <HiArrowLeft /> Go back to Home Page
+        </Button>
+      </StyledContainer>
+    </>
   );
 }

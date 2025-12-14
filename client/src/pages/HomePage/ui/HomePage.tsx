@@ -21,14 +21,17 @@ const SideBar = styled.aside`
 
 export function HomePage() {
   return (
-    <StyledContainer>
-      <Main>
-        <CategoriesWidget />
-      </Main>
-      <SideBar>
-        <StatisticWidget />
-        <LatestPostsWidget />
-      </SideBar>
-    </StyledContainer>
+    <>
+      <title>{`Forum | Home`}</title>
+      <StyledContainer>
+        <Main>
+          <CategoriesWidget />
+        </Main>
+        <SideBar>
+          <StatisticWidget />
+          <LatestPostsWidget />
+        </SideBar>
+      </StyledContainer>
+    </>
   );
 }

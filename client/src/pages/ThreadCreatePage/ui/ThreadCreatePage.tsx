@@ -8,8 +8,11 @@ const StyledContainer = styled(Container)`
 
 export function ThreadCreatePage() {
   return (
-    <StyledContainer>
-      <ThreadCreateWidget />
-    </StyledContainer>
+    <>
+      <title>{`Forum | Create Thread`}</title>
+      <StyledContainer>
+        <ThreadCreateWidget />
+      </StyledContainer>
+    </>
   );
 }

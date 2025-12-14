@@ -3,8 +3,11 @@ import { Container } from '../../../shared/ui/Container';
 
 export function SignupPage() {
   return (
-    <Container>
-      <SignupForm />
-    </Container>
+    <>
+      <title>{`Forum | Sign Up`}</title>
+      <Container>
+        <SignupForm />
+      </Container>
+    </>
   );
 }

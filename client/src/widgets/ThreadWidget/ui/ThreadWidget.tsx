@@ -43,6 +43,7 @@ export function ThreadWidget() {
 
   return (
     <>
+      <title>{`Forum | ${thread.title}`}</title>
       <ThreadContainer>
         <StyledWidgetHeader>
           <WidgetHeaderGroup>

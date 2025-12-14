@@ -3,8 +3,11 @@ import { SigninForm } from '../../../features/signin';
 
 export function SigninPage() {
   return (
-    <Container>
-      <SigninForm />
-    </Container>
+    <>
+      <title>{`Forum | Sign In`}</title>
+      <Container>
+        <SigninForm />
+      </Container>
+    </>
   );
 }
