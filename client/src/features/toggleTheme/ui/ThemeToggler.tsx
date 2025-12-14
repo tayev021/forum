@@ -14,7 +14,10 @@ const Button = styled.button<ButtonProps>`
   transition: all linear 0.1s;
 
   &:hover {
-    color: var(--color-emerald-950);
+    ${(props) =>
+      props.$theme === 'light'
+        ? 'color: var(--color-emerald-950);'
+        : 'color: var(--color-yellow-700);'}
     transform: scale(1.1);
   }
 
