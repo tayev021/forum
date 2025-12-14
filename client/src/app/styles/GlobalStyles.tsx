@@ -48,10 +48,34 @@ export const GlobalStyles = createGlobalStyle`
     --color-rose-900: #881337;
     --color-rose-950: #4c0519;
 
-    --shadow-small: 1px 2px 2px rgba(0,0,0, 0.3);
-    --shadow-medium: 2px 4px 8px rgba(0,0,0, 0.3);
-    --shadow-top-medium: 0 -4px 6px rgba(0,0,0, 0.3);
-    --shadow-bottom-medium: 0 4px 6px rgba(0,0,0, 0.3);
+    --color-rose-50: #fff1f2;
+    --color-rose-100: #ffe4e6;
+    --color-rose-200: #fecdd3;
+    --color-rose-300: #fda4af;
+    --color-rose-400: #fb7185;
+    --color-rose-500: #f43f5e;
+    --color-rose-600: #e11d48;
+    --color-rose-700: #be123c;
+    --color-rose-800: #9f1239;
+    --color-rose-900: #881337;
+    --color-rose-950: #4c0519;
+
+    --color-yellow-50:	#fefce8;
+    --color-yellow-100:	#fef9c3;
+    --color-yellow-200:	#fef08a;
+    --color-yellow-300:	#fde047;
+    --color-yellow-400:	#facc15;
+    --color-yellow-500:	#eab308;
+    --color-yellow-600:	#ca8a04;
+    --color-yellow-700:	#a16207;
+    --color-yellow-800:	#854d0e;
+    --color-yellow-900:	#713f12;
+    --color-yellow-950:	#422006;
+
+    --shadow-small: 1px 2px 2px rgba(0,0,0, 0.2);
+    --shadow-medium: 2px 4px 8px rgba(0,0,0, 0.2);
+    --shadow-top-medium: 0 -4px 6px rgba(0,0,0, 0.2);
+    --shadow-bottom-medium: 0 4px 6px rgba(0,0,0, 0.2);
   }
 
   &.dark-theme {
@@ -99,6 +123,18 @@ export const GlobalStyles = createGlobalStyle`
     --color-rose-200: #9f1239;
     --color-rose-100: #881337;
     --color-rose-50: #4c0519;
+
+    --color-yellow-950:	#fefce8;
+    --color-yellow-900:	#fef9c3;
+    --color-yellow-800:	#fef08a;
+    --color-yellow-700:	#fde047;
+    --color-yellow-600:	#facc15;
+    --color-yellow-500:	#eab308;
+    --color-yellow-400:	#ca8a04;
+    --color-yellow-300:	#a16207;
+    --color-yellow-200:	#854d0e;
+    --color-yellow-100:	#713f12;
+    --color-yellow-50:	#422006;
 
     --shadow-small: 1px 2px 2px rgba(255,255,255, 0.2);
     --shadow-medium: 2px 4px 8px rgba(255,255,255, 0.2);
