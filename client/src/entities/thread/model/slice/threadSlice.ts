@@ -76,8 +76,8 @@ const threadSlice = createSlice({
     });
     builder.addCase(
       updateThread.fulfilled,
-      (state, action: PayloadAction<Thread>) => {
-        state.thread = action.payload;
+      (state, action: PayloadAction<string>) => {
+        state.thread = { ...state.thread, title: action.payload } as Thread;
         state.isLoading = false;
       }
     );
