@@ -1,0 +1,3 @@
+export const DEFAULT_PAGE = 1;
+export const PAGE_ITEMS_LIMIT = 10;
+export const LATEST_POSTS_LIMIT = 5;
