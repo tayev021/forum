@@ -10,7 +10,7 @@ import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { WidgetLoader } from '../../../shared/ui/widget-kit/WidgetLoader';
 import { NoCategories } from './NoCategories';
-import { Category } from './Category';
+import { Category } from './category/Category';
 import { Modal } from '../../../shared/ui/Modal';
 import { useRestrictTo } from '../../../entities/user';
 import { CreateCategoryForm } from '../../../features/createCategory';
