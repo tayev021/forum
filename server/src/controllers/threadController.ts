@@ -133,38 +133,7 @@ export const updateThread = catchAsync(async (req: Request, res: Response) => {
 
   await thread.save();
 
-  const page = Number(req.query.page) || DEFAULT_PAGE;
-  const limit = Number(req.query.limit) || PAGE_ITEMS_LIMIT;
-  const offset = (page - 1) * limit;
-
-  const { rows: posts, count } = await Post.findAndCountAll({
-    where: { threadId },
-    limit: limit,
-    offset: offset,
-    attributes: ['id', 'threadId', 'content', 'createdAt', 'updatedAt'],
-    include: [
-      {
-        model: User,
-        as: 'author',
-        attributes: ['id', 'username', 'avatar', 'lastSignIn'],
-      },
-    ],
-    order: [['createdAt', 'ASC']],
-  });
-
-  res.status(200).json({
-    thread: {
-      id: thread.id,
-      title: thread.title,
-      authorId: thread.authorId,
-      forumId: thread.forumId,
-      createdAt: thread.createdAt,
-      posts: posts,
-      totalPosts: count,
-      page: page,
-      totalPages: Math.ceil(count / limit),
-    },
-  });
+  res.status(200).json({});
 });
 
 export const deleteThread = catchAsync(async (req: Request, res: Response) => {
