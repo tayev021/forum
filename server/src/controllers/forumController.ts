@@ -108,39 +108,7 @@ export const updateForum = catchAsync(async (req: Request, res: Response) => {
 
   await forum.save();
 
-  const page = Number(req.query.page) || DEFAULT_PAGE;
-  const limit = Number(req.query.limit) || PAGE_ITEMS_LIMIT;
-  const offset = (page - 1) * limit;
-
-  const threads = await Thread.findAll({
-    where: { forumId },
-    attributes: [
-      'id',
-      'title',
-      'createdAt',
-      [sequelize.fn('COUNT', sequelize.col('posts.id')), 'postsCount'],
-    ],
-    include: [
-      {
-        model: Post,
-        as: 'posts',
-        attributes: [],
-      },
-    ],
-    group: ['Thread.id'],
-  });
-
-  res.status(200).json({
-    forum: {
-      id: forum.id,
-      title: forum.title,
-      createdAt: forum.createdAt,
-      threads: threads.slice(offset, offset + limit),
-      totalThreads: threads.length,
-      page: page,
-      totalPages: Math.ceil(threads.length / limit),
-    },
-  });
+  res.status(200).json({});
 });
 
 export const deleteForum = catchAsync(async (req: Request, res: Response) => {
