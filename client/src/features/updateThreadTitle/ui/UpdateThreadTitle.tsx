@@ -20,7 +20,6 @@ interface ChildElementProps {
 
 export function UpdateThreadTitle({
   threadId,
-  page,
   closeModal = () => {},
   children,
 }: UpdateThreadTitleProps) {
@@ -35,7 +34,7 @@ export function UpdateThreadTitle({
   }, [serverError, isLoading]);
 
   function submit(title: string) {
-    dispatch(updateThread({ threadId, page, title }));
+    dispatch(updateThread({ threadId, title }));
     closeModal();
   }
 
