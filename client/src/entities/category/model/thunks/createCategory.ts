@@ -5,7 +5,7 @@ import type { ServerError } from '../../../../shared/types/ServerError';
 import { API_URL } from '../../../../shared/constants';
 
 export const createCategory = createAsyncThunk<
-  Category[],
+  Category,
   CategoryData,
   { rejectValue: ServerError }
 >('category/createCategory', async function (categoryData, thunkAPI) {
@@ -23,7 +23,7 @@ export const createCategory = createAsyncThunk<
     return thunkAPI.rejectWithValue(error);
   }
 
-  const json: { categories: Category[] } = await response.json();
+  const json: { category: Category } = await response.json();
 
-  return json.categories;
+  return json.category;
 });
