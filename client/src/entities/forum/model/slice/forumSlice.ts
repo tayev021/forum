@@ -71,8 +71,8 @@ const forumSlice = createSlice({
     });
     builder.addCase(
       updateForum.fulfilled,
-      (state, action: PayloadAction<Forum>) => {
-        state.forum = action.payload;
+      (state, action: PayloadAction<string>) => {
+        state.forum = { ...state.forum, title: action.payload } as Forum;
         state.isLoading = false;
       }
     );
