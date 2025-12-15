@@ -33,12 +33,13 @@ export const createCategory = catchAsync(
       });
     }
 
-    await Category.create({
+    const createdCategory = await Category.create({
       authorId: user.id,
       title: capitalize(title),
     });
 
-    const categories = await Category.findAll({
+    const category = await Category.findOne({
+      where: { id: createdCategory.id },
       attributes: ['id', 'title'],
       include: [
         {
@@ -49,7 +50,18 @@ export const createCategory = catchAsync(
       ],
     });
 
-    res.status(201).json({ categories });
+    // const categories = await Category.findAll({
+    //   attributes: ['id', 'title'],
+    //   include: [
+    //     {
+    //       model: Forum,
+    //       as: 'forums',
+    //       attributes: ['id', 'title'],
+    //     },
+    //   ],
+    // });
+
+    res.status(201).json({ category });
   }
 );
 
@@ -111,17 +123,6 @@ export const deleteCategory = catchAsync(
 
     await category.destroy();
 
-    const categories = await Category.findAll({
-      attributes: ['id', 'title'],
-      include: [
-        {
-          model: Forum,
-          as: 'forums',
-          attributes: ['id', 'title'],
-        },
-      ],
-    });
-
-    res.status(200).json({ categories });
+    res.status(200).json({});
   }
 );
