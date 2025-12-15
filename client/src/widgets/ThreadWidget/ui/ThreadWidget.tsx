@@ -50,7 +50,7 @@ export function ThreadWidget() {
             <WidgetBackButton url={`/forums/${thread.forumId}`} />
             <WidgetTitle>{thread.title} Thread</WidgetTitle>
             <InlineModal.Window name={`editThreadTitle-${thread.id}`}>
-              <UpdateThreadTitle threadId={thread.id} page={thread.page}>
+              <UpdateThreadTitle threadId={thread.id}>
                 <WidgetTitleInput currentTitle={thread.title} />
               </UpdateThreadTitle>
             </InlineModal.Window>
