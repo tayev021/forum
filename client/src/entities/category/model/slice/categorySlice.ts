@@ -47,8 +47,8 @@ const categorySlice = createSlice({
     });
     builder.addCase(
       createCategory.fulfilled,
-      (state, action: PayloadAction<Category[]>) => {
-        state.categories = action.payload;
+      (state, action: PayloadAction<Category>) => {
+        state.categories = [...state.categories, action.payload];
         state.isLoading = false;
       }
     );
@@ -93,9 +93,11 @@ const categorySlice = createSlice({
     });
     builder.addCase(
       deleteCategory.fulfilled,
-      (state, action: PayloadAction<Category[]>) => {
-        state.categories = action.payload;
+      (state, action: PayloadAction<number>) => {
         state.isLoading = false;
+        state.categories = state.categories.filter(
+          (category) => category.id !== action.payload
+        );
       }
     );
     builder.addCase(deleteCategory.rejected, (state, action) => {
