@@ -8,6 +8,7 @@ import { getCategories } from './model/thunks/getCategories';
 import { createCategory } from './model/thunks/createCategory';
 import { updateCategory } from './model/thunks/updateCategory';
 import { deleteCategory } from './model/thunks/deleteCategory';
+import { type Category } from './model/types/Category';
 
 export {
   categoryReducer,
@@ -18,4 +19,5 @@ export {
   createCategory,
   updateCategory,
   deleteCategory,
+  type Category,
 };
