@@ -1,11 +1,12 @@
 import { Request, Response } from 'express';
 import { catchAsync } from '../utils/catchAsync';
+import { LATEST_POSTS_LIMIT } from '../constants';
 import { Post, Thread, User } from '../models';
 import { AppError } from '../utils/AppError';
 
 export const getLatestPosts = catchAsync(
   async (req: Request, res: Response) => {
-    const limit = Number(req.query.limit) || 5;
+    const limit = Number(req.query.limit) || LATEST_POSTS_LIMIT;
 
     const posts = await Post.findAll({
       order: [['createdAt', 'DESC']],
