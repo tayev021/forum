@@ -1,10 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { Category } from '../types/Category';
 import type { ServerError } from '../../../../shared/types/ServerError';
 import { API_URL } from '../../../../shared/constants';
 
 export const deleteCategory = createAsyncThunk<
-  Category[],
+  number,
   { categoryId: number },
   { rejectValue: ServerError }
 >('category/deleteCategory', async function ({ categoryId }, thunkAPI) {
@@ -18,7 +17,5 @@ export const deleteCategory = createAsyncThunk<
     return thunkAPI.rejectWithValue(error);
   }
 
-  const json: { categories: Category[] } = await response.json();
-
-  return json.categories;
+  return categoryId;
 });
