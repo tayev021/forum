@@ -1,10 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { Forum } from '../types/Forum';
 import type { ServerError } from '../../../../shared/types/ServerError';
 import { API_URL } from '../../../../shared/constants';
 
 export const updateForum = createAsyncThunk<
-  Forum,
+  string,
   { forumId: number; title: string },
   { rejectValue: ServerError }
 >('forum/updateForum', async function ({ forumId, title }, thunkAPI) {
@@ -22,7 +21,5 @@ export const updateForum = createAsyncThunk<
     return thunkAPI.rejectWithValue(error);
   }
 
-  const json: { forum: Forum } = await response.json();
-
-  return json.forum;
+  return title;
 });
