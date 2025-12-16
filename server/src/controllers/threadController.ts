@@ -29,7 +29,7 @@ export const getThread = catchAsync(async (req: Request, res: Response) => {
       {
         model: User,
         as: 'author',
-        attributes: ['id', 'username', 'avatar', 'lastSignIn'],
+        attributes: ['id', 'username', 'avatar', 'role', 'lastSignIn'],
       },
     ],
     order: [['createdAt', 'ASC']],
