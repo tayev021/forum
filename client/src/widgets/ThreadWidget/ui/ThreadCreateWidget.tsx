@@ -1,10 +1,7 @@
 import styled from 'styled-components';
-import { WidgetHeader } from '../../../shared/ui/widget-kit/WidgetHeader';
-import { WidgetHeaderGroup } from '../../../shared/ui/widget-kit/WidgetHeaderGroup';
+import { Widget } from '../../../shared/ui/WidgetKit';
 import { useParams } from 'react-router';
 import { useUser } from '../../../entities/user';
-import { WidgetBackButton } from '../../../shared/ui/widget-kit/WidgetBackButton';
-import { WidgetTitle } from '../../../shared/ui/widget-kit/WidgetTitle';
 import { PostAuthor } from './posts/PostAuthor';
 import { CreateThreadForm } from '../../../features/createThread';
 
@@ -14,7 +11,7 @@ const Container = styled.div`
   gap: 2rem;
 `;
 
-const StyledWidgetHeader = styled(WidgetHeader)`
+const StyledWidgetHeader = styled(Widget.Header)`
   border-top-left-radius: 0.4rem;
   border-top-right-radius: 0.4rem;
   background-color: var(--color-bg-secondary);
@@ -38,10 +35,10 @@ export function ThreadCreateWidget() {
   return (
     <Container>
       <StyledWidgetHeader>
-        <WidgetHeaderGroup>
-          <WidgetBackButton url={`/forums/${forumId}`} />
-          <WidgetTitle>Create Thread</WidgetTitle>
-        </WidgetHeaderGroup>
+        <Widget.HeaderGroup>
+          <Widget.BackButton url={`/forums/${forumId}`} />
+          <Widget.Title>Create Thread</Widget.Title>
+        </Widget.HeaderGroup>
       </StyledWidgetHeader>
       <ThreadCreate>
         <PostAuthor author={{ ...user, lastSignIn: '' }} />

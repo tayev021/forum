@@ -1,19 +1,11 @@
 import styled from 'styled-components';
-import { WidgetHeader } from '../../../shared/ui/widget-kit/WidgetHeader';
+import { Widget } from '../../../shared/ui/WidgetKit';
 import { useCurrentThread } from '../lib/hooks/useCurrentThread';
 import { useRestrictTo } from '../../../entities/user';
-import { WidgetLoader } from '../../../shared/ui/widget-kit/WidgetLoader';
-import { WidgetHeaderGroup } from '../../../shared/ui/widget-kit/WidgetHeaderGroup';
-import { WidgetBackButton } from '../../../shared/ui/widget-kit/WidgetBackButton';
-import { WidgetTitle } from '../../../shared/ui/widget-kit/WidgetTitle';
 import { InlineModal } from '../../../shared/ui/InlineModal';
 import { UpdateThreadTitle } from '../../../features/updateThreadTitle';
-import { WidgetTitleInput } from '../../../shared/ui/widget-kit/WidgetTitleInput';
-import { WidgetEditButton } from '../../../shared/ui/widget-kit/WidgetEditButton';
 import { Modal } from '../../../shared/ui/Modal';
-import { WidgetDeleteButton } from '../../../shared/ui/widget-kit/WidgetDeleteButton';
 import { DeleteThread } from '../../../features/deleteThread';
-import { WidgetConfirm } from '../../../shared/ui/widget-kit/WidgetConfirm';
 import { PostsList } from './posts/PostsList';
 import { Pagination } from '../../../shared/ui/Pagination';
 import { PostUpdate } from './posts/PostUpdate';
@@ -25,7 +17,7 @@ const ThreadContainer = styled.div`
   margin-bottom: 2rem;
 `;
 
-const StyledWidgetHeader = styled(WidgetHeader)`
+const StyledWidgetHeader = styled(Widget.Header)`
   border-top-left-radius: 0.4rem;
   border-top-right-radius: 0.4rem;
   background-color: var(--color-bg-secondary);
@@ -38,7 +30,7 @@ export function ThreadWidget() {
   const hasModeratePermissions = useRestrictTo(['admin', 'moderator']);
 
   if (!thread || isLoading) {
-    return <WidgetLoader />;
+    return <Widget.Loader />;
   }
 
   return (
@@ -46,37 +38,37 @@ export function ThreadWidget() {
       <title>{`Forum | ${thread.title}`}</title>
       <ThreadContainer>
         <StyledWidgetHeader>
-          <WidgetHeaderGroup>
-            <WidgetBackButton url={`/forums/${thread.forumId}`} />
-            <WidgetTitle>{thread.title} Thread</WidgetTitle>
+          <Widget.HeaderGroup>
+            <Widget.BackButton url={`/forums/${thread.forumId}`} />
+            <Widget.Title>{thread.title} Thread</Widget.Title>
             <InlineModal.Window name={`editThreadTitle-${thread.id}`}>
               <UpdateThreadTitle threadId={thread.id}>
-                <WidgetTitleInput currentTitle={thread.title} />
+                <Widget.TitleInput currentTitle={thread.title} />
               </UpdateThreadTitle>
             </InlineModal.Window>
-          </WidgetHeaderGroup>
-          <WidgetHeaderGroup>
+          </Widget.HeaderGroup>
+          <Widget.HeaderGroup>
             {hasModeratePermissions && (
               <InlineModal.Open windowName={`editThreadTitle-${thread.id}`}>
-                <WidgetEditButton />
+                <Widget.EditButton />
               </InlineModal.Open>
             )}
             {hasAdminsPermissions && (
               <>
                 <Modal.Open windowName={`deleteThread-${thread.id}`}>
-                  <WidgetDeleteButton />
+                  <Widget.DeleteButton />
                 </Modal.Open>
                 <Modal.Window name={`deleteThread-${thread.id}`}>
                   <DeleteThread forumId={thread.forumId} threadId={thread.id}>
-                    <WidgetConfirm title="Delete Thread">
+                    <Widget.Confirm title="Delete Thread">
                       Are you sure you want to delete the "{thread.title}"
                       thread?
-                    </WidgetConfirm>
+                    </Widget.Confirm>
                   </DeleteThread>
                 </Modal.Window>
               </>
             )}
-          </WidgetHeaderGroup>
+          </Widget.HeaderGroup>
         </StyledWidgetHeader>
         <PostsList posts={thread.posts} />
       </ThreadContainer>

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import type { Post } from '../../model/types/Post';
-import { WidgetEditButton } from '../../../../shared/ui/widget-kit/WidgetEditButton';
+import { Widget } from '../../../../shared/ui/WidgetKit';
 import { useUser } from '../../../../entities/user';
 import { formatRelativeTime } from '../../../../shared/lib/utils/formatRelativeTime';
 
@@ -27,7 +27,7 @@ const Time = styled.p`
   color: var(--color-grey-500);
 `;
 
-const StyledEditButton = styled(WidgetEditButton)`
+const StyledEditButton = styled(Widget.EditButton)`
   width: 1.5rem;
   height: 1.5rem;
 `;
