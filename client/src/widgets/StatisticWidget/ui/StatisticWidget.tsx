@@ -1,17 +1,14 @@
 import styled from 'styled-components';
-import { WidgetHeader } from '../../../shared/ui/widget-kit/WidgetHeader';
-import { WidgetTitle } from '../../../shared/ui/widget-kit/WidgetTitle';
+import { Widget } from '../../../shared/ui/WidgetKit';
 import { useStatistic } from '../../../entities/statistic';
-import { WidgetContainer } from '../../../shared/ui/widget-kit/WidgetContainer';
-import { WidgetLoader } from '../../../shared/ui/widget-kit/WidgetLoader';
 import { HiChartBar } from 'react-icons/hi2';
 
-const StyledWidgetHeader = styled(WidgetHeader)`
+const StyledWidgetHeader = styled(Widget.Header)`
   padding: 1rem;
   grid-template-columns: 1fr;
 `;
 
-const StyledWidgetTitle = styled(WidgetTitle)`
+const StyledWidgetTitle = styled(Widget.Title)`
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -42,8 +39,8 @@ export function StatisticWidget() {
   const { posts, threads, forums, members, isLoading } = useStatistic();
 
   return (
-    <WidgetContainer>
-      {isLoading && <WidgetLoader />}
+    <Widget.Container>
+      {isLoading && <Widget.Loader />}
       <StyledWidgetHeader>
         <StyledWidgetTitle>
           <HiChartBar />
@@ -68,6 +65,6 @@ export function StatisticWidget() {
           <span>{members}</span>
         </Row>
       </List>
-    </WidgetContainer>
+    </Widget.Container>
   );
 }
