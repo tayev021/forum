@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
 import { catchAsync } from '../utils/catchAsync';
-import { LATEST_POSTS_LIMIT } from '../constants';
+import { LATEST_POSTS_LIMIT, PAGE_ITEMS_LIMIT } from '../constants';
 import { Post, Thread, User } from '../models';
 import { AppError } from '../utils/AppError';
+import sequelize from 'sequelize';
 
 export const getLatestPosts = catchAsync(
   async (req: Request, res: Response) => {
@@ -16,7 +17,23 @@ export const getLatestPosts = catchAsync(
         {
           model: Thread,
           as: 'thread',
-          attributes: ['id', 'title'],
+          attributes: [
+            'id',
+            'title',
+            [
+              sequelize.literal(`
+                  CEIL(
+                    (
+                      SELECT COUNT(*)
+                      FROM posts p2
+                      WHERE p2.threadId = Post.threadId
+                        AND p2.createdAt <= Post.createdAt
+                    ) / ${PAGE_ITEMS_LIMIT}
+                  ) 
+              `),
+              'page',
+            ],
+          ],
         },
         {
           model: User,
