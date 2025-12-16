@@ -8,25 +8,33 @@ interface PostAuthorProps {
 }
 
 const StyledPostAuthor = styled.div`
-  min-height: 23rem;
+  min-height: 25rem;
   display: grid;
-  grid-template-rows: min-content 1fr min-content min-content;
+  grid-template-rows: repeat(2, min-content) 1fr repeat(2, min-content);
   justify-items: center;
   padding: 2rem;
   border-right: 2px solid var(--color-grey-200);
   font-size: 1.4rem;
 `;
 
-const StyledUserAvatar = styled(UserAvatar)`
+const StyledAuthorAvatar = styled(UserAvatar)`
   margin-bottom: 1rem;
 `;
 
-const UserName = styled.p`
+const AuthorName = styled.p`
+  width: 100%;
+  margin-bottom: 1rem;
   font-size: 1.8rem;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+`;
 
-  & + p {
-    margin-top: 4rem;
-  }
+const AuthorRole = styled.p`
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--color-yellow-600);
 `;
 
 const SignInTime = styled.p`
@@ -38,12 +46,15 @@ const SignInTime = styled.p`
 export function PostAuthor({ author }: PostAuthorProps) {
   return (
     <StyledPostAuthor>
-      <StyledUserAvatar
+      <StyledAuthorAvatar
         username={author.username}
         avatar={author.avatar}
         size={8}
       />
-      <UserName>{author.username}</UserName>
+      <AuthorName>{author.username}</AuthorName>
+      <AuthorRole>
+        {['admin', 'moderator'].includes(author.role) ? author.role : ''}
+      </AuthorRole>
       {author.lastSignIn && (
         <>
           <SignInTime>last sign in:</SignInTime>
