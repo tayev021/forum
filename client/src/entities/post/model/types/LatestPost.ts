@@ -6,6 +6,7 @@ interface Author {
 interface Thread {
   id: number;
   title: string;
+  page: string;
 }
 
 export interface LatestPost {
