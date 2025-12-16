@@ -1,9 +1,14 @@
+import styled from 'styled-components';
 import { useCurrentForum } from '../lib/hooks/useCurrentForum';
 import { Widget } from '../../../shared/ui/WidgetKit';
 import { NoThreads } from './NoThreads';
 import { ThreadsList } from './ThreadsList';
 import { Pagination } from '../../../shared/ui/Pagination';
 import { ForumWidgetHeader } from './ForumWidgetHeader';
+
+const StyledPagination = styled(Pagination)`
+  margin-top: 2rem;
+`;
 
 export function ForumWidget() {
   const { forum, isLoading } = useCurrentForum();
@@ -23,7 +28,7 @@ export function ForumWidget() {
           <ThreadsList threads={forum.threads} />
         )}
       </Widget.Container>
-      <Pagination
+      <StyledPagination
         baseUrl={`/forums/${forum.id}`}
         currentPage={forum.page}
         totalPages={forum.totalPages}
