@@ -24,6 +24,8 @@ const StyledWidgetHeader = styled(Widget.Header)`
   box-shadow: var(--shadow-small);
 `;
 
+const StyledPagination = styled(Pagination)``;
+
 export function ThreadWidget() {
   const { thread, isLoading } = useCurrentThread();
   const hasAdminsPermissions = useRestrictTo(['admin']);
@@ -70,13 +72,18 @@ export function ThreadWidget() {
             )}
           </Widget.HeaderGroup>
         </StyledWidgetHeader>
+        <StyledPagination
+          baseUrl={`/threads/${thread.id}`}
+          currentPage={thread.page}
+          totalPages={thread.totalPages}
+        />
         <PostsList posts={thread.posts} />
+        <StyledPagination
+          baseUrl={`/threads/${thread.id}`}
+          currentPage={thread.page}
+          totalPages={thread.totalPages}
+        />
       </ThreadContainer>
-      <Pagination
-        baseUrl={`/threads/${thread.id}`}
-        currentPage={thread.page}
-        totalPages={thread.totalPages}
-      />
       <PostUpdate />
     </>
   );
