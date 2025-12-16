@@ -1,7 +1,10 @@
+type AuthorRole = 'user' | 'moderator' | 'admin';
+
 interface Author {
   id: number;
   username: string;
   avatar: string | null;
+  role: AuthorRole;
   lastSignIn: string;
 }
 
