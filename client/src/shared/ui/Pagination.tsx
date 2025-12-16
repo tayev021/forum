@@ -4,6 +4,7 @@ import { paginate } from '../lib/utils/paginate';
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi2';
 
 interface PaginationProps {
+  className?: string;
   baseUrl: string;
   currentPage: number;
   totalPages: number;
@@ -16,7 +17,6 @@ interface PageLinkProps {
 const Container = styled.div`
   display: flex;
   gap: 1rem;
-  margin: 2rem 0;
 
   &:empty {
     display: none;
@@ -55,6 +55,7 @@ const PageLinkPlaceholder = styled.span`
 `;
 
 export function Pagination({
+  className = '',
   baseUrl,
   currentPage,
   totalPages,
@@ -78,7 +79,7 @@ export function Pagination({
   });
 
   return (
-    <Container>
+    <Container className={className}>
       {currentPage > 1 && (
         <PageLink to={`${baseUrl}?page=${currentPage - 1}`}>
           <HiChevronLeft /> Prev
