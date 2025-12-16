@@ -61,7 +61,9 @@ const Main = styled.div`
 export function LatestPost({ post }: LatestPostProps) {
   return (
     <li>
-      <StyledLink to={`/threads/${post.thread.id}`}>
+      <StyledLink
+        to={`/threads/${post.thread.id}?page=${post.thread.page}#${post.id}`}
+      >
         <Header>
           <UserAvatar
             username={post.author.username}
