@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { WidgetContainer } from '../../../shared/ui/widget-kit/WidgetContainer';
+import { Widget } from '../../../shared/ui/WidgetKit';
 
-const Container = styled(WidgetContainer)`
+const Container = styled(Widget.Container)`
   padding: 2rem;
   font-style: italic;
   text-align: center;

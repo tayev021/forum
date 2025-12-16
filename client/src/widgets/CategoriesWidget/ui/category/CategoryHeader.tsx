@@ -1,18 +1,11 @@
 import type { Category } from '../../../../entities/category';
 import { useRestrictTo } from '../../../../entities/user';
-import { WidgetHeader } from '../../../../shared/ui/widget-kit/WidgetHeader';
-import { WidgetHeaderGroup } from '../../../../shared/ui/widget-kit/WidgetHeaderGroup';
-import { WidgetTitle } from '../../../../shared/ui/widget-kit/WidgetTitle';
+import { Widget } from '../../../../shared/ui/WidgetKit';
 import { InlineModal } from '../../../../shared/ui/InlineModal';
 import { UpdateCategoryTitle } from '../../../../features/updateCategoryTitle';
-import { WidgetTitleInput } from '../../../../shared/ui/widget-kit/WidgetTitleInput';
-import { WidgetEditButton } from '../../../../shared/ui/widget-kit/WidgetEditButton';
 import { Modal } from '../../../../shared/ui/Modal';
-import { WidgetCreateButton } from '../../../../shared/ui/widget-kit/WidgetCreateButton';
 import { CreateForumForm } from '../../../../features/createForum';
-import { WidgetDeleteButton } from '../../../../shared/ui/widget-kit/WidgetDeleteButton';
 import { DeleteCategory } from '../../../../features/deleteCategory';
-import { WidgetConfirm } from '../../../../shared/ui/widget-kit/WidgetConfirm';
 
 interface CategoryHeaderProps {
   category: Category;
@@ -23,26 +16,26 @@ export function CategoryHeader({ category }: CategoryHeaderProps) {
   const hasModeratePermissions = useRestrictTo(['admin', 'moderator']);
 
   return (
-    <WidgetHeader>
-      <WidgetHeaderGroup>
-        <WidgetTitle>{category.title}</WidgetTitle>
+    <Widget.Header>
+      <Widget.HeaderGroup>
+        <Widget.Title>{category.title}</Widget.Title>
         <InlineModal.Window name={`editCategoryTitle-${category.id}`}>
           <UpdateCategoryTitle categoryId={category.id}>
-            <WidgetTitleInput currentTitle={category.title} />
+            <Widget.TitleInput currentTitle={category.title} />
           </UpdateCategoryTitle>
         </InlineModal.Window>
-      </WidgetHeaderGroup>
-      <WidgetHeaderGroup>
+      </Widget.HeaderGroup>
+      <Widget.HeaderGroup>
         {hasModeratePermissions && (
           <InlineModal.Open windowName={`editCategoryTitle-${category.id}`}>
-            <WidgetEditButton />
+            <Widget.EditButton />
           </InlineModal.Open>
         )}
 
         {hasModeratePermissions && (
           <>
             <Modal.Open windowName={`createForumInCategory-${category.id}`}>
-              <WidgetCreateButton />
+              <Widget.CreateButton />
             </Modal.Open>
             <Modal.Window name={`createForumInCategory-${category.id}`}>
               <CreateForumForm categoryId={category.id} />
@@ -52,19 +45,19 @@ export function CategoryHeader({ category }: CategoryHeaderProps) {
         {hasAdminsPermissions && category.forums.length === 0 && (
           <>
             <Modal.Open windowName={`deleteCategory-${category.id}`}>
-              <WidgetDeleteButton />
+              <Widget.DeleteButton />
             </Modal.Open>
             <Modal.Window name={`deleteCategory-${category.id}`}>
               <DeleteCategory categoryId={category.id}>
-                <WidgetConfirm title="Delete Category">
+                <Widget.Confirm title="Delete Category">
                   Are you sure you want to delete the "{category.title}"
                   category?
-                </WidgetConfirm>
+                </Widget.Confirm>
               </DeleteCategory>
             </Modal.Window>
           </>
         )}
-      </WidgetHeaderGroup>
-    </WidgetHeader>
+      </Widget.HeaderGroup>
+    </Widget.Header>
   );
 }

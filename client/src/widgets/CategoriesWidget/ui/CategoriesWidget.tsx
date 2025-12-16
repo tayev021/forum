@@ -8,7 +8,7 @@ import {
 import { useAppDispatch } from '../../../shared/lib/hooks/useAppDispatch';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
-import { WidgetLoader } from '../../../shared/ui/widget-kit/WidgetLoader';
+import { Widget } from '../../../shared/ui/WidgetKit';
 import { NoCategories } from './NoCategories';
 import { Category } from './category/Category';
 import { Modal } from '../../../shared/ui/Modal';
@@ -44,7 +44,7 @@ export function CategoriesWidget() {
 
   return (
     <Container>
-      {isLoading && <WidgetLoader position="top" />}
+      {isLoading && <Widget.Loader position="top" />}
       {categories.length === 0 && <NoCategories />}
       {categories.map((category) => (
         <Category key={category.id} category={category} />

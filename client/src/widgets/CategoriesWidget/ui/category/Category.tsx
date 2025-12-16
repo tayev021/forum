@@ -1,6 +1,6 @@
 import type { Category } from '../../../../entities/category/model/types/Category';
 import styled from 'styled-components';
-import { WidgetContainer } from '../../../../shared/ui/widget-kit/WidgetContainer';
+import { Widget } from '../../../../shared/ui/WidgetKit';
 import { CategoryHeader } from './CategoryHeader';
 import { NoForums } from '../NoForums';
 import { ForumLink } from '../ForumLink';
@@ -15,7 +15,7 @@ const ForumsList = styled.ul`
 
 export function Category({ category }: CategoryProps) {
   return (
-    <WidgetContainer>
+    <Widget.Container>
       <CategoryHeader category={category} />
       <ForumsList>
         {category.forums.length === 0 && <NoForums />}
@@ -23,6 +23,6 @@ export function Category({ category }: CategoryProps) {
           <ForumLink key={forum.id} forum={forum} />
         ))}
       </ForumsList>
-    </WidgetContainer>
+    </Widget.Container>
   );
 }
