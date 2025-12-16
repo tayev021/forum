@@ -1,19 +1,11 @@
 import type { Forum } from '../../../entities/forum';
 import { useRestrictTo, useUser } from '../../../entities/user';
+import { Widget } from '../../../shared/ui/WidgetKit';
 import { useNavigate } from 'react-router';
-import { WidgetHeader } from '../../../shared/ui/widget-kit/WidgetHeader';
-import { WidgetHeaderGroup } from '../../../shared/ui/widget-kit/WidgetHeaderGroup';
-import { WidgetBackButton } from '../../../shared/ui/widget-kit/WidgetBackButton';
-import { WidgetTitle } from '../../../shared/ui/widget-kit/WidgetTitle';
 import { InlineModal } from '../../../shared/ui/InlineModal';
 import { UpdateForumTitle } from '../../../features/updateForumTitle';
-import { WidgetTitleInput } from '../../../shared/ui/widget-kit/WidgetTitleInput';
-import { WidgetEditButton } from '../../../shared/ui/widget-kit/WidgetEditButton';
-import { WidgetCreateButton } from '../../../shared/ui/widget-kit/WidgetCreateButton';
 import { Modal } from '../../../shared/ui/Modal';
-import { WidgetDeleteButton } from '../../../shared/ui/widget-kit/WidgetDeleteButton';
 import { DeleteForum } from '../../../features/deleteForum';
-import { WidgetConfirm } from '../../../shared/ui/widget-kit/WidgetConfirm';
 
 interface ForumWidgetHeaderProps {
   forum: Forum;
@@ -26,42 +18,42 @@ export function ForumWidgetHeader({ forum }: ForumWidgetHeaderProps) {
   const navigate = useNavigate();
 
   return (
-    <WidgetHeader>
-      <WidgetHeaderGroup>
-        <WidgetBackButton />
-        <WidgetTitle>{forum?.title} Forum</WidgetTitle>
+    <Widget.Header>
+      <Widget.HeaderGroup>
+        <Widget.BackButton />
+        <Widget.Title>{forum?.title} Forum</Widget.Title>
         <InlineModal.Window name={`editForumTitle-${forum.id}`}>
           <UpdateForumTitle forumId={forum.id}>
-            <WidgetTitleInput currentTitle={forum.title} />
+            <Widget.TitleInput currentTitle={forum.title} />
           </UpdateForumTitle>
         </InlineModal.Window>
-      </WidgetHeaderGroup>
-      <WidgetHeaderGroup>
+      </Widget.HeaderGroup>
+      <Widget.HeaderGroup>
         {hasModeratePermissions && (
           <InlineModal.Open windowName={`editForumTitle-${forum.id}`}>
-            <WidgetEditButton />
+            <Widget.EditButton />
           </InlineModal.Open>
         )}
         {!!user && (
-          <WidgetCreateButton
+          <Widget.CreateButton
             onClick={() => navigate(`/forums/${forum.id}/createThread`)}
           />
         )}
         {hasAdminsPermissions && forum.threads.length === 0 && (
           <>
             <Modal.Open windowName={`deleteForum-${forum.id}`}>
-              <WidgetDeleteButton />
+              <Widget.DeleteButton />
             </Modal.Open>
             <Modal.Window name={`deleteForum-${forum.id}`}>
               <DeleteForum forumId={forum.id}>
-                <WidgetConfirm title="Delete Forum">
+                <Widget.Confirm title="Delete Forum">
                   Are you sure you want to delete the "{forum.title}" forum?
-                </WidgetConfirm>
+                </Widget.Confirm>
               </DeleteForum>
             </Modal.Window>
           </>
         )}
-      </WidgetHeaderGroup>
-    </WidgetHeader>
+      </Widget.HeaderGroup>
+    </Widget.Header>
   );
 }
