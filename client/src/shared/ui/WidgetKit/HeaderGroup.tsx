@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react';
 import styled from 'styled-components';
 
-interface WidgetHeaderGroupProps {
+interface HeaderGroupProps {
   className?: string;
   children: ReactElement | false | (ReactElement | false)[];
 }
@@ -13,10 +13,7 @@ const Group = styled.div`
   overflow: hidden;
 `;
 
-export function WidgetHeaderGroup({
-  className,
-  children,
-}: WidgetHeaderGroupProps) {
+export function HeaderGroup({ className, children }: HeaderGroupProps) {
   if (!children) return null;
 
   return <Group className={className}>{children}</Group>;

@@ -1,12 +1,12 @@
 import type { ReactNode } from 'react';
 import styled from 'styled-components';
 
-interface WidgetTitleProps {
+interface TitleProps {
   className?: string;
   children: ReactNode;
 }
 
-const Title = styled.h3`
+const StyledTitle = styled.h3`
   font-size: 2rem;
   font-weight: 600;
   line-height: 1.4;
@@ -16,6 +16,6 @@ const Title = styled.h3`
   overflow: hidden;
 `;
 
-export function WidgetTitle({ className, children }: WidgetTitleProps) {
-  return <Title className={className}>{children}</Title>;
+export function Title({ className, children }: TitleProps) {
+  return <StyledTitle className={className}>{children}</StyledTitle>;
 }

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import type { ReactElement } from 'react';
-import { WidgetButton } from './WidgetButton';
+import { Button } from './Button';
 import { HiOutlineTrash } from 'react-icons/hi2';
 
 interface DeleteButtonProps {
@@ -9,7 +9,7 @@ interface DeleteButtonProps {
   children?: ReactElement;
 }
 
-const Button = styled(WidgetButton)`
+const StyledButton = styled(Button)`
   &:hover {
     color: var(--color-rose-500);
   }
@@ -22,14 +22,14 @@ const Icon = styled(HiOutlineTrash)`
   min-height: 1rem;
 `;
 
-export function WidgetDeleteButton({
+export function DeleteButton({
   className,
   onClick = () => {},
   children,
 }: DeleteButtonProps) {
   return (
-    <Button className={className} onClick={onClick}>
+    <StyledButton className={className} onClick={onClick}>
       {children || <Icon />}
-    </Button>
+    </StyledButton>
   );
 }

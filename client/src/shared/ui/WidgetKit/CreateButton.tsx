@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { HiPlus } from 'react-icons/hi2';
-import { WidgetButton } from './WidgetButton';
+import { Button } from './Button';
 
 interface WidgetCreateButtonProps {
   className?: string;
@@ -14,13 +14,13 @@ const Icon = styled(HiPlus)`
   min-height: 1rem;
 `;
 
-export function WidgetCreateButton({
+export function CreateButton({
   className,
   onClick = () => {},
 }: WidgetCreateButtonProps) {
   return (
-    <WidgetButton className={className} onClick={onClick}>
+    <Button className={className} onClick={onClick}>
       <Icon />
-    </WidgetButton>
+    </Button>
   );
 }

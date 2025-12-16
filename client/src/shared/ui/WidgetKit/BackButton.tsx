@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { HiArrowLeft } from 'react-icons/hi2';
 import { useNavigate } from 'react-router';
-import { WidgetButton } from './WidgetButton';
+import { Button } from './Button';
 
 interface BackButtonProps {
   className?: string;
@@ -13,12 +13,12 @@ const Icon = styled(HiArrowLeft)`
   height: 100%;
 `;
 
-export function WidgetBackButton({ className, url }: BackButtonProps) {
+export function BackButton({ className, url }: BackButtonProps) {
   const navigate = useNavigate();
 
   return (
-    <WidgetButton className={className} onClick={() => navigate(url || '/')}>
+    <Button className={className} onClick={() => navigate(url || '/')}>
       <Icon />
-    </WidgetButton>
+    </Button>
   );
 }

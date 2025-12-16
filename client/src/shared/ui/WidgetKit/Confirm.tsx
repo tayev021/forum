@@ -55,7 +55,7 @@ const Button = styled.button`
   }
 `;
 
-export function WidgetConfirm({
+export function Confirm({
   title,
   children,
   closeModal = () => {},

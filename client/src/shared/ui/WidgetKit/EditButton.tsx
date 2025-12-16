@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { HiPencil } from 'react-icons/hi2';
-import { WidgetButton } from './WidgetButton';
+import { Button } from './Button';
 
-interface WidgetEditButtonProps {
+interface EditButtonProps {
   className?: string;
   onClick?: () => void;
 }
@@ -14,13 +14,10 @@ const Icon = styled(HiPencil)`
   min-height: 1rem;
 `;
 
-export function WidgetEditButton({
-  className,
-  onClick = () => {},
-}: WidgetEditButtonProps) {
+export function EditButton({ className, onClick = () => {} }: EditButtonProps) {
   return (
-    <WidgetButton className={className} onClick={onClick}>
+    <Button className={className} onClick={onClick}>
       <Icon />
-    </WidgetButton>
+    </Button>
   );
 }

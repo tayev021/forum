@@ -1,8 +1,8 @@
+import styled from 'styled-components';
 import { useState, type ChangeEvent, type FormEvent } from 'react';
 import { HiChevronRight } from 'react-icons/hi2';
-import styled from 'styled-components';
 
-interface WidgetTitleInputProps {
+interface TitleInputProps {
   currentTitle: string;
   className?: string;
   submit?: (title: string) => void;
@@ -44,11 +44,11 @@ const Button = styled.button`
   }
 `;
 
-export function WidgetTitleInput({
+export function TitleInput({
   currentTitle,
   className,
   submit = () => {},
-}: WidgetTitleInputProps) {
+}: TitleInputProps) {
   const [title, setTitle] = useState(currentTitle);
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {

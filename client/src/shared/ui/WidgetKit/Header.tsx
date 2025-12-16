@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const WidgetHeader = styled.div`
+export const Header = styled.div`
   position: relative;
   display: grid;
   grid-template-columns: 1fr max-content;

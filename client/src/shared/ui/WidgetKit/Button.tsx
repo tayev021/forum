@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const WidgetButton = styled.button`
+export const Button = styled.button`
   width: 2rem;
   height: 2rem;
   display: flex;
