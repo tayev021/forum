@@ -6,6 +6,7 @@ export class Thread extends Model {
   public authorId!: number;
   public forumId!: number;
   public title!: string;
+  public views!: number;
   public createdAt!: string;
 }
 
@@ -32,6 +33,11 @@ Thread.init(
     title: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    views: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
     },
   },
   {
