@@ -1,6 +1,7 @@
 interface Thread {
   id: number;
   title: string;
+  views: number;
   postsCount: number;
   createdAt: string;
 }
