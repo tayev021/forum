@@ -26,7 +26,7 @@ Post.init(
     threadId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: { model: 'thread', key: 'id' },
+      references: { model: 'threads', key: 'id' },
       onDelete: 'CASCADE',
     },
     content: {
