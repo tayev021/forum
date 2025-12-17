@@ -9,7 +9,8 @@ interface ThreadRowProps {
 
 const Li = styled.li`
   display: grid;
-  grid-template-columns: minmax(20rem, 1fr) 10rem 15rem;
+  grid-template-columns: minmax(20rem, 1fr) minmax(9rem, min-content) 7rem 12rem;
+  gap: 1rem;
   padding: 0.5rem;
   border-radius: 0.5rem;
   cursor: pointer;
@@ -20,7 +21,6 @@ const Li = styled.li`
 `;
 
 const Cell = styled.div`
-  padding: 0 0.5rem;
   font-size: 1.4rem;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -43,6 +43,9 @@ export function ThreadItem({ thread }: ThreadRowProps) {
   return (
     <Li onClick={() => navigate(`/threads/${thread.id}?page=1`)}>
       <TitleCell>{thread.title}</TitleCell>
+      <Cell>
+        {thread.views} {thread.views === 1 ? 'view' : 'views'}
+      </Cell>
       <Cell>
         {thread.postsCount} {thread.postsCount > 1 ? 'posts' : 'post'}
       </Cell>
