@@ -20,6 +20,10 @@ export const getThread = catchAsync(async (req: Request, res: Response) => {
     });
   }
 
+  thread.views += 1;
+
+  await thread.save();
+
   const { rows: posts, count } = await Post.findAndCountAll({
     where: { threadId },
     limit: limit,
@@ -39,6 +43,7 @@ export const getThread = catchAsync(async (req: Request, res: Response) => {
     thread: {
       id: thread.id,
       title: thread.title,
+      views: thread.views,
       authorId: thread.authorId,
       forumId: thread.forumId,
       createdAt: thread.createdAt,
