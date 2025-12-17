@@ -26,6 +26,7 @@ export const getForum = catchAsync(async (req: Request, res: Response) => {
     attributes: [
       'id',
       'title',
+      'views',
       'createdAt',
       [sequelize.fn('COUNT', sequelize.col('posts.id')), 'postsCount'],
     ],
