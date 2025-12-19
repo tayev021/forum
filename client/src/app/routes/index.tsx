@@ -1,7 +1,8 @@
 import { useUser } from '../../entities/user';
 import { AppLoader } from '../../shared/ui/AppLoader';
 import { BrowserRouter, Route, Routes } from 'react-router';
-import { AppLayout } from '../layouts/AppLayout';
+import { AppLayout } from '../../shared/layouts/AppLayout';
+import { NavBarWidget } from '../../widgets/NavBarWidget';
 import { HomePage } from '../../pages/HomePage/ui/HomePage';
 import { SigninPage } from '../../pages/SigninPage';
 import { SignupPage } from '../../pages/SignupPage';
@@ -19,7 +20,7 @@ export function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<AppLayout />}>
+        <Route element={<AppLayout NavBar={NavBarWidget} />}>
           <Route index element={<HomePage />} />
           <Route path="signin" element={<SigninPage />} />
           <Route path="signup" element={<SignupPage />} />

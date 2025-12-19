@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { Container } from '../../shared/ui/Container';
-import LogoImage from '../../shared/assets/logo.png';
+import { Container } from '../../../ui/Container';
+import LogoImage from '../../../assets/logo.png';
 
 const Header = styled.header`
   background-color: var(--color-primary);

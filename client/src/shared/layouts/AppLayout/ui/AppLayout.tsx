@@ -1,8 +1,12 @@
 import styled from 'styled-components';
 import { Outlet } from 'react-router';
 import { AppHeader } from './AppHeader';
-import { NavBarWidget } from '../../widgets/NavBarWidget';
 import { AppFooter } from './AppFooter';
+import type { ElementType } from 'react';
+
+interface AppLayoutProps {
+  NavBar: ElementType;
+}
 
 const App = styled.div`
   min-height: 100vh;
@@ -11,18 +15,14 @@ const App = styled.div`
   grid-template-rows: min-content min-content 1fr min-content;
 `;
 
-const Main = styled.main`
-  min-height: 120rem;
-`;
-
-export function AppLayout() {
+export function AppLayout({ NavBar }: AppLayoutProps) {
   return (
     <App>
       <AppHeader />
-      <NavBarWidget />
-      <Main>
+      <NavBar />
+      <main>
         <Outlet />
-      </Main>
+      </main>
       <AppFooter />
     </App>
   );

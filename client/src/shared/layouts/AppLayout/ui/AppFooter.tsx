@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Container } from '../../shared/ui/Container';
+import { Container } from '../../../ui/Container';
 import { HiLink } from 'react-icons/hi2';
 
 const Footer = styled.footer`
