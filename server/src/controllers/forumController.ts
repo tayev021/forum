@@ -8,9 +8,6 @@ import sequelize from 'sequelize';
 
 export const getForum = catchAsync(async (req: Request, res: Response) => {
   const forumId = req.params.forumId;
-  const page = Number(req.query.page) || DEFAULT_PAGE;
-  const limit = Number(req.query.limit) || PAGE_ITEMS_LIMIT;
-  const offset = (page - 1) * limit;
 
   const forum = await Forum.findByPk(forumId);
 
@@ -21,6 +18,20 @@ export const getForum = catchAsync(async (req: Request, res: Response) => {
     });
   }
 
+  const page = Number(req.query.page) || DEFAULT_PAGE;
+  const limit = Number(req.query.limit) || PAGE_ITEMS_LIMIT;
+  const offset = (page - 1) * limit;
+  const sortKey = [
+    'updatedAt',
+    'createdAt',
+    'views',
+    'postsCount',
+    'title',
+  ].includes(String(req.query.sortKey))
+    ? String(req.query.sortKey)
+    : 'updatedAt';
+  const sortOrder = String(req.query.sortOrder) === 'ASC' ? 'ASC' : 'DESC';
+
   const threads = await Thread.findAll({
     where: { forumId },
     attributes: [
@@ -28,6 +39,7 @@ export const getForum = catchAsync(async (req: Request, res: Response) => {
       'title',
       'views',
       'createdAt',
+      'updatedAt',
       [sequelize.fn('COUNT', sequelize.col('posts.id')), 'postsCount'],
     ],
     include: [
@@ -38,6 +50,7 @@ export const getForum = catchAsync(async (req: Request, res: Response) => {
       },
     ],
     group: ['Thread.id'],
+    order: [[sortKey, sortOrder]],
   });
 
   res.status(200).json({
