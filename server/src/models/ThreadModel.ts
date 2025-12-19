@@ -8,6 +8,7 @@ export class Thread extends Model {
   public title!: string;
   public views!: number;
   public createdAt!: string;
+  public updatedAt!: string;
 }
 
 Thread.init(
