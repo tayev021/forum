@@ -68,6 +68,9 @@ export const createPost = catchAsync(async (req: Request, res: Response) => {
     content,
   });
 
+  thread.changed('updatedAt', true);
+  await thread.save();
+
   res.status(201).json({ post });
 });
 
