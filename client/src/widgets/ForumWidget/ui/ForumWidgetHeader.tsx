@@ -1,15 +1,21 @@
 import type { Forum } from '../../../entities/forum';
+import styled from 'styled-components';
 import { useRestrictTo, useUser } from '../../../entities/user';
 import { Widget } from '../../../shared/ui/WidgetKit';
 import { useNavigate } from 'react-router';
 import { InlineModal } from '../../../shared/ui/InlineModal';
 import { UpdateForumTitle } from '../../../features/updateForumTitle';
+import { SortThreads } from '../../../features/sortThreads';
 import { Modal } from '../../../shared/ui/Modal';
 import { DeleteForum } from '../../../features/deleteForum';
 
 interface ForumWidgetHeaderProps {
   forum: Forum;
 }
+
+const StyledHeaderGroup = styled(Widget.HeaderGroup)`
+  overflow: visible;
+`;
 
 export function ForumWidgetHeader({ forum }: ForumWidgetHeaderProps) {
   const { user } = useUser();
@@ -28,7 +34,8 @@ export function ForumWidgetHeader({ forum }: ForumWidgetHeaderProps) {
           </UpdateForumTitle>
         </InlineModal.Window>
       </Widget.HeaderGroup>
-      <Widget.HeaderGroup>
+      <StyledHeaderGroup>
+        {forum.threads.length > 1 && <SortThreads />}
         {hasModeratePermissions && (
           <InlineModal.Open windowName={`editForumTitle-${forum.id}`}>
             <Widget.EditButton />
@@ -53,7 +60,7 @@ export function ForumWidgetHeader({ forum }: ForumWidgetHeaderProps) {
             </Modal.Window>
           </>
         )}
-      </Widget.HeaderGroup>
+      </StyledHeaderGroup>
     </Widget.Header>
   );
 }
