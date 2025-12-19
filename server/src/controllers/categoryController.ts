@@ -12,8 +12,10 @@ export const getCategories = catchAsync(async (req: Request, res: Response) => {
         model: Forum,
         as: 'forums',
         attributes: ['id', 'title'],
+        order: [['updatedAt', 'DESC']],
       },
     ],
+    order: [['createdAt', 'ASC']],
   });
 
   res.status(200).json({ categories });
