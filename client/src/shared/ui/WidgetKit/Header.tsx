@@ -8,5 +8,4 @@ export const Header = styled.div`
   gap: 2rem;
   padding: 1rem 2rem;
   border-bottom: 1px solid var(--color-grey-400);
-  overflow: hidden;
 `;
