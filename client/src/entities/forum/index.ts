@@ -6,6 +6,8 @@ import { updateForum } from './model/thunks/updateForum';
 import { deleteForum } from './model/thunks/deleteForum';
 import { type Forum } from './model/types/Forum';
 import { type ForumData } from './model/types/ForumData';
+import { sortKeys, type SortKey } from './model/types/SortKey';
+import { sortOrders, type SortOrder } from './model/types/SortOrder';
 
 export {
   forumReducer,
@@ -17,4 +19,8 @@ export {
   deleteForum,
   type Forum,
   type ForumData,
+  sortKeys,
+  type SortKey,
+  sortOrders,
+  type SortOrder,
 };
