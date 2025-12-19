@@ -22,7 +22,7 @@ export const getThread = catchAsync(async (req: Request, res: Response) => {
 
   thread.views += 1;
 
-  await thread.save();
+  await thread.save({ silent: true });
 
   const { rows: posts, count } = await Post.findAndCountAll({
     where: { threadId },
