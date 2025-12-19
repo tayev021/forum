@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import { Widget } from '../../../shared/ui/WidgetKit';
-import { useParams } from 'react-router';
+import { useNavigate, useSearchParams } from 'react-router';
 import { useUser } from '../../../entities/user';
+import { useEffect } from 'react';
 import { PostAuthor } from './posts/PostAuthor';
 import { CreateThreadForm } from '../../../features/createThread';
 
@@ -27,8 +28,17 @@ const ThreadCreate = styled.li`
 `;
 
 export function ThreadCreateWidget() {
-  const { forumId } = useParams();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const { user } = useUser();
+
+  const forumId = Number(searchParams.get('forumId'));
+
+  useEffect(() => {
+    if (!forumId || isNaN(forumId)) {
+      navigate('/');
+    }
+  }, [forumId]);
 
   if (!user) return null;
 

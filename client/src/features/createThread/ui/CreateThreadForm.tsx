@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { PrimaryButton } from '../../../shared/ui/PrimaryButton';
 import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react';
-import { useNavigate, useParams } from 'react-router';
+import { useNavigate, useSearchParams } from 'react-router';
 import { useAppDispatch } from '../../../shared/lib/hooks/useAppDispatch';
 import {
   clearThreadError,
@@ -59,11 +59,11 @@ export function CreateThreadForm() {
   const [content, setContent] = useState('');
   const [isCreated, setIsCreated] = useState(false);
   const { thread, isLoading, error: serverError } = useThread();
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const params = useParams();
   const dispatch = useAppDispatch();
 
-  const forumId = Number(params.forumId);
+  const forumId = Number(searchParams.get('forumId'));
 
   useEffect(() => {
     if (serverError?.type === 'general') {

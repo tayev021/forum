@@ -43,7 +43,7 @@ export function ForumWidgetHeader({ forum }: ForumWidgetHeaderProps) {
         )}
         {!!user && (
           <Widget.CreateButton
-            onClick={() => navigate(`/forums/${forum.id}/createThread`)}
+            onClick={() => navigate(`/threads/create?forumId=${forum.id}`)}
           />
         )}
         {hasAdminsPermissions && forum.threads.length === 0 && (

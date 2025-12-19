@@ -34,7 +34,7 @@ export function AppRouter() {
           />
           <Route path="forums/:forumId" element={<ForumPage />} />
           <Route
-            path="forums/:forumId/createThread"
+            path="threads/create"
             element={
               <ProtectedRoute>
                 <ThreadCreatePage />
