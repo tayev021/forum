@@ -11,7 +11,7 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
   const { user } = useUser();
 
   useEffect(() => {
-    if (!user) navigate('/signin');
+    if (!user) navigate('/auth/signin');
   }, [user]);
 
   return children;

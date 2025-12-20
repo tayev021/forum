@@ -23,11 +23,11 @@ const StyledLink = styled(Link)`
 export function AuthPanel() {
   return (
     <>
-      <StyledLink to="/signin">
+      <StyledLink to="/auth/signin">
         <HiKey />
         Sign in
       </StyledLink>
-      <StyledLink to="/signup">
+      <StyledLink to="/auth/signup">
         <HiIdentification />
         Sign up
       </StyledLink>

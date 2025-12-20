@@ -1,5 +1,5 @@
-import { SignupForm } from '../../../features/signup';
-import { Container } from '../../../shared/ui/Container';
+import { Container } from '../../../../shared/ui/Container';
+import { SignupForm } from '../../../../features/signup';
 
 export function SignupPage() {
   return (
