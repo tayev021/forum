@@ -130,7 +130,6 @@ export const signout = catchAsync(async (req: Request, res: Response) => {
   res.clearCookie('token', {
     httpOnly: true,
     secure: false,
-    sameSite: 'none',
   });
   res.status(200).json({});
 });
