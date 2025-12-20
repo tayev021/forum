@@ -5,11 +5,15 @@ import {
   type SortKey,
   type SortOrder,
 } from '../../../entities/forum';
-import { HiMiniArrowLongDown, HiMiniArrowLongUp } from 'react-icons/hi2';
+import { HiBarsArrowDown, HiBarsArrowUp } from 'react-icons/hi2';
 
 const Container = styled.div`
-  width: 17rem;
+  width: 18rem;
+  height: 2rem;
   position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   font-size: 1.4rem;
   line-height: 1.2;
 `;
@@ -17,7 +21,7 @@ const Container = styled.div`
 const Options = styled.ul`
   position: absolute;
   top: -0.6rem;
-  left: 6.2rem;
+  left: 7rem;
   height: 2.5rem;
   padding: 0.2rem;
   border: 1px solid transparent;
@@ -55,13 +59,13 @@ const Option = styled.li`
 `;
 
 const OrderButton = styled.button`
-  transform: translate(3px, 3px);
+  transform: translateY(3px);
   color: var(--color-primary);
   cursor: pointer;
 
   svg {
-    height: 1.4rem;
-    width: 1.4rem;
+    height: 2rem;
+    width: 2rem;
 
     &:hover {
       filter: drop-shadow(0 0 3px var(--color-primary));
@@ -111,9 +115,9 @@ export function SortThreads() {
       </Options>
       <OrderButton onClick={handleClick}>
         {searchParams.get('sortOrder') === 'ASC' ? (
-          <HiMiniArrowLongDown />
+          <HiBarsArrowDown />
         ) : (
-          <HiMiniArrowLongUp />
+          <HiBarsArrowUp />
         )}
       </OrderButton>
     </Container>
