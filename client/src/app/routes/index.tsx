@@ -6,6 +6,8 @@ import { NavBarWidget } from '../../widgets/NavBarWidget';
 import { HomePage } from '../../pages/home/ui/HomePage';
 import { SigninPage, SignupPage } from '../../pages/auth';
 import { ProtectedRoute } from './ProtectedRoute';
+import { AccountLayout } from '../../shared/layouts/AccountLayout';
+import { AccountNavBarWidget } from '../../widgets/AccountNavBarWidget';
 import { ForumPage } from '../../pages/forum';
 import { ThreadCreatePage, ThreadPage } from '../../pages/thread';
 import { PageNotFound } from '../../pages/pageNotFound';
@@ -28,10 +30,15 @@ export function AppRouter() {
             path="account"
             element={
               <ProtectedRoute>
-                <div>Account</div>
+                <AccountLayout NavBar={AccountNavBarWidget} />
               </ProtectedRoute>
             }
-          />
+          >
+            <Route index element={<div>Bio Page</div>} />
+            <Route path="threads" element={<div>Threads Page</div>} />
+            <Route path="posts" element={<div>Posts Page</div>} />
+            <Route path="settings" element={<div>Settings Page</div>} />
+          </Route>
           <Route path="forums">
             <Route path=":forumId" element={<ForumPage />} />
           </Route>
