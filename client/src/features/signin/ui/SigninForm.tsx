@@ -83,7 +83,7 @@ export function SigninForm() {
         <Form.InputError message={errors['password']} />
       </Form.Row>
 
-      <Form.Submit disabled={isLoading}>Sign Up</Form.Submit>
+      <Form.Submit disabled={isLoading}>Sign In</Form.Submit>
 
       <Form.Loader isLoading={isLoading} />
     </Form>
