@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router';
 import { useUser } from '../../../entities/user';
 import { UserAvatar } from '../../../entities/user/ui/UserAvatar';
 import { Signout } from '../../../features/signout';
+import { HiArrowRightOnRectangle } from 'react-icons/hi2';
 
 const Container = styled.div`
   display: flex;
@@ -23,6 +24,15 @@ const Account = styled.button`
   }
 `;
 
+const StyledSignout = styled(Signout)`
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    color: var(--color-text-tertiary);
+  }
+`;
+
 export function UserPanel() {
   const navigate = useNavigate();
   const { user } = useUser();
@@ -35,7 +45,9 @@ export function UserPanel() {
         <UserAvatar username={user.username} avatar={user.avatar} />
         {user.username}
       </Account>
-      <Signout />
+      <StyledSignout>
+        <HiArrowRightOnRectangle />
+      </StyledSignout>
     </Container>
   );
 }
