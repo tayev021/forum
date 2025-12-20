@@ -1,24 +1,23 @@
-import styled from 'styled-components';
-import { HiArrowRightOnRectangle } from 'react-icons/hi2';
+import type { ReactNode } from 'react';
 import { useAppDispatch } from '../../../shared/lib/hooks/useAppDispatch';
 import { signout } from '../../../entities/user';
+import styled from 'styled-components';
+
+interface SignoutProps {
+  className?: string;
+  children: ReactNode | ReactNode[];
+}
 
 const Button = styled.button`
-  display: flex;
-  align-items: center;
   cursor: pointer;
-
-  &:hover {
-    color: var(--color-text-tertiary);
-  }
 `;
 
-export function Signout() {
+export function Signout({ className = '', children }: SignoutProps) {
   const dispatch = useAppDispatch();
 
   return (
-    <Button onClick={() => dispatch(signout())}>
-      <HiArrowRightOnRectangle />
+    <Button className={className} onClick={() => dispatch(signout())}>
+      {children}
     </Button>
   );
 }
