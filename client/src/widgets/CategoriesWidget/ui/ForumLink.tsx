@@ -12,6 +12,9 @@ const StyledLink = styled(Link)`
   display: block;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 
   &:hover {
     background-color: var(--color-grey-200);
