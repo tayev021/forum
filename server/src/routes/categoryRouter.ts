@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { protect } from '../middleware/protect';
 import { restrictTo } from '../middleware/restrictTo';
 import { validate } from '../middleware/validate';
-import { categorySchema } from '../validators/categoryValidator';
+import { categorySchema } from '../validators/categorySchema';
 import {
   getCategories,
   createCategory,

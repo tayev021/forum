@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { protect } from '../middleware/protect';
 import { restrictTo } from '../middleware/restrictTo';
 import { validate } from '../middleware/validate';
-import { forumSchema } from '../validators/forumValidator';
+import { forumSchema } from '../validators/forumSchema';
 import {
   getForum,
   createForum,

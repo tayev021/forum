@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import { protect } from '../middleware/protect';
 import { validate } from '../middleware/validate';
-import { threadSchema } from '../validators/threadValidator';
-import { postSchema } from '../validators/postValidator';
+import { threadSchema } from '../validators/threadSchema';
+import { postSchema } from '../validators/postSchema';
 import {
   getThread,
   createThread,

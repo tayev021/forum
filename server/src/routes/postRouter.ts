@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { protect } from '../middleware/protect';
 import { validate } from '../middleware/validate';
-import { postSchema } from '../validators/postValidator';
+import { postSchema } from '../validators/postSchema';
 import {
   createPost,
   getLatestPosts,
