@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { protect } from '../middleware/protect';
 import { restrictTo } from '../middleware/restrictTo';
 import { validate } from '../middleware/validate';
-import { forumSchema } from '../validators/forumSchema';
+import { forumTitleSchema } from '../validators/forumSchemas';
 import {
   getForum,
   createForum,
@@ -17,14 +17,14 @@ forumRouter.post(
   '/',
   protect,
   restrictTo('admin', 'moderator'),
-  validate(forumSchema),
+  validate(forumTitleSchema),
   createForum
 );
 forumRouter.patch(
   '/:forumId',
   protect,
   restrictTo('admin', 'moderator'),
-  validate(forumSchema),
+  validate(forumTitleSchema),
   updateForum
 );
 forumRouter.delete('/:forumId', protect, restrictTo('admin'), deleteForum);

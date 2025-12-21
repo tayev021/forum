@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import { validate } from '../middleware/validate';
-import { signupSchema } from '../validators/signupSchema';
-import { signinSchema } from '../validators/signinSchema';
+import { signinSchema, signupSchema } from '../validators/authSchemas';
 import { me, signup, signin, signout } from '../controllers/authController';
 import { protect } from '../middleware/protect';
 

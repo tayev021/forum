@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const forumSchema = z.object({
+export const forumTitleSchema = z.object({
   title: z
     .string()
     .min(3, 'Forum title must be at least three characters long')

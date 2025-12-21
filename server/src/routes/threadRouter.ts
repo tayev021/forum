@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import { protect } from '../middleware/protect';
 import { validate } from '../middleware/validate';
-import { threadSchema } from '../validators/threadSchema';
-import { postSchema } from '../validators/postSchema';
+import { threadTitleSchema } from '../validators/threadSchemas';
+import { postContentSchema } from '../validators/postSchemas';
 import {
   getThread,
   createThread,
@@ -17,10 +17,15 @@ threadRouter.get('/:threadId', getThread);
 threadRouter.post(
   '/',
   protect,
-  validate(threadSchema, postSchema),
+  validate(threadTitleSchema, postContentSchema),
   createThread
 );
-threadRouter.patch('/:threadId', protect, validate(threadSchema), updateThread);
+threadRouter.patch(
+  '/:threadId',
+  protect,
+  validate(threadTitleSchema),
+  updateThread
+);
 threadRouter.delete('/:threadId', protect, restrictTo('admin'), deleteThread);
 
 export { threadRouter };

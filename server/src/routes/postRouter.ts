@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { protect } from '../middleware/protect';
 import { validate } from '../middleware/validate';
-import { postSchema } from '../validators/postSchema';
+import { postContentSchema } from '../validators/postSchemas';
 import {
   createPost,
   getLatestPosts,
@@ -11,7 +11,7 @@ import {
 const postRouter = Router();
 
 postRouter.get('/latest', getLatestPosts);
-postRouter.post('/', protect, validate(postSchema), createPost);
-postRouter.patch('/:postId', protect, validate(postSchema), updatePost);
+postRouter.post('/', protect, validate(postContentSchema), createPost);
+postRouter.patch('/:postId', protect, validate(postContentSchema), updatePost);
 
 export { postRouter };

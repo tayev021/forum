@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const postSchema = z.object({
+export const postContentSchema = z.object({
   content: z
     .string()
     .min(1, 'Post content must be at least 1 character long')

@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { protect } from '../middleware/protect';
 import { restrictTo } from '../middleware/restrictTo';
 import { validate } from '../middleware/validate';
-import { categorySchema } from '../validators/categorySchema';
+import { categoryTitleSchema } from '../validators/categorySchemas';
 import {
   getCategories,
   createCategory,
@@ -17,14 +17,14 @@ categoryRouter.post(
   '/',
   protect,
   restrictTo('admin', 'moderator'),
-  validate(categorySchema),
+  validate(categoryTitleSchema),
   createCategory
 );
 categoryRouter.patch(
   '/:categoryId',
   protect,
   restrictTo('admin', 'moderator'),
-  validate(categorySchema),
+  validate(categoryTitleSchema),
   updateCategory
 );
 categoryRouter.delete(

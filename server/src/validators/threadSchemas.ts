@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const threadSchema = z.object({
+export const threadTitleSchema = z.object({
   title: z
     .string()
     .min(3, 'Thread title must be at least 3 characters long')
