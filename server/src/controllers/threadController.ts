@@ -4,6 +4,7 @@ import { DEFAULT_PAGE, PAGE_ITEMS_LIMIT } from '../constants';
 import { Forum, Post, Thread, User } from '../models';
 import { AppError } from '../utils/AppError';
 import { capitalize } from '../utils/capitalize';
+import sequelize from 'sequelize';
 
 export const getThread = catchAsync(async (req: Request, res: Response) => {
   const threadId = req.params.threadId;
@@ -54,6 +55,52 @@ export const getThread = catchAsync(async (req: Request, res: Response) => {
     },
   });
 });
+
+export const getAuthorThreads = catchAsync(
+  async (req: Request, res: Response) => {
+    const authorId = req.params.authorId;
+    const page = Number(req.query.page) || DEFAULT_PAGE;
+    const limit = Number(req.query.limit) || PAGE_ITEMS_LIMIT;
+    const offset = (page - 1) * limit;
+
+    const author = await User.findByPk(authorId);
+
+    if (!author) {
+      throw new AppError(400, 'Failed to get threads!', {
+        type: 'general',
+        message: 'An author with such an identifier does not exist',
+      });
+    }
+
+    const threads = await Thread.findAll({
+      where: { authorId: authorId },
+      attributes: [
+        'id',
+        'title',
+        'views',
+        'createdAt',
+        'updatedAt',
+        [sequelize.fn('COUNT', sequelize.col('posts.id')), 'postsCount'],
+      ],
+      include: [
+        {
+          model: Post,
+          as: 'posts',
+          attributes: [],
+        },
+      ],
+      group: ['Thread.id'],
+      order: [['createdAt', 'DESC']],
+    });
+
+    res.status(200).json({
+      threads: threads.slice(offset, offset + limit),
+      totalThreads: threads.length,
+      page: page,
+      totalPages: Math.ceil(threads.length / limit),
+    });
+  }
+);
 
 export const createThread = catchAsync(async (req: Request, res: Response) => {
   const user = req.user!;
