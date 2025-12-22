@@ -5,6 +5,7 @@ import { threadTitleSchema } from '../validators/threadSchemas';
 import { postContentSchema } from '../validators/postSchemas';
 import {
   getThread,
+  getAuthorThreads,
   createThread,
   updateThread,
   deleteThread,
@@ -14,6 +15,7 @@ import { restrictTo } from '../middleware/restrictTo';
 const threadRouter = Router();
 
 threadRouter.get('/:threadId', getThread);
+threadRouter.get('/author/:authorId', getAuthorThreads);
 threadRouter.post(
   '/',
   protect,
