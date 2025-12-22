@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { SERVER_URL } from '../../../shared/constants';
 
 interface UserAvatarProps {
   username: string;
@@ -25,6 +26,7 @@ const Avatar = styled.div<AvatarProps>`
   text-transform: uppercase;
   color: var(--color-primary);
   background-color: var(--color-text-secondary);
+  overflow: hidden;
 `;
 
 const Image = styled.img`
@@ -40,7 +42,10 @@ export function UserAvatar({
   return (
     <Avatar $size={size} className={className}>
       {avatar ? (
-        <Image src={avatar} alt={`${username} avatar`} />
+        <Image
+          src={`${SERVER_URL}/images/avatars/${avatar}`}
+          alt={`${username} avatar`}
+        />
       ) : (
         username.slice(0, 2)
       )}
