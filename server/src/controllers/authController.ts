@@ -15,6 +15,7 @@ export const me = catchAsync(async (req: Request, res: Response) => {
       username: user.username,
       email: user.email,
       avatar: user.avatar,
+      bio: user.bio,
       role: user.role,
       lastSignIn: user.lastSignIn,
       createdAt: user.createdAt,
@@ -32,8 +33,7 @@ export const signup = catchAsync(async (req: Request, res: Response) => {
   });
 
   if (existingUser) {
-    const field =
-      existingUser.dataValues.username === username ? 'username' : 'email';
+    const field = existingUser.username === username ? 'username' : 'email';
 
     throw new AppError(400, 'Fail to sign up!', {
       type: 'validation',
@@ -54,7 +54,7 @@ export const signup = catchAsync(async (req: Request, res: Response) => {
     password: hashedPassword,
   });
 
-  const token = signToken({ id: user.dataValues.id });
+  const token = signToken({ id: user.id });
 
   user.lastSignIn = new Date();
   await user.save();
@@ -86,23 +86,20 @@ export const signin = catchAsync(async (req: Request, res: Response) => {
   if (!user) {
     throw new AppError(400, 'Fail to sign in!', {
       type: 'general',
-      message: 'Wrong email address or password.',
+      message: 'Wrong email address or password',
     });
   }
 
-  const isCorrectPassword = await bcrypt.compare(
-    password,
-    user.dataValues.password
-  );
+  const isCorrectPassword = await bcrypt.compare(password, user.password);
 
   if (!isCorrectPassword) {
     throw new AppError(400, 'Fail to sign in!', {
       type: 'general',
-      message: 'Wrong email address or password.',
+      message: 'Wrong email address or password',
     });
   }
 
-  const token = signToken({ id: user.dataValues.id });
+  const token = signToken({ id: user.id });
 
   user.lastSignIn = new Date();
   await user.save();
