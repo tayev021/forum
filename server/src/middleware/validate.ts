@@ -4,6 +4,13 @@ import { AppError } from '../utils/AppError';
 
 export function validate(...schemas: ZodType<any>[]) {
   return (req: Request, res: Response, next: NextFunction) => {
+    if (!req.body) {
+      throw new AppError(400, 'Data error!', {
+        type: 'general',
+        message: 'Failed to parse received data',
+      });
+    }
+
     for (const schema of schemas) {
       const result = schema.safeParse(req.body);
 
