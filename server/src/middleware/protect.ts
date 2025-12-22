@@ -23,7 +23,6 @@ export async function protect(req: Request, res: Response, next: NextFunction) {
     });
   }
 
-  currentUser.dataValues.password = '';
   req.user = currentUser;
   next();
 }
