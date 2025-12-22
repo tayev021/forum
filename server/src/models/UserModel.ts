@@ -8,6 +8,7 @@ export class User extends Model {
   public email!: string;
   public password!: string;
   public avatar!: string;
+  public bio!: string;
   public role!: UserRole;
   public lastSignIn!: Date;
   public createdAt!: Date;
@@ -34,6 +35,9 @@ User.init(
       allowNull: false,
     },
     avatar: {
+      type: DataTypes.STRING,
+    },
+    bio: {
       type: DataTypes.STRING,
     },
     role: {
