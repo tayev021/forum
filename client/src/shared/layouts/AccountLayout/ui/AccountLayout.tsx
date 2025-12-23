@@ -9,7 +9,7 @@ interface AccountLayoutProps {
 
 const StyledContainer = styled(Container)`
   display: grid;
-  grid-template-columns: 22rem minmax(30rem, 1fr);
+  grid-template-columns: 20rem minmax(30rem, 1fr);
   gap: 2rem;
   padding: 4rem 2rem;
 `;
