@@ -5,6 +5,8 @@ import { signup } from '../thunks/signup';
 import { signin } from '../thunks/signin';
 import { signout } from '../thunks/signout';
 import type { ServerError } from '../../../../shared/types/ServerError';
+import { changeAvatar } from '../thunks/changeAvatar';
+import { updateBio } from '../thunks/updateBio';
 
 interface UserState {
   user: User | null;
@@ -97,6 +99,50 @@ const userSlice = createSlice({
     });
     builder.addCase(signout.rejected, (state, action) => {
       state.user = null;
+      state.isLoading = false;
+
+      if (action.payload) {
+        state.error = action.payload;
+      } else {
+        state.error = { type: 'general', message: 'Unknown error!' };
+      }
+    });
+
+    builder.addCase(changeAvatar.pending, (state, _action) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(
+      changeAvatar.fulfilled,
+      (state, action: PayloadAction<User>) => {
+        state.user = action.payload;
+        state.isLoading = false;
+        state.error = null;
+      }
+    );
+    builder.addCase(changeAvatar.rejected, (state, action) => {
+      state.isLoading = false;
+
+      if (action.payload) {
+        state.error = action.payload;
+      } else {
+        state.error = { type: 'general', message: 'Unknown error!' };
+      }
+    });
+
+    builder.addCase(updateBio.pending, (state, _action) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(
+      updateBio.fulfilled,
+      (state, action: PayloadAction<User>) => {
+        state.user = action.payload;
+        state.isLoading = false;
+        state.error = null;
+      }
+    );
+    builder.addCase(updateBio.rejected, (state, action) => {
       state.isLoading = false;
 
       if (action.payload) {
