@@ -11,6 +11,7 @@ import {
 import { Signout } from '../../../features/signout';
 
 const Container = styled(Widget.Container)`
+  height: max-content;
   padding: 2rem 0;
   border: none;
   overflow: hidden;
