@@ -4,14 +4,18 @@ import type { LatestPost } from '../types/LatestPost';
 import { getLatestPosts } from '../thunks/getLatestPosts';
 import { createPost } from '../thunks/createPost';
 import { updatePost } from '../thunks/updatePost';
+import type { AuthorPosts } from '../types/AuthorPosts';
+import { getAuthorPosts } from '../thunks/getAuthorPosts';
 
 interface PostState {
+  authorPosts: AuthorPosts | null;
   latestPosts: LatestPost[];
   isLoading: boolean;
   error: ServerError | null;
 }
 
 const initialState: PostState = {
+  authorPosts: null,
   latestPosts: [],
   isLoading: false,
   error: null,
@@ -37,6 +41,21 @@ const postSlice = createSlice({
       }
     );
     builder.addCase(getLatestPosts.rejected, (state, _action) => {
+      state.latestPosts = [];
+      state.isLoading = false;
+    });
+
+    builder.addCase(getAuthorPosts.pending, (state, _action) => {
+      state.isLoading = true;
+    });
+    builder.addCase(
+      getAuthorPosts.fulfilled,
+      (state, action: PayloadAction<AuthorPosts>) => {
+        state.authorPosts = action.payload;
+        state.isLoading = false;
+      }
+    );
+    builder.addCase(getAuthorPosts.rejected, (state, _action) => {
       state.latestPosts = [];
       state.isLoading = false;
     });
