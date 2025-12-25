@@ -76,7 +76,23 @@ export const getAuthorPosts = catchAsync(
         {
           model: Thread,
           as: 'thread',
-          attributes: ['id', 'title'],
+          attributes: [
+            'id',
+            'title',
+            [
+              sequelize.literal(`
+                  CEIL(
+                    (
+                      SELECT COUNT(*)
+                      FROM posts p2
+                      WHERE p2.threadId = Post.threadId
+                        AND p2.createdAt <= Post.createdAt
+                    ) / ${PAGE_ITEMS_LIMIT}
+                  ) 
+              `),
+              'page',
+            ],
+          ],
         },
       ],
       order: [['createdAt', 'DESC']],
