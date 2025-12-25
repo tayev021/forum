@@ -60,7 +60,7 @@ export function Pagination({
   currentPage,
   totalPages,
 }: PaginationProps) {
-  if (totalPages === 1) return null;
+  if (totalPages <= 1) return null;
 
   const links = paginate(currentPage, totalPages).map((page) => {
     if (page.type === 'placeholder') {
