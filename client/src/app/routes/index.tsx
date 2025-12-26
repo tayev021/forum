@@ -8,7 +8,11 @@ import { SigninPage, SignupPage } from '../../pages/auth';
 import { ProtectedRoute } from './ProtectedRoute';
 import { AccountLayout } from '../../shared/layouts/AccountLayout';
 import { AccountNavBarWidget } from '../../widgets/AccountNavBarWidget';
-import { AuthorPostsPage, BioPage } from '../../pages/account';
+import {
+  AuthorPostsPage,
+  AuthorThreadsPage,
+  BioPage,
+} from '../../pages/account';
 import { ForumPage } from '../../pages/forum';
 import { ThreadCreatePage, ThreadPage } from '../../pages/thread';
 import { PageNotFound } from '../../pages/pageNotFound';
@@ -37,7 +41,7 @@ export function AppRouter() {
           >
             <Route index element={<BioPage />} />
             <Route path="posts" element={<AuthorPostsPage />} />
-            <Route path="threads" element={<div>Threads Page</div>} />
+            <Route path="threads" element={<AuthorThreadsPage />} />
             <Route path="settings" element={<div>Settings Page</div>} />
           </Route>
           <Route path="forums">
