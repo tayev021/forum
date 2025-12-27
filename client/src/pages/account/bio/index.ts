@@ -1,3 +1,3 @@
-import { BioPage } from './ui/BioPage';
+import { AccountBioPage } from './ui/AccountBioPage';
 
-export { BioPage };
+export { AccountBioPage };

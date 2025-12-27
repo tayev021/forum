@@ -1,5 +1,5 @@
-import { BioPage } from './bio';
-import { AuthorPostsPage } from './posts';
-import { AuthorThreadsPage } from './threads';
+import { AccountBioPage } from './bio';
+import { AccountPostsPage } from './posts';
+import { AccountThreadsPage } from './threads';
 
-export { BioPage, AuthorPostsPage, AuthorThreadsPage };
+export { AccountBioPage, AccountPostsPage, AccountThreadsPage };

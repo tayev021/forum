@@ -1,3 +1,3 @@
-import { AuthorPostsPage } from './ui/AuthorPostsPage';
+import { AccountPostsPage } from './ui/AccountPostsPage';
 
-export { AuthorPostsPage };
+export { AccountPostsPage };

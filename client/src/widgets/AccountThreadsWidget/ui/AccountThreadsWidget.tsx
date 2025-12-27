@@ -16,7 +16,7 @@ const StyledPagination = styled(Pagination)`
   margin-top: 2rem;
 `;
 
-export function AuthorThreadsWidget() {
+export function AccountThreadsWidget() {
   const { user } = useUser();
   const { authorThreads, isLoading } = useAuthorThreads();
   const [searchParams] = useSearchParams();

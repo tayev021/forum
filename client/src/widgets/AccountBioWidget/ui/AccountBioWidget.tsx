@@ -51,7 +51,7 @@ const NoBio = styled.p`
   color: var(--color-grey-500);
 `;
 
-export function BioWidget() {
+export function AccountBioWidget() {
   const [isUpdating, setIsUpdating] = useState(false);
   const { user } = useUser();
 

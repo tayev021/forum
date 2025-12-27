@@ -1,3 +1,3 @@
-import { AuthorThreadsPage } from './ui/AuthorThreadsPage';
+import { AccountThreadsPage } from './ui/AccountThreadsPage';
 
-export { AuthorThreadsPage };
+export { AccountThreadsPage };

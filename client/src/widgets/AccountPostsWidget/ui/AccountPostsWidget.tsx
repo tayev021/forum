@@ -27,7 +27,7 @@ const PostsList = styled.ul`
   gap: 2rem;
 `;
 
-export function AuthorPostsWidget() {
+export function AccountPostsWidget() {
   const { user } = useUser();
   const { authorPosts, isLoading } = useAuthorPosts();
   const [searchParams] = useSearchParams();
