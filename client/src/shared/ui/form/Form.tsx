@@ -9,6 +9,7 @@ import { Submit } from './Submit';
 import { Loader } from './Loader';
 
 interface FormProps {
+  className?: string;
   onSubmit: (e: FormEvent) => void;
   children: ReactElement | ReactElement[];
 }
@@ -26,8 +27,12 @@ const StyledForm = styled.form`
   box-shadow: var(--shadow-medium);
 `;
 
-export function Form({ onSubmit, children }: FormProps) {
-  return <StyledForm onSubmit={onSubmit}>{children}</StyledForm>;
+export function Form({ className, onSubmit, children }: FormProps) {
+  return (
+    <StyledForm className={className} onSubmit={onSubmit}>
+      {children}
+    </StyledForm>
+  );
 }
 
 Form.Heading = Heading;
