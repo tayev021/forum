@@ -34,6 +34,18 @@ export const updatePassword = catchAsync(
     const previousPassword = req.body.previousPassword;
     const password = req.body.password;
 
+    if (previousPassword === password) {
+      throw new AppError(400, 'Fail to change password!', {
+        type: 'validation',
+        fields: [
+          {
+            field: 'password',
+            message: 'Password must be different from the previous one',
+          },
+        ],
+      });
+    }
+
     const isCorrectPassword = await bcrypt.compare(
       previousPassword,
       user.password
@@ -41,8 +53,13 @@ export const updatePassword = catchAsync(
 
     if (!isCorrectPassword) {
       throw new AppError(400, 'Fail to change password!', {
-        type: 'general',
-        message: 'Wrong previous password',
+        type: 'validation',
+        fields: [
+          {
+            field: 'previousPassword',
+            message: 'Wrong previous password',
+          },
+        ],
       });
     }
 
