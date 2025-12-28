@@ -26,7 +26,8 @@ type Action =
       };
     }
   | { type: 'change'; payload: { inputName: string; value: string } }
-  | { type: 'error'; payload: { inputName: string; error: string } };
+  | { type: 'error'; payload: { inputName: string; error: string } }
+  | { type: 'reset' };
 
 interface Options {
   defaultValue?: string;
@@ -63,6 +64,15 @@ function reducer(state: State, action: Action): State {
           error: action.payload.error,
         },
       };
+    case 'reset':
+      return Object.entries(state)
+        .map(([inputName, input]) => {
+          return [inputName, { ...input, value: '', error: '' }] as const;
+        })
+        .reduce((acc: State, [inputName, input]) => {
+          acc[inputName] = input;
+          return acc;
+        }, {});
     default:
       return state;
   }
@@ -165,5 +175,9 @@ export function useForm() {
     };
   }
 
-  return { register, getValues, getErrors, setError, handleSubmit };
+  function reset() {
+    dispatch({ type: 'reset' });
+  }
+
+  return { register, getValues, getErrors, setError, handleSubmit, reset };
 }
