@@ -9,9 +9,10 @@ import { ProtectedRoute } from './ProtectedRoute';
 import { AccountLayout } from '../../shared/layouts/AccountLayout';
 import { AccountNavBarWidget } from '../../widgets/AccountNavBarWidget';
 import {
+  AccountBioPage,
   AccountPostsPage,
   AccountThreadsPage,
-  AccountBioPage,
+  AccountSettingsPage,
 } from '../../pages/account';
 import { ForumPage } from '../../pages/forum';
 import { ThreadCreatePage, ThreadPage } from '../../pages/thread';
@@ -42,7 +43,7 @@ export function AppRouter() {
             <Route index element={<AccountBioPage />} />
             <Route path="posts" element={<AccountPostsPage />} />
             <Route path="threads" element={<AccountThreadsPage />} />
-            <Route path="settings" element={<div>Settings Page</div>} />
+            <Route path="settings" element={<AccountSettingsPage />} />
           </Route>
           <Route path="forums">
             <Route path=":forumId" element={<ForumPage />} />
