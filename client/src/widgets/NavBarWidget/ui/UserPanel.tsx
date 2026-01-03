@@ -42,7 +42,7 @@ export function UserPanel() {
   return (
     <Container>
       <Account onClick={() => navigate('/account')}>
-        <UserAvatar username={user.username} avatar={user.avatar} />
+        <UserAvatar user={user} />
         {user.username}
       </Account>
       <StyledSignout>
