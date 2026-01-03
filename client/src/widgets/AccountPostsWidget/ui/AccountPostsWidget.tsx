@@ -7,6 +7,7 @@ import { useAppDispatch } from '../../../shared/lib/hooks/useAppDispatch';
 import { Pagination } from '../../../shared/ui/Pagination';
 import { useSearchParams } from 'react-router';
 import { Post } from './Post';
+import { NoPosts } from './NoPosts';
 
 const Container = styled.div`
   display: flex;
@@ -48,7 +49,9 @@ export function AccountPostsWidget() {
       <StyledWidgetHeader>
         <Widget.Title>{user?.username} posts</Widget.Title>
       </StyledWidgetHeader>
-      {authorPosts && (
+      {authorPosts.posts.length < 1 ? (
+        <NoPosts />
+      ) : (
         <>
           <PostsList>
             {authorPosts?.posts.map((post) => (
