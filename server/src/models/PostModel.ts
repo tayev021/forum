@@ -3,10 +3,11 @@ import { database } from '../config/database';
 
 export class Post extends Model {
   public id!: number;
-  public authorId!: number;
+  public authorId!: number | null;
   public threadId!: number;
   public content!: string;
   public createdAt!: string;
+  public updatedAt!: string;
 }
 
 Post.init(
@@ -19,7 +20,7 @@ Post.init(
     },
     authorId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       references: { model: 'users', key: 'id' },
       onDelete: 'CASCADE',
     },
