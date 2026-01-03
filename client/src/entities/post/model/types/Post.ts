@@ -1,12 +1,6 @@
-interface Thread {
-  id: number;
-  title: string;
-  page: number;
-}
+import type { Post as BasePost } from '../../../../shared/types/Post';
+import type { PostThread } from './PostThread';
 
-export interface Post {
-  id: number;
-  thread: Thread;
-  content: string;
-  createdAt: string;
-}
+export type Post = Pick<BasePost, 'id' | 'content' | 'createdAt'> & {
+  thread: PostThread;
+};

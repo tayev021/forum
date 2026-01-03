@@ -5,7 +5,7 @@ import { useAuthorPosts } from './lib/hooks/useAuthorPosts';
 import { useLatestPosts } from './lib/hooks/useLatestPosts';
 import { updatePost } from './model/thunks/updatePost';
 import { getAuthorPosts } from './model/thunks/getAuthorPosts';
-import type { Post } from './model/types/Post';
+import { type Post } from './model/types/Post';
 
 export {
   postReducer,

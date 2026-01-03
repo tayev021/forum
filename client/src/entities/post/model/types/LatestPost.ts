@@ -1,18 +1,10 @@
-interface Author {
-  username: string;
-  avatar: string | null;
-}
-
-interface Thread {
-  id: number;
-  title: string;
-  page: string;
-}
+import type { LatestPostAuthor } from './LatestPostAuthor';
+import type { LatestPostThread } from './LatestPostThread';
 
 export interface LatestPost {
   id: number;
-  author: Author;
-  thread: Thread;
+  author: LatestPostAuthor | null;
+  thread: LatestPostThread;
   content: string;
   createdAt: string;
 }
