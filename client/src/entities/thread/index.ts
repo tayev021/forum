@@ -6,8 +6,10 @@ import { updateThread } from './model/thunks/updateThread';
 import { deleteThread } from './model/thunks/deleteThread';
 import { useThread } from './lib/hooks/useThread';
 import { useAuthorThreads } from './lib/hooks/useAuthorThreads';
-import { type Thread } from './model/types/Thread';
 import { type AuthorThread } from './model/types/AuthorThread';
+import { type Thread } from './model/types/Thread';
+import { type ThreadPost } from './model/types/ThreadPost';
+import { type ThreadPostAuthor } from './model/types/ThreadPostAuthor';
 
 export {
   threadReducer,
@@ -19,6 +21,8 @@ export {
   deleteThread,
   useThread,
   useAuthorThreads,
-  type Thread,
   type AuthorThread,
+  type Thread,
+  type ThreadPost,
+  type ThreadPostAuthor,
 };

@@ -1,30 +1,9 @@
-type AuthorRole = 'user' | 'moderator' | 'admin';
+import type { Thread as BaseThread } from '../../../../shared/types/Thread';
+import type { ThreadPost } from './ThreadPost';
 
-interface Author {
-  id: number;
-  username: string;
-  avatar: string | null;
-  role: AuthorRole;
-  lastSignIn: string;
-}
-
-interface Post {
-  id: number;
-  threadId: number;
-  content: string;
-  author: Author;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface Thread {
-  id: number;
-  title: string;
-  authorId: number;
-  forumId: number;
-  createdAt: string;
-  posts: Post[];
+export type Thread = BaseThread & {
+  posts: ThreadPost[];
   totalPosts: number;
   page: number;
   totalPages: number;
-}
+};
