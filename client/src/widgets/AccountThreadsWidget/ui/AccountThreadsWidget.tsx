@@ -7,6 +7,7 @@ import { useAppDispatch } from '../../../shared/lib/hooks/useAppDispatch';
 import { useEffect } from 'react';
 import { Pagination } from '../../../shared/ui/Pagination';
 import { Thread } from './Thread';
+import { NoThreads } from './NoThreads';
 
 const ThreadsList = styled.ul`
   padding: 1rem;
@@ -32,15 +33,19 @@ export function AccountThreadsWidget() {
     return <Widget.Loader />;
   }
 
+  if (!user) return null;
+
   return (
     <>
       <Widget.Container>
         <Widget.Header>
-          <Widget.Title>{user?.username} threads</Widget.Title>
+          <Widget.Title>{user.username} threads</Widget.Title>
         </Widget.Header>
-        {authorThreads && (
+        {authorThreads.threads.length < 1 ? (
+          <NoThreads />
+        ) : (
           <ThreadsList>
-            {authorThreads?.threads.map((thread) => (
+            {authorThreads.threads.map((thread) => (
               <Thread key={thread.id} thread={thread} />
             ))}
           </ThreadsList>
