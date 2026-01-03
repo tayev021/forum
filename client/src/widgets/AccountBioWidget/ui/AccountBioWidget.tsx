@@ -64,7 +64,7 @@ export function AccountBioWidget() {
       </Widget.Header>
       <Main>
         <AvatarContainer>
-          <UserAvatar username={user.username} avatar={user.avatar} size={16} />
+          <UserAvatar user={user} size={16} />
           <ChangeAvatar />
         </AvatarContainer>
         <div>
