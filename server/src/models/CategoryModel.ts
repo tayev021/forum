@@ -3,7 +3,7 @@ import { database } from '../config/database';
 
 export class Category extends Model {
   public id!: number;
-  public authorId!: number;
+  public authorId!: number | null;
   public title!: string;
   public createdAt!: string;
 }
@@ -18,7 +18,7 @@ Category.init(
     },
     authorId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       references: { model: 'users', key: 'id' },
       onDelete: 'CASCADE',
     },
