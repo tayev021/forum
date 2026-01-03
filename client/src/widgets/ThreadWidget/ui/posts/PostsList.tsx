@@ -1,9 +1,9 @@
+import type { ThreadPost } from '../../../../entities/thread';
 import styled from 'styled-components';
-import type { Post } from '../../model/types/Post';
 import { PostItem } from './PostItem';
 
 interface PostsListProps {
-  posts: Post[];
+  posts: ThreadPost[];
 }
 
 const StyledPostsList = styled.ul`

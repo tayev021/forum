@@ -1,10 +1,10 @@
-import type { Author } from '../../model/types/Author';
+import type { ThreadPostAuthor } from '../../../../entities/thread';
 import styled from 'styled-components';
 import { UserAvatar } from '../../../../entities/user/ui/UserAvatar';
 import { formatRelativeTime } from '../../../../shared/lib/utils/formatRelativeTime';
 
 interface PostAuthorProps {
-  author: Author;
+  author: ThreadPostAuthor | null;
 }
 
 const StyledPostAuthor = styled.div`
@@ -46,16 +46,14 @@ const SignInTime = styled.p`
 export function PostAuthor({ author }: PostAuthorProps) {
   return (
     <StyledPostAuthor>
-      <StyledAuthorAvatar
-        username={author.username}
-        avatar={author.avatar}
-        size={8}
-      />
-      <AuthorName>{author.username}</AuthorName>
+      <StyledAuthorAvatar user={author} size={8} />
+      <AuthorName>{author?.username || 'deleted'}</AuthorName>
       <AuthorRole>
-        {['admin', 'moderator'].includes(author.role) ? author.role : ''}
+        {['admin', 'moderator'].includes(author?.role || '')
+          ? author?.role
+          : ''}
       </AuthorRole>
-      {author.lastSignIn && (
+      {author?.lastSignIn && (
         <>
           <SignInTime>last sign in:</SignInTime>
           <SignInTime>{formatRelativeTime(author.lastSignIn)}</SignInTime>

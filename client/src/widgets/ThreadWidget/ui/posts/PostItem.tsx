@@ -1,13 +1,13 @@
 import styled from 'styled-components';
-import type { Post } from '../../model/types/Post';
 import { useEffect, useState } from 'react';
 import { PostUpdate } from './PostUpdate';
 import { PostAuthor } from './PostAuthor';
 import { PostContent } from './PostContent';
 import { useOutsideClick } from '../../../../shared/lib/hooks/useOutsideClick';
+import type { ThreadPost } from '../../../../entities/thread';
 
 interface PostItemProps {
-  post: Post;
+  post: ThreadPost;
 }
 
 interface StyledPostItemProps {
@@ -46,7 +46,7 @@ export function PostItem({ post }: PostItemProps) {
 
   return (
     <StyledPostItem id={post.id}>
-      <PostAuthor author={post.author} />
+      <PostAuthor author={post?.author} />
       <PostContent
         post={post}
         handleUpdate={() => setIsUpdating((current) => !current)}

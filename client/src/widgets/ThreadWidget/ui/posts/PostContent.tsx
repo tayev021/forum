@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import type { Post } from '../../model/types/Post';
+import type { ThreadPost } from '../../../../entities/thread';
 import { Widget } from '../../../../shared/ui/WidgetKit';
 import { useUser } from '../../../../entities/user';
 import { formatRelativeTime } from '../../../../shared/lib/utils/formatRelativeTime';
 
 interface PostContentProps {
-  post: Post;
+  post: ThreadPost;
   handleUpdate: () => void;
 }
 
@@ -52,7 +52,7 @@ export function PostContent({ post, handleUpdate }: PostContentProps) {
       <Header>
         <Time>{formatRelativeTime(post.createdAt)}</Time>
         <div>
-          {user?.id === post.author.id && (
+          {user?.id === post?.author?.id && (
             <StyledEditButton onClick={handleUpdate} />
           )}
         </div>
