@@ -65,11 +65,7 @@ export function LatestPost({ post }: LatestPostProps) {
         to={`/threads/${post.thread.id}?page=${post.thread.page}#${post.id}`}
       >
         <Header>
-          <UserAvatar
-            username={post.author.username}
-            avatar={post.author.avatar}
-            size={4}
-          />
+          <UserAvatar user={post.author} size={4} />
           <HeaderGroup>
             <Title>{post.thread.title}</Title>
             <Time>{formatRelativeTime(post.createdAt)}</Time>
