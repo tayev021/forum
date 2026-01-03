@@ -1,16 +1,10 @@
-interface Thread {
-  id: number;
-  title: string;
-  views: number;
-  postsCount: number;
-  createdAt: string;
-}
+import type { ForumThread } from './ForumThread';
 
 export interface Forum {
   id: number;
   title: string;
   createdAt: string;
-  threads: Thread[];
+  threads: ForumThread[];
   totalThreads: number;
   page: number;
   totalPages: number;
