@@ -48,6 +48,7 @@ export const getThread = catchAsync(async (req: Request, res: Response) => {
       authorId: thread.authorId,
       forumId: thread.forumId,
       createdAt: thread.createdAt,
+      updatedAt: thread.updatedAt,
       posts: posts,
       totalPosts: count,
       page: page,
@@ -148,7 +149,7 @@ export const createThread = catchAsync(async (req: Request, res: Response) => {
       {
         model: User,
         as: 'author',
-        attributes: ['id', 'username', 'avatar', 'lastSignIn'],
+        attributes: ['id', 'username', 'avatar', 'role', 'lastSignIn'],
       },
     ],
   });
@@ -157,9 +158,11 @@ export const createThread = catchAsync(async (req: Request, res: Response) => {
     thread: {
       id: thread.id,
       title: thread.title,
+      views: thread.views,
       authorId: thread.authorId,
       forumId: thread.forumId,
       createdAt: thread.createdAt,
+      updatedAt: thread.updatedAt,
       posts: [post],
       totalPosts: 1,
       page: 1,
