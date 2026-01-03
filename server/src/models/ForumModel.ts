@@ -3,7 +3,7 @@ import { database } from '../config/database';
 
 export class Forum extends Model {
   public id!: number;
-  public authorId!: number;
+  public authorId!: number | null;
   public categoryId!: number;
   public title!: string;
   public createdAt!: string;
@@ -19,7 +19,7 @@ Forum.init(
     },
     authorId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       references: { model: 'users', key: 'id' },
       onDelete: 'CASCADE',
     },
