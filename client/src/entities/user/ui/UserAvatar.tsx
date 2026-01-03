@@ -1,15 +1,17 @@
+import type { User } from '../../../shared/types/User';
 import styled from 'styled-components';
 import { SERVER_URL } from '../../../shared/constants';
+import { HiNoSymbol } from 'react-icons/hi2';
 
 interface UserAvatarProps {
-  username: string;
-  avatar: string | null;
+  user: Pick<User, 'username' | 'avatar'> | null;
   size?: number;
   className?: string;
 }
 
 interface AvatarProps {
   $size: number;
+  $isDeleted?: boolean;
 }
 
 const Avatar = styled.div<AvatarProps>`
@@ -27,6 +29,19 @@ const Avatar = styled.div<AvatarProps>`
   color: var(--color-primary);
   background-color: var(--color-text-secondary);
   overflow: hidden;
+
+  ${(props) =>
+    props.$isDeleted &&
+    `
+    border-color: var(--color-rose-500);
+    color: var(--color-rose-500);
+    background-color: var(--color-rose-100);
+
+    svg {
+      width: 60%;
+      height: 60%;
+    }
+  `}
 `;
 
 const Image = styled.img`
@@ -34,20 +49,27 @@ const Image = styled.img`
 `;
 
 export function UserAvatar({
-  username,
-  avatar,
+  user = null,
   size = 2,
   className,
 }: UserAvatarProps) {
+  if (!user) {
+    return (
+      <Avatar className={className} $size={size} $isDeleted={true}>
+        <HiNoSymbol />
+      </Avatar>
+    );
+  }
+
   return (
     <Avatar $size={size} className={className}>
-      {avatar ? (
+      {user.avatar ? (
         <Image
-          src={`${SERVER_URL}/images/avatars/${avatar}`}
-          alt={`${username} avatar`}
+          src={`${SERVER_URL}/images/avatars/${user.avatar}`}
+          alt={`${user.username} avatar`}
         />
       ) : (
-        username.slice(0, 2)
+        user.username.slice(0, 2)
       )}
     </Avatar>
   );

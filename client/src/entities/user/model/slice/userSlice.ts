@@ -1,10 +1,10 @@
+import type { User } from '../../../../shared/types/User';
+import type { ServerError } from '../../../../shared/types/ServerError';
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import { type User } from '../types/User';
 import { me } from '../thunks/me';
 import { signup } from '../thunks/signup';
 import { signin } from '../thunks/signin';
 import { signout } from '../thunks/signout';
-import type { ServerError } from '../../../../shared/types/ServerError';
 import { changeAvatar } from '../thunks/changeAvatar';
 import { updateBio } from '../thunks/updateBio';
 import { changePassword } from '../thunks/changePassword';

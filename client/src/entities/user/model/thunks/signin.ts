@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { User } from '../types/User';
+import type { User } from '../../../../shared/types/User';
 import type { SigninData } from '../types/SigninData';
 import type { ServerError } from '../../../../shared/types/ServerError';
 import { API_URL } from '../../../../shared/constants';
