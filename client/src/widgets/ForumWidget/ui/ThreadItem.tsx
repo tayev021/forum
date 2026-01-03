@@ -1,10 +1,10 @@
-import { useNavigate } from 'react-router';
-import type { Thread } from '../model/types/Thread';
+import type { ForumThread } from '../../../entities/forum';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router';
 import { formatRelativeTime } from '../../../shared/lib/utils/formatRelativeTime';
 
 interface ThreadRowProps {
-  thread: Thread;
+  thread: ForumThread;
 }
 
 const Li = styled.li`

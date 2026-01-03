@@ -1,9 +1,9 @@
+import type { ForumThread } from '../../../entities/forum';
 import styled from 'styled-components';
-import type { Thread } from '../model/types/Thread';
 import { ThreadItem } from './ThreadItem';
 
 interface ThreadsTableProps {
-  threads: Thread[];
+  threads: ForumThread[];
 }
 
 const List = styled.ul`
