@@ -1,14 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { AuthorPosts } from '../types/AuthorPosts';
+import type { UserPosts } from '../types/UserPosts';
 import { API_URL } from '../../../../shared/constants';
 
-export const getAuthorPosts = createAsyncThunk<
-  AuthorPosts,
-  { authorId: number; page: number },
+export const getUserPosts = createAsyncThunk<
+  UserPosts,
+  { userId: number; page: number },
   { rejectValue: any }
->('post/getAuthorPosts', async function ({ authorId, page }, thunkAPI) {
+>('user/getUserPosts', async function ({ userId, page }, thunkAPI) {
   const response = await fetch(
-    `${API_URL}/posts/author/${authorId}?page=${page}`,
+    `${API_URL}/users/${userId}/posts?page=${page}`,
     {
       credentials: 'include',
     }
@@ -19,7 +19,7 @@ export const getAuthorPosts = createAsyncThunk<
     return thunkAPI.rejectWithValue(errors);
   }
 
-  const authorPosts: AuthorPosts = await response.json();
+  const authorPosts: UserPosts = await response.json();
 
   return authorPosts;
 });

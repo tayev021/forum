@@ -1,10 +1,10 @@
-import type { Post } from '../../../entities/post';
+import type { UserPost } from '../../../entities/user';
 import styled from 'styled-components';
 import { Link } from 'react-router';
 import { formatRelativeTime } from '../../../shared/lib/utils/formatRelativeTime';
 
 interface PostProps {
-  post: Post;
+  post: UserPost;
 }
 
 const StyledLink = styled(Link)`

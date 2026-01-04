@@ -11,9 +11,12 @@ import { changePassword } from '../thunks/changePassword';
 import { deleteAccount } from '../thunks/deleteAccount';
 import type { UserThreads } from '../types/UserThreads';
 import { getUserThreads } from '../thunks/getUserThreads';
+import type { UserPosts } from '../types/UserPosts';
+import { getUserPosts } from '../thunks/getUserPosts';
 
 interface UserState {
   user: User | null;
+  userPosts: UserPosts | null;
   userThreads: UserThreads | null;
   isLoading: boolean;
   error: ServerError | null;
@@ -22,6 +25,7 @@ interface UserState {
 
 const initialState: UserState = {
   user: null,
+  userPosts: null,
   userThreads: null,
   isLoading: false,
   error: null,
@@ -106,6 +110,27 @@ const userSlice = createSlice({
     });
     builder.addCase(signout.rejected, (state, action) => {
       state.user = null;
+      state.isLoading = false;
+
+      if (action.payload) {
+        state.error = action.payload;
+      } else {
+        state.error = { type: 'general', message: 'Unknown error!' };
+      }
+    });
+
+    builder.addCase(getUserPosts.pending, (state, _action) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(
+      getUserPosts.fulfilled,
+      (state, action: PayloadAction<UserPosts>) => {
+        state.userPosts = action.payload;
+        state.isLoading = false;
+      }
+    );
+    builder.addCase(getUserPosts.rejected, (state, action) => {
       state.isLoading = false;
 
       if (action.payload) {

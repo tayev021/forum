@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import { useUser } from '../../../entities/user';
-import { getAuthorPosts, useAuthorPosts } from '../../../entities/post';
+import { getUserPosts, useUser, useUserPosts } from '../../../entities/user';
 import { Widget } from '../../../shared/ui/WidgetKit';
 import { useEffect } from 'react';
 import { useAppDispatch } from '../../../shared/lib/hooks/useAppDispatch';
@@ -30,17 +29,17 @@ const PostsList = styled.ul`
 
 export function AccountPostsWidget() {
   const { user } = useUser();
-  const { authorPosts, isLoading } = useAuthorPosts();
+  const { userPosts, isLoading } = useUserPosts();
   const [searchParams] = useSearchParams();
   const dispatch = useAppDispatch();
 
   const page = Number(searchParams.get('page')) || 1;
 
   useEffect(() => {
-    dispatch(getAuthorPosts({ authorId: user!.id, page }));
+    dispatch(getUserPosts({ userId: user!.id, page }));
   }, [user!.id, page]);
 
-  if (!authorPosts || isLoading) {
+  if (!userPosts || isLoading) {
     return <Widget.Loader />;
   }
 
@@ -49,19 +48,19 @@ export function AccountPostsWidget() {
       <StyledWidgetHeader>
         <Widget.Title>{user?.username} posts</Widget.Title>
       </StyledWidgetHeader>
-      {authorPosts.posts.length < 1 ? (
+      {userPosts.posts.length < 1 ? (
         <NoPosts />
       ) : (
         <>
           <PostsList>
-            {authorPosts?.posts.map((post) => (
+            {userPosts?.posts.map((post) => (
               <Post key={post.id} post={post} />
             ))}
           </PostsList>
           <Pagination
             baseUrl="/account/posts"
-            currentPage={authorPosts.page}
-            totalPages={authorPosts.totalPages}
+            currentPage={userPosts.page}
+            totalPages={userPosts.totalPages}
           />
         </>
       )}
