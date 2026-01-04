@@ -21,5 +21,7 @@ export const updateThread = createAsyncThunk<
     return thunkAPI.rejectWithValue(error);
   }
 
-  return title;
+  const json: { title: string } = await response.json();
+
+  return json.title;
 });
