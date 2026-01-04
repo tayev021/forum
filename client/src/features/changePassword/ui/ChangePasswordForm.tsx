@@ -14,6 +14,10 @@ import { validate } from '../../../shared/lib/utils/validate';
 import { passwordSchema } from '../../../shared/lib/validators/passwordSchema';
 import { HiKey, HiLockClosed, HiOutlineLockClosed } from 'react-icons/hi2';
 
+interface ChangePasswordFormProps {
+  closeModal?: () => void;
+}
+
 const StyledForm = styled(Form)`
   max-width: 30rem;
   padding: 2rem;
@@ -23,7 +27,9 @@ const StyledForm = styled(Form)`
   background-color: var(--color-bg);
 `;
 
-export function ChangePasswordForm() {
+export function ChangePasswordForm({
+  closeModal = () => {},
+}: ChangePasswordFormProps) {
   const { isLoading, error: serverError } = useUser();
   const [isChanged, setIsChanged] = useState(false);
   const dispatch = useAppDispatch();
@@ -44,6 +50,7 @@ export function ChangePasswordForm() {
       setIsChanged(false);
     } else if (isChanged) {
       reset();
+      closeModal();
       toast.success('Password changed successfully');
     }
   }, [serverError, isChanged]);
