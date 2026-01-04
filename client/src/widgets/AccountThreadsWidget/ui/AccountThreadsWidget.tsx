@@ -1,7 +1,10 @@
 import styled from 'styled-components';
 import { Widget } from '../../../shared/ui/WidgetKit';
-import { useUser } from '../../../entities/user';
-import { getAuthorThreads, useAuthorThreads } from '../../../entities/thread';
+import {
+  getUserThreads,
+  useUser,
+  useUserThreads,
+} from '../../../entities/user';
 import { useSearchParams } from 'react-router';
 import { useAppDispatch } from '../../../shared/lib/hooks/useAppDispatch';
 import { useEffect } from 'react';
@@ -19,17 +22,17 @@ const StyledPagination = styled(Pagination)`
 
 export function AccountThreadsWidget() {
   const { user } = useUser();
-  const { authorThreads, isLoading } = useAuthorThreads();
+  const { userThreads, isLoading } = useUserThreads();
   const [searchParams] = useSearchParams();
   const dispatch = useAppDispatch();
 
   const page = Number(searchParams.get('page')) || 1;
 
   useEffect(() => {
-    dispatch(getAuthorThreads({ authorId: user!.id, page }));
+    dispatch(getUserThreads({ userId: user!.id, page }));
   }, [user!.id, page]);
 
-  if (!authorThreads || isLoading) {
+  if (!userThreads || isLoading) {
     return <Widget.Loader />;
   }
 
@@ -41,11 +44,11 @@ export function AccountThreadsWidget() {
         <Widget.Header>
           <Widget.Title>{user.username} threads</Widget.Title>
         </Widget.Header>
-        {authorThreads.threads.length < 1 ? (
+        {userThreads.threads.length < 1 ? (
           <NoThreads />
         ) : (
           <ThreadsList>
-            {authorThreads.threads.map((thread) => (
+            {userThreads.threads.map((thread) => (
               <Thread key={thread.id} thread={thread} />
             ))}
           </ThreadsList>
@@ -53,8 +56,8 @@ export function AccountThreadsWidget() {
       </Widget.Container>
       <StyledPagination
         baseUrl="/account/threads"
-        currentPage={authorThreads.page}
-        totalPages={authorThreads.totalPages}
+        currentPage={userThreads.page}
+        totalPages={userThreads.totalPages}
       />
     </>
   );

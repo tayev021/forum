@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import type { AuthorThread } from '../../../entities/thread';
+import type { UserThread } from '../../../entities/user';
 import { Link } from 'react-router';
 import { formatRelativeTime } from '../../../shared/lib/utils/formatRelativeTime';
 
 interface ThreadProps {
-  thread: AuthorThread;
+  thread: UserThread;
 }
 
 const StyledLink = styled(Link)`

@@ -9,9 +9,12 @@ import { changeAvatar } from '../thunks/changeAvatar';
 import { updateBio } from '../thunks/updateBio';
 import { changePassword } from '../thunks/changePassword';
 import { deleteAccount } from '../thunks/deleteAccount';
+import type { UserThreads } from '../types/UserThreads';
+import { getUserThreads } from '../thunks/getUserThreads';
 
 interface UserState {
   user: User | null;
+  userThreads: UserThreads | null;
   isLoading: boolean;
   error: ServerError | null;
   initialized: boolean;
@@ -19,6 +22,7 @@ interface UserState {
 
 const initialState: UserState = {
   user: null,
+  userThreads: null,
   isLoading: false,
   error: null,
   initialized: false,
@@ -50,6 +54,7 @@ const userSlice = createSlice({
       state.error = null;
       state.initialized = true;
     });
+
     builder.addCase(signup.pending, (state, _action) => {
       state.isLoading = true;
       state.error = null;
@@ -101,6 +106,27 @@ const userSlice = createSlice({
     });
     builder.addCase(signout.rejected, (state, action) => {
       state.user = null;
+      state.isLoading = false;
+
+      if (action.payload) {
+        state.error = action.payload;
+      } else {
+        state.error = { type: 'general', message: 'Unknown error!' };
+      }
+    });
+
+    builder.addCase(getUserThreads.pending, (state, _action) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(
+      getUserThreads.fulfilled,
+      (state, action: PayloadAction<UserThreads>) => {
+        state.userThreads = action.payload;
+        state.isLoading = false;
+      }
+    );
+    builder.addCase(getUserThreads.rejected, (state, action) => {
       state.isLoading = false;
 
       if (action.payload) {

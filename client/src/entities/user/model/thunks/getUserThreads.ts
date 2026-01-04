@@ -1,15 +1,15 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { AuthorThreads } from '../types/AuthorThreads';
+import type { UserThreads } from '../types/UserThreads';
 import type { ServerError } from '../../../../shared/types/ServerError';
 import { API_URL } from '../../../../shared/constants';
 
-export const getAuthorThreads = createAsyncThunk<
-  AuthorThreads,
-  { authorId: number; page?: number },
+export const getUserThreads = createAsyncThunk<
+  UserThreads,
+  { userId: number; page?: number },
   { rejectValue: ServerError }
->('thread/getAuthorThreads', async function ({ authorId, page = 1 }, thunkAPI) {
+>('user/getUserThreads', async function ({ userId, page = 1 }, thunkAPI) {
   const response = await fetch(
-    `${API_URL}/threads/author/${authorId}?page=${page}`,
+    `${API_URL}/users/${userId}/threads?page=${page}`,
     {
       credentials: 'include',
     }
@@ -20,7 +20,7 @@ export const getAuthorThreads = createAsyncThunk<
     return thunkAPI.rejectWithValue(error);
   }
 
-  const authorThreads: AuthorThreads = await response.json();
+  const userThreads: UserThreads = await response.json();
 
-  return authorThreads;
+  return userThreads;
 });

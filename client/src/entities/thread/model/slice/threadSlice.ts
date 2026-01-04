@@ -1,23 +1,19 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { ServerError } from '../../../../shared/types/ServerError';
 import type { Thread } from '../types/Thread';
-import type { AuthorThreads } from '../types/AuthorThreads';
 import { getThread } from '../thunks/getThread';
-import { getAuthorThreads } from '../thunks/getAuthorThreads';
 import { createThread } from '../thunks/createThread';
 import { deleteThread } from '../thunks/deleteThread';
 import { updateThread } from '../thunks/updateThread';
 
 interface ThreadState {
   thread: Thread | null;
-  authorThreads: AuthorThreads | null;
   isLoading: boolean;
   error: ServerError | null;
 }
 
 const initialState: ThreadState = {
   thread: null,
-  authorThreads: null,
   isLoading: false,
   error: null,
 };
@@ -44,28 +40,6 @@ const threadSlice = createSlice({
       }
     );
     builder.addCase(getThread.rejected, (state, action) => {
-      state.isLoading = false;
-
-      if (action.payload) {
-        state.error = action.payload;
-      } else {
-        state.error = { type: 'general', message: 'Unknown error!' };
-      }
-    });
-
-    builder.addCase(getAuthorThreads.pending, (state, _action) => {
-      state.thread = null;
-      state.isLoading = true;
-      state.error = null;
-    });
-    builder.addCase(
-      getAuthorThreads.fulfilled,
-      (state, action: PayloadAction<AuthorThreads>) => {
-        state.authorThreads = action.payload;
-        state.isLoading = false;
-      }
-    );
-    builder.addCase(getAuthorThreads.rejected, (state, action) => {
       state.isLoading = false;
 
       if (action.payload) {
