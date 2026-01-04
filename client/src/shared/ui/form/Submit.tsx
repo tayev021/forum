@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import styled from 'styled-components';
 
 interface SubmitProps {
+  className?: string;
   disabled?: boolean;
   children: ReactNode;
 }
@@ -30,9 +31,13 @@ const Button = styled.button`
   }
 `;
 
-export function Submit({ disabled = false, children }: SubmitProps) {
+export function Submit({
+  className = '',
+  disabled = false,
+  children,
+}: SubmitProps) {
   return (
-    <Button type="submit" disabled={disabled}>
+    <Button className={className} type="submit" disabled={disabled}>
       {children}
     </Button>
   );

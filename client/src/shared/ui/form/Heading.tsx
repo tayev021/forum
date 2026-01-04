@@ -2,10 +2,11 @@ import type { ReactNode } from 'react';
 import styled from 'styled-components';
 
 interface HeadingProps {
+  className?: string;
   children: ReactNode;
 }
 
-const H3 = styled.h3`
+const StyledHeading = styled.h3`
   margin: 0.5rem 0 1rem;
   font-size: 1.8rem;
   font-weight: 400;
@@ -14,6 +15,6 @@ const H3 = styled.h3`
   color: var(--color-primary);
 `;
 
-export function Heading({ children }: HeadingProps) {
-  return <H3>{children}</H3>;
+export function Heading({ className = '', children }: HeadingProps) {
+  return <StyledHeading className={className}>{children}</StyledHeading>;
 }
