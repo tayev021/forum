@@ -6,11 +6,12 @@ import {
   userChangePasswordSchema,
 } from '../validators/userSchemas';
 import {
-  resizeAvatar,
-  updateAvatar,
   updateBio,
   updatePassword,
   uploadAvatar,
+  resizeAvatar,
+  updateAvatar,
+  deleteUser,
 } from '../controllers/userController';
 
 const userRouter = Router();
@@ -23,5 +24,6 @@ userRouter.patch(
   updatePassword
 );
 userRouter.patch('/avatar', protect, uploadAvatar, resizeAvatar, updateAvatar);
+userRouter.delete('/', protect, deleteUser);
 
 export { userRouter };
