@@ -18,8 +18,9 @@ const StyledForm = styled(Form)`
   max-width: 30rem;
   padding: 2rem;
   margin: 0 auto;
-  border: none;
+  border: 2px solid var(--color-primary);
   box-shadow: none;
+  background-color: var(--color-bg);
 `;
 
 export function ChangePasswordForm() {
@@ -75,6 +76,8 @@ export function ChangePasswordForm() {
 
   return (
     <StyledForm onSubmit={handleSubmit(submit)}>
+      <Form.Heading>Change Password</Form.Heading>
+
       <Form.Row hasError={!!errors['previousPassword']}>
         <HiKey />
         <Form.Label
