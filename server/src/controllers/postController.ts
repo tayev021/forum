@@ -1,10 +1,6 @@
 import { Request, Response } from 'express';
 import { catchAsync } from '../utils/catchAsync';
-import {
-  DEFAULT_PAGE,
-  LATEST_POSTS_LIMIT,
-  PAGE_ITEMS_LIMIT,
-} from '../constants';
+import { LATEST_POSTS_LIMIT, PAGE_ITEMS_LIMIT } from '../constants';
 import { Post, Thread, User } from '../models';
 import { AppError } from '../utils/AppError';
 import sequelize from 'sequelize';
@@ -48,62 +44,6 @@ export const getLatestPosts = catchAsync(
     });
 
     res.status(200).json({ posts });
-  }
-);
-
-export const getAuthorPosts = catchAsync(
-  async (req: Request, res: Response) => {
-    const authorId = req.params.authorId;
-    const page = Number(req.query.page) || DEFAULT_PAGE;
-    const limit = Number(req.query.limit) || PAGE_ITEMS_LIMIT;
-    const offset = (page - 1) * limit;
-
-    const author = await User.findByPk(authorId);
-
-    if (!author) {
-      throw new AppError(400, 'Failed to get posts!', {
-        type: 'general',
-        message: 'An author with such an identifier does not exist',
-      });
-    }
-
-    const { rows: posts, count } = await Post.findAndCountAll({
-      where: { authorId: authorId },
-      limit: limit,
-      offset: offset,
-      attributes: ['id', 'content', 'createdAt'],
-      include: [
-        {
-          model: Thread,
-          as: 'thread',
-          attributes: [
-            'id',
-            'title',
-            [
-              sequelize.literal(`
-                  CEIL(
-                    (
-                      SELECT COUNT(*)
-                      FROM posts p2
-                      WHERE p2.threadId = Post.threadId
-                        AND p2.createdAt <= Post.createdAt
-                    ) / ${PAGE_ITEMS_LIMIT}
-                  ) 
-              `),
-              'page',
-            ],
-          ],
-        },
-      ],
-      order: [['createdAt', 'DESC']],
-    });
-
-    res.status(200).json({
-      posts: posts,
-      totalPosts: count,
-      page: page,
-      totalPages: Math.ceil(count / limit),
-    });
   }
 );
 

@@ -10,11 +10,62 @@ import { catchAsync } from '../utils/catchAsync';
 import { AppError } from '../utils/AppError';
 import { removeFile } from '../utils/removeFile';
 
+export const getUserPosts = catchAsync(async (req: Request, res: Response) => {
+  const userId = req.params.userId;
+  const page = Number(req.query.page) || DEFAULT_PAGE;
+  const limit = Number(req.query.limit) || PAGE_ITEMS_LIMIT;
+  const offset = (page - 1) * limit;
+
+  const user = await User.findByPk(userId);
+
+  if (!user) {
+    throw new AppError(400, 'Failed to get posts!', {
+      type: 'general',
+      message: 'User with such an identifier does not exist',
+    });
+  }
+
+  const { rows: posts, count } = await Post.findAndCountAll({
+    where: { authorId: user.id },
+    limit: limit,
+    offset: offset,
+    attributes: ['id', 'content', 'createdAt'],
+    include: [
+      {
+        model: Thread,
+        as: 'thread',
+        attributes: [
+          'id',
+          'title',
+          [
+            sequelize.literal(`
+                  CEIL(
+                    (
+                      SELECT COUNT(*)
+                      FROM posts p2
+                      WHERE p2.threadId = Post.threadId
+                        AND p2.createdAt <= Post.createdAt
+                    ) / ${PAGE_ITEMS_LIMIT}
+                  ) 
+              `),
+            'page',
+          ],
+        ],
+      },
+    ],
+    order: [['createdAt', 'DESC']],
+  });
+
+  res.status(200).json({
+    posts: posts,
+    totalPosts: count,
+    page: page,
+    totalPages: Math.ceil(count / limit),
+  });
+});
+
 export const getUserThreads = catchAsync(
   async (req: Request, res: Response) => {
-    console.log(123);
-    console.log(req.params);
-
     const userId = req.params.userId;
     const page = Number(req.query.page) || DEFAULT_PAGE;
     const limit = Number(req.query.limit) || PAGE_ITEMS_LIMIT;
@@ -22,12 +73,10 @@ export const getUserThreads = catchAsync(
 
     const user = await User.findByPk(userId);
 
-    console.log(user);
-
     if (!user) {
       throw new AppError(400, 'Failed to get threads!', {
         type: 'general',
-        message: 'An user with such an identifier does not exist',
+        message: 'User with such an identifier does not exist',
       });
     }
 

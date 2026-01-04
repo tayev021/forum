@@ -13,10 +13,12 @@ import {
   resizeAvatar,
   updateAvatar,
   deleteUser,
+  getUserPosts,
 } from '../controllers/userController';
 
 const userRouter = Router();
 
+userRouter.get('/:userId/posts', getUserPosts);
 userRouter.get('/:userId/threads', getUserThreads);
 userRouter.patch('/bio', protect, validate(userBioSchema), updateBio);
 userRouter.patch(
