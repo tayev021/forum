@@ -1,3 +1,6 @@
+import { DEFAULT_PAGE, PAGE_ITEMS_LIMIT } from '../constants';
+import { Post, Thread, User } from '../models';
+import sequelize from 'sequelize';
 import bcrypt from 'bcryptjs';
 import multer from 'multer';
 import sharp from 'sharp';
@@ -6,6 +9,57 @@ import { NextFunction, Request, Response } from 'express';
 import { catchAsync } from '../utils/catchAsync';
 import { AppError } from '../utils/AppError';
 import { removeFile } from '../utils/removeFile';
+
+export const getUserThreads = catchAsync(
+  async (req: Request, res: Response) => {
+    console.log(123);
+    console.log(req.params);
+
+    const userId = req.params.userId;
+    const page = Number(req.query.page) || DEFAULT_PAGE;
+    const limit = Number(req.query.limit) || PAGE_ITEMS_LIMIT;
+    const offset = (page - 1) * limit;
+
+    const user = await User.findByPk(userId);
+
+    console.log(user);
+
+    if (!user) {
+      throw new AppError(400, 'Failed to get threads!', {
+        type: 'general',
+        message: 'An user with such an identifier does not exist',
+      });
+    }
+
+    const threads = await Thread.findAll({
+      where: { authorId: user.id },
+      attributes: [
+        'id',
+        'title',
+        'views',
+        'createdAt',
+        'updatedAt',
+        [sequelize.fn('COUNT', sequelize.col('posts.id')), 'postsCount'],
+      ],
+      include: [
+        {
+          model: Post,
+          as: 'posts',
+          attributes: [],
+        },
+      ],
+      group: ['Thread.id'],
+      order: [['createdAt', 'DESC']],
+    });
+
+    res.status(200).json({
+      threads: threads.slice(offset, offset + limit),
+      totalThreads: threads.length,
+      page: page,
+      totalPages: Math.ceil(threads.length / limit),
+    });
+  }
+);
 
 export const updateBio = catchAsync(async (req: Request, res: Response) => {
   const user = req.user!;

@@ -6,6 +6,7 @@ import {
   userChangePasswordSchema,
 } from '../validators/userSchemas';
 import {
+  getUserThreads,
   updateBio,
   updatePassword,
   uploadAvatar,
@@ -16,6 +17,7 @@ import {
 
 const userRouter = Router();
 
+userRouter.get('/:userId/threads', getUserThreads);
 userRouter.patch('/bio', protect, validate(userBioSchema), updateBio);
 userRouter.patch(
   '/password',
