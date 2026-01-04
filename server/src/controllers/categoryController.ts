@@ -52,17 +52,6 @@ export const createCategory = catchAsync(
       ],
     });
 
-    // const categories = await Category.findAll({
-    //   attributes: ['id', 'title'],
-    //   include: [
-    //     {
-    //       model: Forum,
-    //       as: 'forums',
-    //       attributes: ['id', 'title'],
-    //     },
-    //   ],
-    // });
-
     res.status(201).json({ category });
   }
 );
