@@ -188,7 +188,7 @@ export const updateThread = catchAsync(async (req: Request, res: Response) => {
 
   await thread.save();
 
-  res.status(200).json({});
+  res.status(200).json({ title: thread.title });
 });
 
 export const deleteThread = catchAsync(async (req: Request, res: Response) => {
