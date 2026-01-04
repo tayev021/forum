@@ -8,6 +8,7 @@ import { signout } from '../thunks/signout';
 import { changeAvatar } from '../thunks/changeAvatar';
 import { updateBio } from '../thunks/updateBio';
 import { changePassword } from '../thunks/changePassword';
+import { deleteAccount } from '../thunks/deleteAccount';
 
 interface UserState {
   user: User | null;
@@ -122,6 +123,25 @@ const userSlice = createSlice({
       }
     );
     builder.addCase(changePassword.rejected, (state, action) => {
+      state.isLoading = false;
+
+      if (action.payload) {
+        state.error = action.payload;
+      } else {
+        state.error = { type: 'general', message: 'Unknown error!' };
+      }
+    });
+
+    builder.addCase(deleteAccount.pending, (state, _action) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(deleteAccount.fulfilled, (state, _action) => {
+      state.user = null;
+      state.isLoading = false;
+      state.error = null;
+    });
+    builder.addCase(deleteAccount.rejected, (state, action) => {
       state.isLoading = false;
 
       if (action.payload) {
