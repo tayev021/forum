@@ -21,5 +21,7 @@ export const updateForum = createAsyncThunk<
     return thunkAPI.rejectWithValue(error);
   }
 
-  return title;
+  const json: { title: string } = await response.json();
+
+  return json.title;
 });
