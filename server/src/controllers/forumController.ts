@@ -122,7 +122,7 @@ export const updateForum = catchAsync(async (req: Request, res: Response) => {
 
   await forum.save();
 
-  res.status(200).json({});
+  res.status(200).json({ title: forum.title });
 });
 
 export const deleteForum = catchAsync(async (req: Request, res: Response) => {
