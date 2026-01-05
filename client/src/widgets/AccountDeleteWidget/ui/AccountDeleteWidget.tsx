@@ -10,6 +10,11 @@ const Main = styled.div`
   gap: 2rem;
   padding: 2rem;
   margin: 0 auto;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
 `;
 
 const DeleteButton = styled.button`
@@ -21,6 +26,11 @@ const DeleteButton = styled.button`
   text-transform: uppercase;
   color: var(--color-rose-500);
   cursor: pointer;
+
+  @media (max-width: 900px) {
+    grid-area: 2/1/3/2;
+    justify-self: center;
+  }
 
   &:hover {
     box-shadow: var(--shadow-small);
