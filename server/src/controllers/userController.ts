@@ -1,5 +1,5 @@
 import { DEFAULT_PAGE, PAGE_ITEMS_LIMIT } from '../constants';
-import { Post, Thread, User } from '../models';
+import { Post, Subscription, Thread, User } from '../models';
 import sequelize from 'sequelize';
 import bcrypt from 'bcryptjs';
 import multer from 'multer';
@@ -9,6 +9,7 @@ import { NextFunction, Request, Response } from 'express';
 import { catchAsync } from '../utils/catchAsync';
 import { AppError } from '../utils/AppError';
 import { removeFile } from '../utils/removeFile';
+import { Op } from 'sequelize';
 
 export const getUserPosts = catchAsync(async (req: Request, res: Response) => {
   const userId = req.params.userId;
@@ -107,6 +108,87 @@ export const getUserThreads = catchAsync(
       page: page,
       totalPages: Math.ceil(threads.length / limit),
     });
+  }
+);
+
+export const getUserSubscriptions = catchAsync(
+  async (req: Request, res: Response) => {
+    const user = req.user!;
+
+    const subscriptions = await Subscription.findAll({
+      where: { userId: user.id },
+      attributes: ['id', 'lastReadAt', 'createdAt'],
+      include: [
+        // {
+        //   model: User,
+        //   as: 'user',
+        //   attributes: ['id', 'username'],
+        // },
+        {
+          model: Thread,
+          as: 'thread',
+          attributes: ['id', 'title'],
+        },
+      ],
+    });
+
+    res.status(200).json({ subscriptions });
+  }
+);
+
+export const getUserNotifications = catchAsync(
+  async (req: Request, res: Response) => {
+    const user = req.user!;
+
+    const notifications = await Subscription.findAll({
+      where: {
+        userId: user.id,
+        [Op.and]: sequelize.literal(`
+          EXISTS (
+            SELECT 1
+            FROM posts p
+            WHERE p.threadId = Subscription.threadId
+              AND p.createdAt > Subscription.lastReadAt
+          )
+        `),
+      },
+      attributes: ['id', 'lastReadAt'],
+      include: [
+        {
+          model: Thread,
+          as: 'thread',
+          attributes: [
+            'id',
+            'title',
+            [
+              sequelize.literal(`
+                (
+                  SELECT p.id
+                  FROM posts p
+                  WHERE p.threadId = Subscription.threadId
+                    AND p.createdAt > Subscription.lastReadAt
+                  ORDER BY p.createdAt ASC
+                  LIMIT 1
+                )`),
+              'firstPostId',
+            ],
+            [
+              sequelize.literal(`(
+                SELECT p.content
+                FROM posts p
+                WHERE p.threadId = Subscription.threadId
+                  AND p.createdAt > Subscription.lastReadAt
+                ORDER BY p.createdAt ASC
+                LIMIT 1
+              )`),
+              'firstPostContent',
+            ],
+          ],
+        },
+      ],
+    });
+
+    res.status(200).json({ notifications });
   }
 );
 
