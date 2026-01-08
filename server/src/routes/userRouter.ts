@@ -14,12 +14,16 @@ import {
   updateAvatar,
   deleteUser,
   getUserPosts,
+  getUserSubscriptions,
+  getUserNotifications,
 } from '../controllers/userController';
 
 const userRouter = Router();
 
 userRouter.get('/:userId/posts', getUserPosts);
 userRouter.get('/:userId/threads', getUserThreads);
+userRouter.get('/subscriptions', protect, getUserSubscriptions);
+userRouter.get('/notifications', protect, getUserNotifications);
 userRouter.patch('/bio', protect, validate(userBioSchema), updateBio);
 userRouter.patch(
   '/password',
