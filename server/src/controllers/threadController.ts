@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { catchAsync } from '../utils/catchAsync';
 import { DEFAULT_PAGE, PAGE_ITEMS_LIMIT } from '../constants';
-import { Forum, Post, Thread, User } from '../models';
+import { Forum, Post, Subscription, Thread, User } from '../models';
 import { AppError } from '../utils/AppError';
 import { capitalize } from '../utils/capitalize';
 
@@ -157,6 +157,86 @@ export const deleteThread = catchAsync(async (req: Request, res: Response) => {
   }
 
   await thread.destroy();
+
+  res.status(204).json({});
+});
+
+export const subscribeThread = catchAsync(
+  async (req: Request, res: Response) => {
+    const user = req.user!;
+    const threadId = req.params.threadId;
+
+    const thread = await Thread.findByPk(threadId);
+
+    if (!thread) {
+      throw new AppError(400, 'Failed to subscribe thread!', {
+        type: 'general',
+        message: 'You are trying to subscribe a thread that does not exist',
+      });
+    }
+
+    const subscription = await Subscription.findOne({
+      where: { userId: user.id, threadId },
+    });
+
+    if (subscription) {
+      throw new AppError(400, 'Failed to subscribe thread!', {
+        type: 'general',
+        message: 'You already subscribed to this thread',
+      });
+    }
+
+    await Subscription.create({
+      userId: user.id,
+      threadId,
+    });
+
+    res.status(204).json({});
+  }
+);
+
+export const unsubscribeThread = catchAsync(
+  async (req: Request, res: Response) => {
+    const user = req.user!;
+    const threadId = req.params.threadId;
+
+    const subscription = await Subscription.findOne({
+      where: { userId: user.id, threadId },
+    });
+
+    await subscription?.destroy();
+
+    res.status(204).json({});
+  }
+);
+
+export const readThread = catchAsync(async (req: Request, res: Response) => {
+  const user = req.user!;
+  const threadId = req.params.threadId;
+
+  const thread = await Thread.findByPk(threadId);
+
+  if (!thread) {
+    throw new AppError(400, 'Failed to read thread!', {
+      type: 'general',
+      message: 'You are trying to read a thread that does not exist',
+    });
+  }
+
+  const subscription = await Subscription.findOne({
+    where: { userId: user.id, threadId },
+  });
+
+  if (!subscription) {
+    throw new AppError(400, 'Failed to read thread!', {
+      type: 'general',
+      message: 'You are not subscribed to this thread',
+    });
+  }
+
+  subscription.lastReadAt = new Date();
+
+  await subscription.save();
 
   res.status(204).json({});
 });
