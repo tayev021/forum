@@ -8,12 +8,18 @@ import {
   createThread,
   updateThread,
   deleteThread,
+  subscribeThread,
+  unsubscribeThread,
+  readThread,
 } from '../controllers/threadController';
 import { restrictTo } from '../middleware/restrictTo';
 
 const threadRouter = Router();
 
 threadRouter.get('/:threadId', getThread);
+threadRouter.post('/:threadId/subscribe', protect, subscribeThread);
+threadRouter.post('/:threadId/unsubscribe', protect, unsubscribeThread);
+threadRouter.patch('/:threadId/read', protect, readThread);
 threadRouter.post(
   '/',
   protect,
