@@ -7,8 +7,8 @@ export class Thread extends Model {
   public forumId!: number;
   public title!: string;
   public views!: number;
-  public createdAt!: string;
-  public updatedAt!: string;
+  public createdAt!: Date;
+  public updatedAt!: Date;
 }
 
 Thread.init(

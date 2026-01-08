@@ -6,8 +6,8 @@ export class Post extends Model {
   public authorId!: number | null;
   public threadId!: number;
   public content!: string;
-  public createdAt!: string;
-  public updatedAt!: string;
+  public createdAt!: Date;
+  public updatedAt!: Date;
 }
 
 Post.init(

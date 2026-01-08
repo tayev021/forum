@@ -5,7 +5,8 @@ export class Category extends Model {
   public id!: number;
   public authorId!: number | null;
   public title!: string;
-  public createdAt!: string;
+  public createdAt!: Date;
+  public updatedAt!: Date;
 }
 
 Category.init(

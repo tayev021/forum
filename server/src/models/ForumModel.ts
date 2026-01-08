@@ -6,7 +6,8 @@ export class Forum extends Model {
   public authorId!: number | null;
   public categoryId!: number;
   public title!: string;
-  public createdAt!: string;
+  public createdAt!: Date;
+  public updatedAt!: Date;
 }
 
 Forum.init(
