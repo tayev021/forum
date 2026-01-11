@@ -1,10 +1,9 @@
 import styled from 'styled-components';
 import { PrimaryButton } from '../../../shared/ui/PrimaryButton';
-import { clearUserError, useUser } from '../../../entities/user';
+import { clearUserError, updateBio, useUser } from '../../../entities/user';
 import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react';
 import { useAppDispatch } from '../../../shared/lib/hooks/useAppDispatch';
 import toast from 'react-hot-toast';
-import { updateBio } from '../../../entities/user/model/thunks/updateBio';
 import { HiArrowTurnDownLeft, HiChevronRight } from 'react-icons/hi2';
 
 interface UpdateBioFormProps {
