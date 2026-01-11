@@ -114,16 +114,17 @@ export const getUserThreads = catchAsync(
 export const getUserSubscriptions = catchAsync(
   async (req: Request, res: Response) => {
     const user = req.user!;
+    const page = Number(req.query.page) || DEFAULT_PAGE;
+    const limit = Number(req.query.limit) || PAGE_ITEMS_LIMIT;
+    const offset = (page - 1) * limit;
 
-    const subscriptions = await Subscription.findAll({
+    const { rows: subscriptions, count } = await Subscription.findAndCountAll({
       where: { userId: user.id },
+      limit: limit,
+      offset: offset,
+      order: [['createdAt', 'DESC']],
       attributes: ['id', 'lastReadAt', 'createdAt'],
       include: [
-        // {
-        //   model: User,
-        //   as: 'user',
-        //   attributes: ['id', 'username'],
-        // },
         {
           model: Thread,
           as: 'thread',
@@ -132,15 +133,23 @@ export const getUserSubscriptions = catchAsync(
       ],
     });
 
-    res.status(200).json({ subscriptions });
+    res.status(200).json({
+      subscriptions: subscriptions,
+      totalSubscriptions: count,
+      page: page,
+      totalPages: Math.ceil(count / limit),
+    });
   }
 );
 
 export const getUserNotifications = catchAsync(
   async (req: Request, res: Response) => {
     const user = req.user!;
+    const page = Number(req.query.page) || DEFAULT_PAGE;
+    const limit = Number(req.query.limit) || PAGE_ITEMS_LIMIT;
+    const offset = (page - 1) * limit;
 
-    const notifications = await Subscription.findAll({
+    const { rows: notifications, count } = await Subscription.findAndCountAll({
       where: {
         userId: user.id,
         [Op.and]: sequelize.literal(`
@@ -152,6 +161,9 @@ export const getUserNotifications = catchAsync(
           )
         `),
       },
+      limit: limit,
+      offset: offset,
+      order: [['createdAt', 'DESC']],
       attributes: ['id', 'lastReadAt'],
       include: [
         {
@@ -170,7 +182,7 @@ export const getUserNotifications = catchAsync(
                   ORDER BY p.createdAt ASC
                   LIMIT 1
                 )`),
-              'firstPostId',
+              'unreadPostId',
             ],
             [
               sequelize.literal(`(
@@ -181,14 +193,30 @@ export const getUserNotifications = catchAsync(
                 ORDER BY p.createdAt ASC
                 LIMIT 1
               )`),
-              'firstPostContent',
+              'unreadPostContent',
+            ],
+            [
+              sequelize.literal(`(
+                SELECT p.createdAt
+                FROM posts p
+                WHERE p.threadId = Subscription.threadId
+                  AND p.createdAt > Subscription.lastReadAt
+                ORDER BY p.createdAt ASC
+                LIMIT 1
+              )`),
+              'unreadPostCreatedAt',
             ],
           ],
         },
       ],
     });
 
-    res.status(200).json({ notifications });
+    res.status(200).json({
+      notifications: notifications,
+      totalNotifications: count,
+      page: page,
+      totalPages: Math.ceil(count / limit),
+    });
   }
 );
 
