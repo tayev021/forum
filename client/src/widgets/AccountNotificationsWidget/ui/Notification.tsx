@@ -15,10 +15,6 @@ const StyledLink = styled(Link)`
   transition: all 0.3s ease;
   cursor: pointer;
 
-  &:not(:last-child) {
-    border: 2px solid red;
-  }
-
   &:hover {
     background-color: var(--color-grey-200);
   }
