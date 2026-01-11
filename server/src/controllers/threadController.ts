@@ -6,6 +6,8 @@ import { AppError } from '../utils/AppError';
 import { capitalize } from '../utils/capitalize';
 
 export const getThread = catchAsync(async (req: Request, res: Response) => {
+  const isSignedIn = req.isSignedIn;
+  const user = req.user;
   const threadId = req.params.threadId;
   const page = Number(req.query.page) || DEFAULT_PAGE;
   const limit = Number(req.query.limit) || PAGE_ITEMS_LIMIT;
@@ -39,11 +41,22 @@ export const getThread = catchAsync(async (req: Request, res: Response) => {
     order: [['createdAt', 'ASC']],
   });
 
+  let isSubscribed = false;
+
+  if (isSignedIn) {
+    const subscription = await Subscription.findOne({
+      where: { userId: user?.id, threadId },
+    });
+
+    isSubscribed = !!subscription;
+  }
+
   res.status(200).json({
     thread: {
       id: thread.id,
       title: thread.title,
       views: thread.views,
+      isSubscribed: isSubscribed,
       authorId: thread.authorId,
       forumId: thread.forumId,
       createdAt: thread.createdAt,
