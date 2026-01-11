@@ -1,9 +1,10 @@
 export interface Thread {
   id: number;
   title: string;
+  views: number;
+  isSubscribed: boolean;
   authorId: number;
   forumId: number;
-  views: number;
   createdAt: string;
   updatedAt: string;
 }
