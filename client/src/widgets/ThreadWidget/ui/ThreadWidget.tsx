@@ -9,6 +9,7 @@ import { DeleteThread } from '../../../features/deleteThread';
 import { PostsList } from './posts/PostsList';
 import { Pagination } from '../../../shared/ui/Pagination';
 import { PostUpdate } from './posts/PostUpdate';
+import { SubscribeThread } from '../../../features/subscribeThread';
 
 const ThreadContainer = styled.div`
   display: flex;
@@ -22,6 +23,17 @@ const StyledWidgetHeader = styled(Widget.Header)`
   border-top-right-radius: 0.4rem;
   background-color: var(--color-bg-secondary);
   box-shadow: var(--shadow-small);
+`;
+
+const RowContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, max-content);
+  justify-content: space-between;
+  gap: 2rem;
+`;
+
+const StyledSubscribeThread = styled(SubscribeThread)`
+  grid-area: 1/2/2/3;
 `;
 
 export function ThreadWidget() {
@@ -70,17 +82,23 @@ export function ThreadWidget() {
             )}
           </Widget.HeaderGroup>
         </StyledWidgetHeader>
-        <Pagination
-          baseUrl={`/threads/${thread.id}`}
-          currentPage={thread.page}
-          totalPages={thread.totalPages}
-        />
+        <RowContainer>
+          <Pagination
+            baseUrl={`/threads/${thread.id}`}
+            currentPage={thread.page}
+            totalPages={thread.totalPages}
+          />
+          <StyledSubscribeThread thread={thread} />
+        </RowContainer>
         <PostsList posts={thread.posts} />
-        <Pagination
-          baseUrl={`/threads/${thread.id}`}
-          currentPage={thread.page}
-          totalPages={thread.totalPages}
-        />
+        <RowContainer>
+          <Pagination
+            baseUrl={`/threads/${thread.id}`}
+            currentPage={thread.page}
+            totalPages={thread.totalPages}
+          />
+          <StyledSubscribeThread thread={thread} />
+        </RowContainer>
       </ThreadContainer>
       <PostUpdate />
     </>
