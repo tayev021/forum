@@ -12,6 +12,8 @@ import {
   AccountBioPage,
   AccountPostsPage,
   AccountThreadsPage,
+  AccountSubscriptionsPage,
+  AccountNotificationsPage,
   AccountSettingsPage,
 } from '../../pages/account';
 import { ForumPage } from '../../pages/forum';
@@ -43,6 +45,14 @@ export function AppRouter() {
             <Route index element={<AccountBioPage />} />
             <Route path="posts" element={<AccountPostsPage />} />
             <Route path="threads" element={<AccountThreadsPage />} />
+            <Route
+              path="subscriptions"
+              element={<AccountSubscriptionsPage />}
+            />
+            <Route
+              path="notifications"
+              element={<AccountNotificationsPage />}
+            />
             <Route path="settings" element={<AccountSettingsPage />} />
           </Route>
           <Route path="forums">
