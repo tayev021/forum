@@ -1,23 +1,29 @@
 import type { User } from '../../../../shared/types/User';
 import type { ServerError } from '../../../../shared/types/ServerError';
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import type { UserPosts } from '../types/UserPosts';
+import type { UserThreads } from '../types/UserThreads';
+import type { UserSubscriptions } from '../types/UserSubscriptions';
+import type { UserNotifications } from '../types/UserNotifications';
 import { me } from '../thunks/me';
 import { signup } from '../thunks/signup';
 import { signin } from '../thunks/signin';
 import { signout } from '../thunks/signout';
-import { changeAvatar } from '../thunks/changeAvatar';
+import { getUserPosts } from '../thunks/getUserPosts';
+import { getUserThreads } from '../thunks/getUserThreads';
+import { getUserSubscriptions } from '../thunks/getUserSubscriptions';
+import { getUserNotifications } from '../thunks/getUserNotifications';
 import { updateBio } from '../thunks/updateBio';
+import { changeAvatar } from '../thunks/changeAvatar';
 import { changePassword } from '../thunks/changePassword';
 import { deleteAccount } from '../thunks/deleteAccount';
-import type { UserThreads } from '../types/UserThreads';
-import { getUserThreads } from '../thunks/getUserThreads';
-import type { UserPosts } from '../types/UserPosts';
-import { getUserPosts } from '../thunks/getUserPosts';
 
 interface UserState {
   user: User | null;
   userPosts: UserPosts | null;
   userThreads: UserThreads | null;
+  userSubscriptions: UserSubscriptions | null;
+  userNotifications: UserNotifications | null;
   isLoading: boolean;
   error: ServerError | null;
   initialized: boolean;
@@ -27,6 +33,8 @@ const initialState: UserState = {
   user: null,
   userPosts: null,
   userThreads: null,
+  userSubscriptions: null,
+  userNotifications: null,
   isLoading: false,
   error: null,
   initialized: false,
@@ -161,6 +169,92 @@ const userSlice = createSlice({
       }
     });
 
+    builder.addCase(getUserSubscriptions.pending, (state, _action) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(
+      getUserSubscriptions.fulfilled,
+      (state, action: PayloadAction<UserSubscriptions>) => {
+        state.userSubscriptions = action.payload;
+        state.isLoading = false;
+      }
+    );
+    builder.addCase(getUserSubscriptions.rejected, (state, action) => {
+      state.isLoading = false;
+
+      if (action.payload) {
+        state.error = action.payload;
+      } else {
+        state.error = { type: 'general', message: 'Unknown error!' };
+      }
+    });
+
+    builder.addCase(getUserNotifications.pending, (state, _action) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(
+      getUserNotifications.fulfilled,
+      (state, action: PayloadAction<UserNotifications>) => {
+        state.userNotifications = action.payload;
+        state.isLoading = false;
+      }
+    );
+    builder.addCase(getUserNotifications.rejected, (state, action) => {
+      state.isLoading = false;
+
+      if (action.payload) {
+        state.error = action.payload;
+      } else {
+        state.error = { type: 'general', message: 'Unknown error!' };
+      }
+    });
+
+    builder.addCase(updateBio.pending, (state, _action) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(
+      updateBio.fulfilled,
+      (state, action: PayloadAction<User>) => {
+        state.user = action.payload;
+        state.isLoading = false;
+        state.error = null;
+      }
+    );
+    builder.addCase(updateBio.rejected, (state, action) => {
+      state.isLoading = false;
+
+      if (action.payload) {
+        state.error = action.payload;
+      } else {
+        state.error = { type: 'general', message: 'Unknown error!' };
+      }
+    });
+
+    builder.addCase(changeAvatar.pending, (state, _action) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(
+      changeAvatar.fulfilled,
+      (state, action: PayloadAction<User>) => {
+        state.user = action.payload;
+        state.isLoading = false;
+        state.error = null;
+      }
+    );
+    builder.addCase(changeAvatar.rejected, (state, action) => {
+      state.isLoading = false;
+
+      if (action.payload) {
+        state.error = action.payload;
+      } else {
+        state.error = { type: 'general', message: 'Unknown error!' };
+      }
+    });
+
     builder.addCase(changePassword.pending, (state, _action) => {
       state.isLoading = true;
       state.error = null;
@@ -193,50 +287,6 @@ const userSlice = createSlice({
       state.error = null;
     });
     builder.addCase(deleteAccount.rejected, (state, action) => {
-      state.isLoading = false;
-
-      if (action.payload) {
-        state.error = action.payload;
-      } else {
-        state.error = { type: 'general', message: 'Unknown error!' };
-      }
-    });
-
-    builder.addCase(changeAvatar.pending, (state, _action) => {
-      state.isLoading = true;
-      state.error = null;
-    });
-    builder.addCase(
-      changeAvatar.fulfilled,
-      (state, action: PayloadAction<User>) => {
-        state.user = action.payload;
-        state.isLoading = false;
-        state.error = null;
-      }
-    );
-    builder.addCase(changeAvatar.rejected, (state, action) => {
-      state.isLoading = false;
-
-      if (action.payload) {
-        state.error = action.payload;
-      } else {
-        state.error = { type: 'general', message: 'Unknown error!' };
-      }
-    });
-
-    builder.addCase(updateBio.pending, (state, _action) => {
-      state.isLoading = true;
-      state.error = null;
-    });
-    builder.addCase(
-      updateBio.fulfilled,
-      (state, action: PayloadAction<User>) => {
-        state.user = action.payload;
-        state.isLoading = false;
-        state.error = null;
-      }
-    );
-    builder.addCase(updateBio.rejected, (state, action) => {
       state.isLoading = false;
 
       if (action.payload) {
