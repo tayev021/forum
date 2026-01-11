@@ -5,6 +5,8 @@ import { getThread } from '../thunks/getThread';
 import { createThread } from '../thunks/createThread';
 import { deleteThread } from '../thunks/deleteThread';
 import { updateThread } from '../thunks/updateThread';
+import { subscribeThread } from '../thunks/subscribeThread';
+import { unsubscribeThread } from '../thunks/unsubscribeThread';
 
 interface ThreadState {
   thread: Thread | null;
@@ -100,6 +102,46 @@ const threadSlice = createSlice({
       state.isLoading = false;
     });
     builder.addCase(deleteThread.rejected, (state, action) => {
+      state.isLoading = false;
+
+      if (action.payload) {
+        state.error = action.payload;
+      } else {
+        state.error = { type: 'general', message: 'Unknown error!' };
+      }
+    });
+
+    builder.addCase(subscribeThread.pending, (state, _action) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(subscribeThread.fulfilled, (state, _action) => {
+      if (state.thread) {
+        state.thread.isSubscribed = true;
+      }
+      state.isLoading = false;
+    });
+    builder.addCase(subscribeThread.rejected, (state, action) => {
+      state.isLoading = false;
+
+      if (action.payload) {
+        state.error = action.payload;
+      } else {
+        state.error = { type: 'general', message: 'Unknown error!' };
+      }
+    });
+
+    builder.addCase(unsubscribeThread.pending, (state, _action) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(unsubscribeThread.fulfilled, (state, _action) => {
+      if (state.thread) {
+        state.thread.isSubscribed = false;
+      }
+      state.isLoading = false;
+    });
+    builder.addCase(unsubscribeThread.rejected, (state, action) => {
       state.isLoading = false;
 
       if (action.payload) {
