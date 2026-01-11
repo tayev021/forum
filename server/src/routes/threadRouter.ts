@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import { protect } from '../middleware/protect';
+import { isSignedIn } from '../middleware/isSignedIn';
+import { restrictTo } from '../middleware/restrictTo';
 import { validate } from '../middleware/validate';
 import { threadTitleSchema } from '../validators/threadSchemas';
 import { postContentSchema } from '../validators/postSchemas';
@@ -12,11 +14,10 @@ import {
   unsubscribeThread,
   readThread,
 } from '../controllers/threadController';
-import { restrictTo } from '../middleware/restrictTo';
 
 const threadRouter = Router();
 
-threadRouter.get('/:threadId', getThread);
+threadRouter.get('/:threadId', isSignedIn, getThread);
 threadRouter.post('/:threadId/subscribe', protect, subscribeThread);
 threadRouter.post('/:threadId/unsubscribe', protect, unsubscribeThread);
 threadRouter.patch('/:threadId/read', protect, readThread);
