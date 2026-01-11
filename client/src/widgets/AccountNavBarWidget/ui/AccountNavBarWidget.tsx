@@ -3,8 +3,10 @@ import { NavLink } from 'react-router';
 import { Widget } from '../../../shared/ui/WidgetKit';
 import {
   HiArrowRightOnRectangle,
+  HiOutlineBellAlert,
   HiOutlineChatBubbleBottomCenterText,
   HiOutlineCog6Tooth,
+  HiOutlineHandThumbUp,
   HiOutlineSquare2Stack,
   HiOutlineUserCircle,
 } from 'react-icons/hi2';
@@ -12,6 +14,8 @@ import { Signout } from '../../../features/signout';
 
 const Container = styled(Widget.Container)`
   height: max-content;
+  position: sticky;
+  top: 8rem;
   padding: 2rem 0;
   border: none;
   overflow: hidden;
@@ -76,6 +80,18 @@ export function AccountNavBarWidget() {
           <StyledNavLink to="/account/threads">
             <HiOutlineSquare2Stack />
             Threads
+          </StyledNavLink>
+        </Item>
+        <Item>
+          <StyledNavLink to="/account/subscriptions">
+            <HiOutlineHandThumbUp />
+            Subscriptions
+          </StyledNavLink>
+        </Item>
+        <Item>
+          <StyledNavLink to="/account/notifications">
+            <HiOutlineBellAlert />
+            Notifications
           </StyledNavLink>
         </Item>
         <Item>
