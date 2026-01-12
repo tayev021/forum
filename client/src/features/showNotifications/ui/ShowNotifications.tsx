@@ -10,6 +10,7 @@ import { Dropdown } from '../../../shared/ui/Dropdown';
 import { Toggler } from './Toggler';
 import { Notifications } from './Notifications';
 import { Link } from 'react-router';
+import { NoNotifications } from './NoNotifications';
 
 const Container = styled.div`
   width: 25rem;
@@ -51,12 +52,17 @@ export function ShowNotifications() {
       </Dropdown.Open>
       <Dropdown.Window name="user-notifications">
         <Container>
-          <Notifications
-            notifications={userNotifications.notifications.slice(0, 5)}
-          />
-
-          {userNotifications.notifications.length > 5 && (
-            <Button to="/account/notifications">See All</Button>
+          {userNotifications.notifications.length < 1 ? (
+            <NoNotifications />
+          ) : (
+            <>
+              <Notifications
+                notifications={userNotifications.notifications.slice(0, 5)}
+              />
+              {userNotifications.notifications.length > 5 && (
+                <Button to="/account/notifications">See All</Button>
+              )}
+            </>
           )}
         </Container>
       </Dropdown.Window>
