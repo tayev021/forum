@@ -7,5 +7,5 @@ const Container = styled.div`
   color: var(--color-grey-500);
 `;
 export function NoSubscriptions() {
-  return <Container>You have no threads yet</Container>;
+  return <Container>You have no subscriptions yet</Container>;
 }
