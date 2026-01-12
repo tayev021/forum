@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router';
 import { useUser } from '../../../entities/user';
+import { ShowNotifications } from '../../../features/showNotifications';
 import { UserAvatar } from '../../../entities/user/ui/UserAvatar';
 import { Signout } from '../../../features/signout';
 import { HiArrowRightOnRectangle } from 'react-icons/hi2';
@@ -41,6 +42,7 @@ export function UserPanel() {
 
   return (
     <Container>
+      <ShowNotifications />
       <Account onClick={() => navigate('/account')}>
         <UserAvatar user={user} />
         {user.username}
