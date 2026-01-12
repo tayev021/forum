@@ -10,9 +10,8 @@ interface PostProps {
 const StyledLink = styled(Link)`
   display: block;
   padding: 1rem;
-  border: 1px solid var(--color-grey-300);
-  background-color: var(--color-bg-secondary);
-  box-shadow: var(--shadow-small);
+  border: 1px solid var(--color-grey-400);
+  border-radius: 0.6rem;
   transition: all 0.3s ease;
   cursor: pointer;
 

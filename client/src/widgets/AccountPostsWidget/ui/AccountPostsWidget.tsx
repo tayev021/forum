@@ -8,23 +8,15 @@ import { useSearchParams } from 'react-router';
 import { Post } from './Post';
 import { NoPosts } from './NoPosts';
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-`;
-
-const StyledWidgetHeader = styled(Widget.Header)`
-  border-top-left-radius: 0.4rem;
-  border-top-right-radius: 0.4rem;
-  background-color: var(--color-bg-secondary);
-  box-shadow: var(--shadow-small);
-`;
-
 const PostsList = styled.ul`
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
+  padding: 1rem;
+`;
+
+const StyledPagination = styled(Pagination)`
+  margin-top: 2rem;
 `;
 
 export function AccountPostsWidget() {
@@ -44,26 +36,28 @@ export function AccountPostsWidget() {
   }
 
   return (
-    <Container>
-      <StyledWidgetHeader>
-        <Widget.Title>{user?.username} posts</Widget.Title>
-      </StyledWidgetHeader>
-      {userPosts.posts.length < 1 ? (
-        <NoPosts />
-      ) : (
-        <>
-          <PostsList>
-            {userPosts?.posts.map((post) => (
-              <Post key={post.id} post={post} />
-            ))}
-          </PostsList>
-          <Pagination
-            baseUrl="/account/posts"
-            currentPage={userPosts.page}
-            totalPages={userPosts.totalPages}
-          />
-        </>
-      )}
-    </Container>
+    <>
+      <Widget.Container>
+        <Widget.Header>
+          <Widget.Title>{user?.username} posts</Widget.Title>
+        </Widget.Header>
+        {userPosts.posts.length < 1 ? (
+          <NoPosts />
+        ) : (
+          <>
+            <PostsList>
+              {userPosts?.posts.map((post) => (
+                <Post key={post.id} post={post} />
+              ))}
+            </PostsList>
+          </>
+        )}
+      </Widget.Container>
+      <StyledPagination
+        baseUrl="/account/posts"
+        currentPage={userPosts.page}
+        totalPages={userPosts.totalPages}
+      />
+    </>
   );
 }
