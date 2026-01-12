@@ -3,6 +3,7 @@ import { StoreProvider } from './StoreProvider';
 import { ThemeProvider } from './ThemeProvider';
 import { ModalProvider } from './ModalProvider';
 import { InlineModalProvider } from './InlineModalProvider';
+import { DropdownProvider } from './DropdownProvider';
 
 interface ProvidersProps {
   children: ReactElement[];
@@ -13,7 +14,9 @@ export function Providers({ children }: ProvidersProps) {
     <StoreProvider>
       <ThemeProvider>
         <ModalProvider>
-          <InlineModalProvider>{children}</InlineModalProvider>
+          <InlineModalProvider>
+            <DropdownProvider>{children}</DropdownProvider>
+          </InlineModalProvider>
         </ModalProvider>
       </ThemeProvider>
     </StoreProvider>
