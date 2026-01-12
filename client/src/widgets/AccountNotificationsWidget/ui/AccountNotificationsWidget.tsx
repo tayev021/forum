@@ -9,7 +9,7 @@ import { useEffect } from 'react';
 import { Widget } from '../../../shared/ui/WidgetKit';
 import styled from 'styled-components';
 import { Pagination } from '../../../shared/ui/Pagination';
-import { NoSubscriptions } from '../../AccountSubscriptionsWidget/ui/NoSubscriptions';
+import { NoNotifications } from './NoNotifications';
 import { Notification } from './Notification';
 
 const NotificationsList = styled.ul`
@@ -48,7 +48,7 @@ export function AccountNotificationsWidget() {
           <Widget.Title>{user.username} notifications</Widget.Title>
         </Widget.Header>
         {userNotifications.notifications.length < 1 ? (
-          <NoSubscriptions />
+          <NoNotifications />
         ) : (
           <NotificationsList>
             {userNotifications.notifications.map((notification) => (

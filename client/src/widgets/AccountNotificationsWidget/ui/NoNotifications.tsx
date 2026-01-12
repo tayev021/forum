@@ -7,5 +7,5 @@ const Container = styled.div`
   color: var(--color-grey-500);
 `;
 export function NoNotifications() {
-  return <Container>You have no notification yet</Container>;
+  return <Container>You have no notifications yet</Container>;
 }
