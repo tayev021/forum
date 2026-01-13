@@ -42,7 +42,9 @@ const Content = styled.p`
 export function Notification({ notification }: NotificationProps) {
   return (
     <li>
-      <StyledLink to={`/threads/${notification.thread.id}`}>
+      <StyledLink
+        to={`/threads/${notification.thread.id}?page=${notification.thread.page}#${notification.thread.unreadPostId}`}
+      >
         <Title>{notification.thread.title}</Title>
         <Time>
           {formatRelativeTime(notification.thread.unreadPostCreatedAt)}
