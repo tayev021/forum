@@ -174,6 +174,19 @@ export const getUserNotifications = catchAsync(
             'title',
             [
               sequelize.literal(`
+                CEIL(
+                  (
+                    SELECT COUNT(*)
+                    FROM posts p
+                    WHERE p.threadId = Subscription.threadId
+                      AND p.createdAt <= Subscription.lastReadAt
+                  ) / ${PAGE_ITEMS_LIMIT}
+                ) 
+              `),
+              'page',
+            ],
+            [
+              sequelize.literal(`
                 (
                   SELECT p.id
                   FROM posts p
