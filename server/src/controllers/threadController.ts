@@ -23,7 +23,6 @@ export const getThread = catchAsync(async (req: Request, res: Response) => {
   }
 
   thread.views += 1;
-
   await thread.save({ silent: true });
 
   const { rows: posts, count } = await Post.findAndCountAll({
@@ -48,7 +47,12 @@ export const getThread = catchAsync(async (req: Request, res: Response) => {
       where: { userId: user?.id, threadId },
     });
 
-    isSubscribed = !!subscription;
+    if (subscription) {
+      isSubscribed = true;
+
+      subscription.lastReadAt = new Date();
+      await subscription.save();
+    }
   }
 
   res.status(200).json({
