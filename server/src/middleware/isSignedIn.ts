@@ -12,7 +12,7 @@ export async function isSignedIn(
   if (!token) {
     req.isSignedIn = false;
     req.user = null;
-    next();
+    return next();
   }
 
   const decoded = await verifyJwtAsync(token);
@@ -21,7 +21,7 @@ export async function isSignedIn(
   if (!currentUser) {
     req.isSignedIn = false;
     req.user = null;
-    next();
+    return next();
   }
 
   req.isSignedIn = true;
