@@ -163,7 +163,7 @@ export const getUserNotifications = catchAsync(
       },
       limit: limit,
       offset: offset,
-      order: [['createdAt', 'DESC']],
+      order: [['lastReadAt', 'DESC']],
       attributes: ['id', 'lastReadAt'],
       include: [
         {
