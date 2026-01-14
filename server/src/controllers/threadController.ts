@@ -226,34 +226,3 @@ export const unsubscribeThread = catchAsync(
     res.status(204).json({});
   }
 );
-
-export const readThread = catchAsync(async (req: Request, res: Response) => {
-  const user = req.user!;
-  const threadId = req.params.threadId;
-
-  const thread = await Thread.findByPk(threadId);
-
-  if (!thread) {
-    throw new AppError(400, 'Failed to read thread!', {
-      type: 'general',
-      message: 'You are trying to read a thread that does not exist',
-    });
-  }
-
-  const subscription = await Subscription.findOne({
-    where: { userId: user.id, threadId },
-  });
-
-  if (!subscription) {
-    throw new AppError(400, 'Failed to read thread!', {
-      type: 'general',
-      message: 'You are not subscribed to this thread',
-    });
-  }
-
-  subscription.lastReadAt = new Date();
-
-  await subscription.save();
-
-  res.status(204).json({});
-});
