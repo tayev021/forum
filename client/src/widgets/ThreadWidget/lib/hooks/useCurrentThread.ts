@@ -7,6 +7,7 @@ import {
 import { useAppDispatch } from '../../../../shared/lib/hooks/useAppDispatch';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
+import { getUserNotifications } from '../../../../entities/user';
 
 export function useCurrentThread() {
   const params = useParams();
@@ -29,6 +30,12 @@ export function useCurrentThread() {
       dispatch(getThread({ threadId, page }));
     }
   }, [dispatch, threadId, page]);
+
+  useEffect(() => {
+    if (thread?.isSubscribed) {
+      dispatch(getUserNotifications({ page: 1 }));
+    }
+  }, [dispatch, thread]);
 
   return { thread, isLoading, error };
 }
