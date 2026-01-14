@@ -1,13 +1,13 @@
 import type { ForumThread } from '../../../entities/forum';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router';
+import { Link } from 'react-router';
 import { formatRelativeTime } from '../../../shared/lib/utils/formatRelativeTime';
 
 interface ThreadRowProps {
   thread: ForumThread;
 }
 
-const Li = styled.li`
+const StyledLink = styled(Link)`
   display: grid;
   grid-template-columns: minmax(20rem, 1fr) minmax(9rem, min-content) 7rem 12rem;
   gap: 1rem;
@@ -38,18 +38,18 @@ const TimeCell = styled(Cell)`
 `;
 
 export function ThreadItem({ thread }: ThreadRowProps) {
-  const navigate = useNavigate();
-
   return (
-    <Li onClick={() => navigate(`/threads/${thread.id}?page=1`)}>
-      <TitleCell>{thread.title}</TitleCell>
-      <Cell>
-        {thread.views} {thread.views === 1 ? 'view' : 'views'}
-      </Cell>
-      <Cell>
-        {thread.postsCount} {thread.postsCount > 1 ? 'posts' : 'post'}
-      </Cell>
-      <TimeCell>{formatRelativeTime(thread.createdAt)}</TimeCell>
-    </Li>
+    <li>
+      <StyledLink to={`/threads/${thread.id}?page=1`}>
+        <TitleCell>{thread.title}</TitleCell>
+        <Cell>
+          {thread.views} {thread.views === 1 ? 'view' : 'views'}
+        </Cell>
+        <Cell>
+          {thread.postsCount} {thread.postsCount > 1 ? 'posts' : 'post'}
+        </Cell>
+        <TimeCell>{formatRelativeTime(thread.createdAt)}</TimeCell>
+      </StyledLink>
+    </li>
   );
 }
