@@ -12,7 +12,6 @@ import {
   deleteThread,
   subscribeThread,
   unsubscribeThread,
-  readThread,
 } from '../controllers/threadController';
 
 const threadRouter = Router();
@@ -20,7 +19,6 @@ const threadRouter = Router();
 threadRouter.get('/:threadId', isSignedIn, getThread);
 threadRouter.post('/:threadId/subscribe', protect, subscribeThread);
 threadRouter.post('/:threadId/unsubscribe', protect, unsubscribeThread);
-threadRouter.patch('/:threadId/read', protect, readThread);
 threadRouter.post(
   '/',
   protect,
