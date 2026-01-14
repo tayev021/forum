@@ -26,7 +26,7 @@ export function ForumWidgetHeader({ forum }: ForumWidgetHeaderProps) {
   return (
     <Widget.Header>
       <Widget.HeaderGroup>
-        <Widget.BackButton />
+        <Widget.BackButton url="/" />
         <Widget.Title>{forum?.title} Forum</Widget.Title>
         <InlineModal.Window name={`editForumTitle-${forum.id}`}>
           <UpdateForumTitle forumId={forum.id}>

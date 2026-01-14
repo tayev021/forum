@@ -17,7 +17,10 @@ export function BackButton({ className, url }: BackButtonProps) {
   const navigate = useNavigate();
 
   return (
-    <Button className={className} onClick={() => navigate(url || '/')}>
+    <Button
+      className={className}
+      onClick={() => (url ? navigate(url) : navigate(-1))}
+    >
       <Icon />
     </Button>
   );

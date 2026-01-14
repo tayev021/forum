@@ -51,7 +51,7 @@ export function ThreadWidget() {
       <ThreadContainer>
         <StyledWidgetHeader>
           <Widget.HeaderGroup>
-            <Widget.BackButton url={`/forums/${thread.forumId}`} />
+            <Widget.BackButton />
             <Widget.Title>{thread.title} Thread</Widget.Title>
             <InlineModal.Window name={`editThreadTitle-${thread.id}`}>
               <UpdateThreadTitle threadId={thread.id}>
