@@ -113,6 +113,10 @@ const userSlice = createSlice({
     });
     builder.addCase(signout.fulfilled, (state, _action) => {
       state.user = null;
+      state.userPosts = null;
+      state.userThreads = null;
+      state.userSubscriptions = null;
+      state.userNotifications = null;
       state.isLoading = false;
       state.error = null;
     });
