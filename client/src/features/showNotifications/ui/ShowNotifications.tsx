@@ -9,7 +9,7 @@ import { useEffect } from 'react';
 import { Dropdown } from '../../../shared/ui/Dropdown';
 import { Toggler } from './Toggler';
 import { Notifications } from './Notifications';
-import { Link } from 'react-router';
+import { Link, useLocation } from 'react-router';
 import { NoNotifications } from './NoNotifications';
 
 const Container = styled.div`
@@ -36,14 +36,23 @@ export function ShowNotifications() {
   const { user } = useUser();
   const { userNotifications, isLoading } = useUserNotifications();
   const dispatch = useAppDispatch();
+  const location = useLocation();
 
   useEffect(() => {
-    if (!userNotifications) {
+    if (location.pathname.includes('/account')) return;
+
+    if (!userNotifications || userNotifications?.page !== 1) {
       dispatch(getUserNotifications({ page: 1 }));
     }
-  }, []);
+  }, [location.pathname, userNotifications]);
 
-  if (!user || !userNotifications || isLoading) return null;
+  if (
+    !user ||
+    location.pathname.includes('/account') ||
+    !userNotifications ||
+    isLoading
+  )
+    return null;
 
   return (
     <>

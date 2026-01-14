@@ -37,7 +37,7 @@ export function Toggler({
   return (
     <Button onClick={onClick}>
       <HiBellAlert />
-      {notificationsCount > 1 && (
+      {notificationsCount > 0 && (
         <Counter>{notificationsCount > 9 ? '9+' : notificationsCount}</Counter>
       )}
     </Button>
