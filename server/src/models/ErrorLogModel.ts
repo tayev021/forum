@@ -20,7 +20,7 @@ ErrorLog.init(
       allowNull: false,
     },
     stack: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
   },
