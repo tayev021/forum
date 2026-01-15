@@ -36,6 +36,8 @@ export function PostItem({ post }: PostItemProps) {
           top: element.offsetTop - 50,
           behavior: 'smooth',
         });
+
+        window.location.hash = '';
       }
     }
   }, []);
