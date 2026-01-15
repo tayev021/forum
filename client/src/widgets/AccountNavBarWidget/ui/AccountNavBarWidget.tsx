@@ -1,5 +1,11 @@
 import styled, { css } from 'styled-components';
 import { NavLink } from 'react-router';
+import {
+  getUserNotifications,
+  useUserNotifications,
+} from '../../../entities/user';
+import { useAppDispatch } from '../../../shared/lib/hooks/useAppDispatch';
+import { useEffect } from 'react';
 import { Widget } from '../../../shared/ui/WidgetKit';
 import {
   HiArrowRightOnRectangle,
@@ -41,6 +47,7 @@ const navBarButton = css`
   display: flex;
   align-items: center;
   gap: 1.5rem;
+  position: relative;
   padding: 0.5rem 2rem;
   font-size: 1.6rem;
   font-weight: 500;
@@ -60,7 +67,34 @@ const StyledSignout = styled(Signout)`
   ${navBarButton}
 `;
 
+const NotificationsCounter = styled.span`
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  right: 1.5rem;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  font-size: 1.2rem;
+  line-height: 1;
+  color: var(--color-text-secondary);
+  background-color: var(--color-rose-500);
+`;
+
 export function AccountNavBarWidget() {
+  const { userNotifications } = useUserNotifications();
+  const dispatch = useAppDispatch();
+  const notificationsCount = userNotifications?.notifications.length || 0;
+
+  useEffect(() => {
+    if (!userNotifications) {
+      dispatch(getUserNotifications({ page: 1 }));
+    }
+  }, [userNotifications]);
+
   return (
     <Container>
       <List>
@@ -92,6 +126,11 @@ export function AccountNavBarWidget() {
           <StyledNavLink to="/account/notifications">
             <HiOutlineBellAlert />
             Notifications
+            {notificationsCount > 0 && (
+              <NotificationsCounter>
+                {notificationsCount > 9 ? '9+' : notificationsCount}
+              </NotificationsCounter>
+            )}
           </StyledNavLink>
         </Item>
         <Item>
