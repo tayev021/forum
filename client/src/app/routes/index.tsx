@@ -16,6 +16,7 @@ import {
   AccountNotificationsPage,
   AccountSettingsPage,
 } from '../../pages/account';
+import { AuthorProfilePage } from '../../pages/author';
 import { ForumPage } from '../../pages/forum';
 import { ThreadCreatePage, ThreadPage } from '../../pages/thread';
 import { PageNotFound } from '../../pages/pageNotFound';
@@ -54,6 +55,9 @@ export function AppRouter() {
               element={<AccountNotificationsPage />}
             />
             <Route path="settings" element={<AccountSettingsPage />} />
+          </Route>
+          <Route path="author">
+            <Route path=":authorId/profile" element={<AuthorProfilePage />} />
           </Route>
           <Route path="forums">
             <Route path=":forumId" element={<ForumPage />} />
