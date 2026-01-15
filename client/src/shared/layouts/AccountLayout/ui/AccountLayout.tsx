@@ -1,6 +1,7 @@
+import type { ElementType } from 'react';
 import styled from 'styled-components';
 import { Container } from '../../../ui/Container';
-import type { ElementType } from 'react';
+import { useUser } from '../../../../entities/user';
 import { Outlet } from 'react-router';
 
 interface AccountLayoutProps {
@@ -15,12 +16,17 @@ const StyledContainer = styled(Container)`
 `;
 
 export function AccountLayout({ NavBar }: AccountLayoutProps) {
+  const { user } = useUser();
+
   return (
-    <StyledContainer>
-      <NavBar />
-      <div>
-        <Outlet />
-      </div>
-    </StyledContainer>
+    <>
+      <title>{`Forum | ${user?.username} Account`}</title>
+      <StyledContainer>
+        <NavBar />
+        <div>
+          <Outlet />
+        </div>
+      </StyledContainer>
+    </>
   );
 }
