@@ -1,7 +1,8 @@
 import type { ThreadPostAuthor } from '../../../../entities/thread';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { UserAvatar } from '../../../../entities/user/ui/UserAvatar';
 import { formatRelativeTime } from '../../../../shared/lib/utils/formatRelativeTime';
+import { Link } from 'react-router';
 
 interface PostAuthorProps {
   author: ThreadPostAuthor | null;
@@ -21,7 +22,7 @@ const StyledAuthorAvatar = styled(UserAvatar)`
   margin-bottom: 1rem;
 `;
 
-const AuthorName = styled.p`
+const authorNameCss = css`
   width: 100%;
   margin-bottom: 1rem;
   font-size: 1.8rem;
@@ -29,6 +30,18 @@ const AuthorName = styled.p`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+`;
+
+const AuthorName = styled.p`
+  ${authorNameCss}
+`;
+
+const AuthorLink = styled(Link)`
+  ${authorNameCss}
+
+  &:hover {
+    color: var(--color-primary);
+  }
 `;
 
 const AuthorRole = styled.p`
@@ -47,7 +60,13 @@ export function PostAuthor({ author }: PostAuthorProps) {
   return (
     <StyledPostAuthor>
       <StyledAuthorAvatar user={author} size={8} />
-      <AuthorName>{author?.username || 'deleted'}</AuthorName>
+      {author ? (
+        <AuthorLink to={`/author/${author.id}/profile`}>
+          {author.username}
+        </AuthorLink>
+      ) : (
+        <AuthorName>deleted</AuthorName>
+      )}
       <AuthorRole>
         {['admin', 'moderator'].includes(author?.role || '')
           ? author?.role
