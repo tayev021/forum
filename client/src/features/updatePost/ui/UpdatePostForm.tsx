@@ -4,13 +4,14 @@ import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react';
 import { HiChevronRight } from 'react-icons/hi2';
 import { useAppDispatch } from '../../../shared/lib/hooks/useAppDispatch';
 import {
+  clearPost,
   clearPostError,
   createPost,
   updatePost,
   usePost,
 } from '../../../entities/post';
 import { getThread } from '../../../entities/thread';
-import { useParams, useSearchParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import toast from 'react-hot-toast';
 
 interface UpdatePostFormProps {
@@ -59,24 +60,23 @@ export function UpdatePostForm({
   postContent = '',
 }: UpdatePostFormProps) {
   const [content, setContent] = useState(postContent);
-  const [isCreated, setIsCreated] = useState(false);
-  const params = useParams();
-  const [searchParams] = useSearchParams();
+  const { post, isLoading, error: serverError } = usePost();
   const dispatch = useAppDispatch();
-  const { isLoading, error: serverError } = usePost();
+  const params = useParams();
+  const navigate = useNavigate();
 
   const threadId = Number(params.threadId);
-  const page = Number(searchParams.get('page')) || 1;
 
   useEffect(() => {
     if (serverError?.type === 'general') {
       toast.error(serverError.message);
       dispatch(clearPostError());
-      setIsCreated(false);
-    } else if (!serverError && !isLoading && isCreated) {
-      dispatch(getThread({ threadId, page }));
+    } else if (!serverError && !isLoading && post) {
+      navigate(`/threads/${threadId}?page=${post.thread.page}#${post.id}`);
+      dispatch(getThread({ threadId, page: post.thread.page }));
+      dispatch(clearPost());
     }
-  }, [serverError, isLoading, isCreated]);
+  }, [serverError, post, isLoading]);
 
   function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
     setContent(event.target.value);
@@ -90,8 +90,6 @@ export function UpdatePostForm({
     } else {
       dispatch(createPost({ threadId, content }));
     }
-
-    setIsCreated(true);
   }
 
   return (
