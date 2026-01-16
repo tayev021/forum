@@ -71,7 +71,34 @@ export const createPost = catchAsync(async (req: Request, res: Response) => {
   thread.changed('updatedAt', true);
   await thread.save();
 
-  res.status(201).json({ post });
+  const detailedPost = await Post.findOne({
+    where: { id: post.id },
+    include: [
+      {
+        model: Thread,
+        as: 'thread',
+        attributes: [
+          'id',
+          'title',
+          [
+            sequelize.literal(`
+                CEIL(
+                  (
+                    SELECT COUNT(*)
+                    FROM posts p
+                    WHERE p.threadId = Post.threadId
+                      AND p.createdAt <= Post.createdAt
+                  ) * 1.0 / ${PAGE_ITEMS_LIMIT}
+                )
+              `),
+            'page',
+          ],
+        ],
+      },
+    ],
+  });
+
+  res.status(201).json({ post: detailedPost });
 });
 
 export const updatePost = catchAsync(async (req: Request, res: Response) => {
@@ -96,8 +123,34 @@ export const updatePost = catchAsync(async (req: Request, res: Response) => {
   }
 
   post.content = content;
-
   await post.save();
 
-  res.status(201).json({ post });
+  const detailedPost = await Post.findOne({
+    where: { id: post.id },
+    include: [
+      {
+        model: Thread,
+        as: 'thread',
+        attributes: [
+          'id',
+          'title',
+          [
+            sequelize.literal(`
+                CEIL(
+                  (
+                    SELECT COUNT(*)
+                    FROM posts p
+                    WHERE p.threadId = Post.threadId
+                      AND p.createdAt <= Post.createdAt
+                  ) * 1.0 / ${PAGE_ITEMS_LIMIT}
+                )
+              `),
+            'page',
+          ],
+        ],
+      },
+    ],
+  });
+
+  res.status(201).json({ post: detailedPost });
 });
