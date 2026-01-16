@@ -3,6 +3,7 @@ import type { ThreadPost } from '../../../../entities/thread';
 import { Widget } from '../../../../shared/ui/WidgetKit';
 import { useUser } from '../../../../entities/user';
 import { formatRelativeTime } from '../../../../shared/lib/utils/formatRelativeTime';
+import { LikePost } from '../../../../features/likePost';
 
 interface PostContentProps {
   post: ThreadPost;
@@ -38,8 +39,15 @@ const Main = styled.div`
 `;
 
 const Footer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
   padding: 0.5rem 1rem;
   border-top: 2px solid var(--color-grey-200);
+`;
+
+const UpdatedTime = styled.p`
   font-size: 1.4rem;
   color: var(--color-grey-500);
 `;
@@ -58,9 +66,13 @@ export function PostContent({ post, handleUpdate }: PostContentProps) {
         </div>
       </Header>
       <Main>{post.content}</Main>
-      {post.createdAt !== post.updatedAt && (
-        <Footer>updated {formatRelativeTime(post.updatedAt)}</Footer>
-      )}
+      <Footer>
+        <UpdatedTime>
+          {post.createdAt !== post.updatedAt &&
+            `updated ${formatRelativeTime(post.updatedAt)}`}
+        </UpdatedTime>
+        <LikePost post={post} />
+      </Footer>
     </StyledPostContent>
   );
 }
