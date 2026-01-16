@@ -4,6 +4,7 @@ import { DEFAULT_PAGE, PAGE_ITEMS_LIMIT } from '../constants';
 import { Forum, Post, Subscription, Thread, User } from '../models';
 import { AppError } from '../utils/AppError';
 import { capitalize } from '../utils/capitalize';
+import sequelize from 'sequelize';
 
 export const getThread = catchAsync(async (req: Request, res: Response) => {
   const isSignedIn = req.isSignedIn;
@@ -29,7 +30,32 @@ export const getThread = catchAsync(async (req: Request, res: Response) => {
     where: { threadId },
     limit: limit,
     offset: offset,
-    attributes: ['id', 'threadId', 'content', 'createdAt', 'updatedAt'],
+    distinct: true,
+    attributes: [
+      'id',
+      'threadId',
+      'authorId',
+      'content',
+      'createdAt',
+      'updatedAt',
+      [
+        sequelize.literal(`(
+          SELECT COUNT(*)
+          FROM likes l
+          WHERE l.postId = Post.id
+        )`),
+        'likes',
+      ],
+      [
+        sequelize.literal(`EXISTS (
+          SELECT 1
+          FROM likes l
+          WHERE l.postId = Post.id
+            AND l.userId = ${user?.id || 0}
+        )`),
+        'isLiked',
+      ],
+    ],
     include: [
       {
         model: User,
@@ -209,7 +235,7 @@ export const subscribeThread = catchAsync(
     });
 
     res.status(204).json({});
-  }
+  },
 );
 
 export const unsubscribeThread = catchAsync(
@@ -224,5 +250,5 @@ export const unsubscribeThread = catchAsync(
     await subscription?.destroy();
 
     res.status(204).json({});
-  }
+  },
 );
