@@ -5,6 +5,7 @@ import { getLatestPosts } from '../thunks/getLatestPosts';
 import { createPost } from '../thunks/createPost';
 import { updatePost } from '../thunks/updatePost';
 import type { Post } from '../types/Post';
+import { likePost } from '../thunks/likePost';
 
 interface PostState {
   post: Post | null;
@@ -40,7 +41,7 @@ const postSlice = createSlice({
       (state, action: PayloadAction<LatestPost[]>) => {
         state.latestPosts = action.payload;
         state.isLoading = false;
-      }
+      },
     );
     builder.addCase(getLatestPosts.rejected, (state, _action) => {
       state.latestPosts = [];
@@ -56,7 +57,7 @@ const postSlice = createSlice({
       (state, action: PayloadAction<Post>) => {
         state.post = action.payload;
         state.isLoading = false;
-      }
+      },
     );
     builder.addCase(createPost.rejected, (state, action) => {
       state.isLoading = false;
@@ -77,9 +78,30 @@ const postSlice = createSlice({
       (state, action: PayloadAction<Post>) => {
         state.post = action.payload;
         state.isLoading = false;
-      }
+      },
     );
     builder.addCase(updatePost.rejected, (state, action) => {
+      state.isLoading = false;
+
+      if (action.payload) {
+        state.error = action.payload;
+      } else {
+        state.error = { type: 'general', message: 'Unknown error!' };
+      }
+    });
+
+    builder.addCase(likePost.pending, (state, _action) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(
+      likePost.fulfilled,
+      (state, action: PayloadAction<Post>) => {
+        state.post = action.payload;
+        state.isLoading = false;
+      },
+    );
+    builder.addCase(likePost.rejected, (state, action) => {
       state.isLoading = false;
 
       if (action.payload) {
