@@ -6,12 +6,14 @@ import {
   getLatestPosts,
   createPost,
   updatePost,
+  likePost,
 } from '../controllers/postController';
 
 const postRouter = Router();
 
 postRouter.get('/latest', getLatestPosts);
 postRouter.post('/', protect, validate(postContentSchema), createPost);
+postRouter.post('/:postId/like', protect, likePost);
 postRouter.patch('/:postId', protect, validate(postContentSchema), updatePost);
 
 export { postRouter };
