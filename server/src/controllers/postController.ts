@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { catchAsync } from '../utils/catchAsync';
 import { LATEST_POSTS_LIMIT, PAGE_ITEMS_LIMIT } from '../constants';
-import { Post, Thread, User } from '../models';
+import { Like, Post, Thread, User } from '../models';
 import { AppError } from '../utils/AppError';
 import sequelize from 'sequelize';
 
@@ -44,7 +44,7 @@ export const getLatestPosts = catchAsync(
     });
 
     res.status(200).json({ posts });
-  }
+  },
 );
 
 export const createPost = catchAsync(async (req: Request, res: Response) => {
@@ -148,6 +148,82 @@ export const updatePost = catchAsync(async (req: Request, res: Response) => {
             'page',
           ],
         ],
+      },
+    ],
+  });
+
+  res.status(201).json({ post: detailedPost });
+});
+
+export const likePost = catchAsync(async (req: Request, res: Response) => {
+  const user = req.user!;
+  const postId = req.params.postId;
+
+  const existingPost = await Post.findByPk(postId);
+
+  if (!existingPost) {
+    throw new AppError(400, 'Failed to like post!', {
+      type: 'general',
+      message: 'You are trying to like a post that does not exist',
+    });
+  }
+
+  if (existingPost.authorId === user.id) {
+    throw new AppError(400, 'Failed to like post!', {
+      type: 'general',
+      message: 'You are trying to like your own post',
+    });
+  }
+
+  const existingLike = await Like.findOne({
+    where: { userId: user.id, postId },
+  });
+
+  if (existingLike) {
+    throw new AppError(400, 'Failed to like post!', {
+      type: 'general',
+      message: 'You are trying to like a post that you already liked',
+    });
+  }
+
+  await Like.create({ userId: user.id, postId });
+
+  const detailedPost = await Post.findOne({
+    where: { id: postId },
+    attributes: [
+      'id',
+      'threadId',
+      'content',
+      'createdAt',
+      'updatedAt',
+      [
+        sequelize.literal(`(
+            SELECT COUNT(*)
+            FROM likes l
+            WHERE l.postId = Post.id
+          )`),
+        'likesCount',
+      ],
+      [
+        sequelize.literal(`EXISTS (
+            SELECT 1
+            FROM likes l
+            WHERE l.postId = Post.id
+              AND l.userId = ${user.id}
+          )`),
+        'isLiked',
+      ],
+    ],
+    include: [
+      {
+        model: User,
+        as: 'author',
+        attributes: ['id', 'username', 'avatar', 'role', 'lastSignIn'],
+      },
+
+      {
+        model: Thread,
+        as: 'thread',
       },
     ],
   });
