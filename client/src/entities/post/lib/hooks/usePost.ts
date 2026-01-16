@@ -1,7 +1,7 @@
 import { useAppSelector } from '../../../../shared/lib/hooks/useAppSelector';
 
 export function usePost() {
-  const { isLoading, error } = useAppSelector((state) => state.post);
+  const { post, isLoading, error } = useAppSelector((state) => state.post);
 
-  return { isLoading, error };
+  return { post, isLoading, error };
 }
