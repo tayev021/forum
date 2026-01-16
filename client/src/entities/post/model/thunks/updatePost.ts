@@ -1,9 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { ServerError } from '../../../../shared/types/ServerError';
 import { API_URL } from '../../../../shared/constants';
+import type { Post } from '../types/Post';
 
 export const updatePost = createAsyncThunk<
-  void,
+  Post,
   { postId: number; content: string },
   { rejectValue: ServerError }
 >('post/updatePost', async function ({ postId, content }, thunkAPI) {
@@ -20,4 +21,8 @@ export const updatePost = createAsyncThunk<
     const error = await response.json();
     return thunkAPI.rejectWithValue(error);
   }
+
+  const json: { post: Post } = await response.json();
+
+  return json.post;
 });
