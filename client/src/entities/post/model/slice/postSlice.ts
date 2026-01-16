@@ -4,14 +4,17 @@ import type { LatestPost } from '../types/LatestPost';
 import { getLatestPosts } from '../thunks/getLatestPosts';
 import { createPost } from '../thunks/createPost';
 import { updatePost } from '../thunks/updatePost';
+import type { Post } from '../types/Post';
 
 interface PostState {
+  post: Post | null;
   latestPosts: LatestPost[];
   isLoading: boolean;
   error: ServerError | null;
 }
 
 const initialState: PostState = {
+  post: null,
   latestPosts: [],
   isLoading: false,
   error: null,
@@ -21,6 +24,9 @@ const postSlice = createSlice({
   name: 'post',
   initialState,
   reducers: {
+    clearPost(state) {
+      state.post = null;
+    },
     clearPostError(state) {
       state.error = null;
     },
@@ -45,9 +51,13 @@ const postSlice = createSlice({
       state.isLoading = true;
       state.error = null;
     });
-    builder.addCase(createPost.fulfilled, (state, _action) => {
-      state.isLoading = false;
-    });
+    builder.addCase(
+      createPost.fulfilled,
+      (state, action: PayloadAction<Post>) => {
+        state.post = action.payload;
+        state.isLoading = false;
+      }
+    );
     builder.addCase(createPost.rejected, (state, action) => {
       state.isLoading = false;
 
@@ -62,9 +72,13 @@ const postSlice = createSlice({
       state.isLoading = true;
       state.error = null;
     });
-    builder.addCase(updatePost.fulfilled, (state, _action) => {
-      state.isLoading = false;
-    });
+    builder.addCase(
+      updatePost.fulfilled,
+      (state, action: PayloadAction<Post>) => {
+        state.post = action.payload;
+        state.isLoading = false;
+      }
+    );
     builder.addCase(updatePost.rejected, (state, action) => {
       state.isLoading = false;
 
@@ -78,4 +92,4 @@ const postSlice = createSlice({
 });
 
 export const postReducer = postSlice.reducer;
-export const { clearPostError } = postSlice.actions;
+export const { clearPost, clearPostError } = postSlice.actions;
