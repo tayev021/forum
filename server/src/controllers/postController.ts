@@ -202,7 +202,7 @@ export const likePost = catchAsync(async (req: Request, res: Response) => {
             FROM likes l
             WHERE l.postId = Post.id
           )`),
-        'likesCount',
+        'likes',
       ],
       [
         sequelize.literal(`EXISTS (
