@@ -71,7 +71,7 @@ export function UpdatePostForm({
     if (serverError?.type === 'general') {
       toast.error(serverError.message);
       dispatch(clearPostError());
-    } else if (!serverError && !isLoading && post) {
+    } else if (!serverError && !isLoading && post && content) {
       navigate(`/threads/${threadId}?page=${post.thread.page}#${post.id}`);
       dispatch(getThread({ threadId, page: post.thread.page }));
       dispatch(clearPost());
