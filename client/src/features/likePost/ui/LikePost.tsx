@@ -1,4 +1,4 @@
-import { getThread, type ThreadPost } from '../../../entities/thread';
+import { updateThreadPost, type ThreadPost } from '../../../entities/thread';
 import styled from 'styled-components';
 import { HiHandThumbUp } from 'react-icons/hi2';
 import { useUser } from '../../../entities/user';
@@ -11,7 +11,6 @@ import {
 } from '../../../entities/post';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router';
 
 interface LikePostProps {
   post: ThreadPost;
@@ -47,7 +46,6 @@ export function LikePost({ post }: LikePostProps) {
   const { user } = useUser();
   const { post: serverPost, isLoading, error: serverError } = usePost();
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const isLikeable = !!user && !post.isLiked && post.authorId !== user.id;
 
@@ -55,14 +53,19 @@ export function LikePost({ post }: LikePostProps) {
     if (serverError?.type === 'general') {
       toast.error(serverError.message);
       dispatch(clearPostError());
-    } else if (!serverError && !isLoading && serverPost) {
-      navigate(
-        `/threads/${serverPost.threadId}?page=${serverPost.thread.page}#${serverPost.id}`,
-      );
+    } else if (
+      !serverError &&
+      !isLoading &&
+      serverPost &&
+      post.id === serverPost.id
+    ) {
       dispatch(
-        getThread({
-          threadId: serverPost.threadId,
-          page: serverPost.thread.page,
+        updateThreadPost({
+          postId: serverPost.id,
+          post: {
+            likes: serverPost.likes,
+            isLiked: true,
+          },
         }),
       );
       dispatch(clearPost());
