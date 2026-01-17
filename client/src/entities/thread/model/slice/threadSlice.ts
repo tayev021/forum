@@ -7,6 +7,7 @@ import { deleteThread } from '../thunks/deleteThread';
 import { updateThread } from '../thunks/updateThread';
 import { subscribeThread } from '../thunks/subscribeThread';
 import { unsubscribeThread } from '../thunks/unsubscribeThread';
+import type { ThreadPost } from '../types/ThreadPost';
 
 interface ThreadState {
   thread: Thread | null;
@@ -24,6 +25,20 @@ const threadSlice = createSlice({
   name: 'thread',
   initialState,
   reducers: {
+    updateThreadPost: (
+      state,
+      action: PayloadAction<{ postId: number; post: Partial<ThreadPost> }>,
+    ) => {
+      if (!state.thread) return;
+
+      state.thread.posts = state.thread?.posts.map((post) => {
+        if (post.id === action.payload.postId) {
+          return { ...post, ...action.payload.post };
+        } else {
+          return post;
+        }
+      });
+    },
     clearThreadError: (state) => {
       state.error = null;
     },
@@ -39,7 +54,7 @@ const threadSlice = createSlice({
       (state, action: PayloadAction<Thread>) => {
         state.thread = action.payload;
         state.isLoading = false;
-      }
+      },
     );
     builder.addCase(getThread.rejected, (state, action) => {
       state.isLoading = false;
@@ -61,7 +76,7 @@ const threadSlice = createSlice({
       (state, action: PayloadAction<Thread>) => {
         state.thread = action.payload;
         state.isLoading = false;
-      }
+      },
     );
     builder.addCase(createThread.rejected, (state, action) => {
       state.isLoading = false;
@@ -81,7 +96,7 @@ const threadSlice = createSlice({
       (state, action: PayloadAction<string>) => {
         state.thread = { ...state.thread, title: action.payload } as Thread;
         state.isLoading = false;
-      }
+      },
     );
     builder.addCase(updateThread.rejected, (state, action) => {
       state.isLoading = false;
@@ -154,4 +169,4 @@ const threadSlice = createSlice({
 });
 
 export const threadReducer = threadSlice.reducer;
-export const { clearThreadError } = threadSlice.actions;
+export const { updateThreadPost, clearThreadError } = threadSlice.actions;
