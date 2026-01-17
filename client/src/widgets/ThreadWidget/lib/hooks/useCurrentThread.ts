@@ -16,7 +16,6 @@ export function useCurrentThread() {
   const dispatch = useAppDispatch();
 
   const threadId = Number(params.threadId);
-  const page = Number(searchParams.get('page')) || 1;
 
   useEffect(() => {
     if (error?.type === 'general') {
@@ -26,10 +25,12 @@ export function useCurrentThread() {
   }, [error, dispatch]);
 
   useEffect(() => {
-    if (threadId) {
+    const page = Number(searchParams.get('page')) || 1;
+
+    if (threadId !== thread?.id || page !== thread?.page) {
       dispatch(getThread({ threadId, page }));
     }
-  }, [dispatch, threadId, page]);
+  }, [dispatch, thread, threadId, searchParams]);
 
   useEffect(() => {
     if (thread?.isSubscribed) {
