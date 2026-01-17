@@ -1,4 +1,8 @@
-import { clearThreadError, threadReducer } from './model/slice/threadSlice';
+import {
+  threadReducer,
+  updateThreadPost,
+  clearThreadError,
+} from './model/slice/threadSlice';
 import { getThread } from './model/thunks/getThread';
 import { createThread } from './model/thunks/createThread';
 import { updateThread } from './model/thunks/updateThread';
@@ -12,6 +16,7 @@ import { type ThreadPostAuthor } from './model/types/ThreadPostAuthor';
 
 export {
   threadReducer,
+  updateThreadPost,
   clearThreadError,
   getThread,
   createThread,
