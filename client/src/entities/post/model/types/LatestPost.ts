@@ -1,10 +1,8 @@
+import type { Post as BasePost } from '../../../../shared/types/Post';
 import type { LatestPostAuthor } from './LatestPostAuthor';
 import type { LatestPostThread } from './LatestPostThread';
 
-export interface LatestPost {
-  id: number;
+export type LatestPost = Pick<BasePost, 'id' | 'content' | 'createdAt'> & {
   author: LatestPostAuthor | null;
   thread: LatestPostThread;
-  content: string;
-  createdAt: string;
-}
+};
