@@ -1,9 +1,11 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import type { ThreadPost } from '../../../../entities/thread';
 import { Widget } from '../../../../shared/ui/WidgetKit';
-import { useUser } from '../../../../entities/user';
+import { useRestrictTo, useUser } from '../../../../entities/user';
 import { formatRelativeTime } from '../../../../shared/lib/utils/formatRelativeTime';
+import { DeletePost } from '../../../../features/deletePost';
 import { LikePost } from '../../../../features/likePost';
+import { Modal } from '../../../../shared/ui/Modal';
 
 interface PostContentProps {
   post: ThreadPost;
@@ -28,9 +30,23 @@ const Time = styled.p`
   color: var(--color-grey-500);
 `;
 
-const StyledEditButton = styled(Widget.EditButton)`
+const Actions = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+`;
+
+const styledButtonCss = css`
   width: 1.5rem;
   height: 1.5rem;
+`;
+
+const StyledEditButton = styled(Widget.EditButton)`
+  ${styledButtonCss}
+`;
+
+const StyledDeleteButton = styled(Widget.DeleteButton)`
+  ${styledButtonCss}
 `;
 
 const Main = styled.div`
@@ -54,16 +70,31 @@ const UpdatedTime = styled.p`
 
 export function PostContent({ post, handleUpdate }: PostContentProps) {
   const { user } = useUser();
+  const hasModeratePermissions = useRestrictTo(['admin', 'moderator']);
 
   return (
     <StyledPostContent>
       <Header>
         <Time>{formatRelativeTime(post.createdAt)}</Time>
-        <div>
+        <Actions>
           {user?.id === post?.author?.id && (
             <StyledEditButton onClick={handleUpdate} />
           )}
-        </div>
+          {hasModeratePermissions && (
+            <>
+              <Modal.Open windowName={`deletePost-${post.id}`}>
+                <StyledDeleteButton />
+              </Modal.Open>
+              <Modal.Window name={`deletePost-${post.id}`}>
+                <DeletePost postId={post.id}>
+                  <Widget.Confirm title="Delete Post">
+                    Are you sure you want to delete the post?
+                  </Widget.Confirm>
+                </DeletePost>
+              </Modal.Window>
+            </>
+          )}
+        </Actions>
       </Header>
       <Main>{post.content}</Main>
       <Footer>
