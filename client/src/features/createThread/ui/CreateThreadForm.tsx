@@ -95,6 +95,8 @@ export function CreateThreadForm() {
       <TitleInput
         type="text"
         placeholder="Write thread title here..."
+        minLength={3}
+        required
         value={title}
         onChange={handleTitleChange}
       />
