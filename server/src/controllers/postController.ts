@@ -155,6 +155,42 @@ export const updatePost = catchAsync(async (req: Request, res: Response) => {
   res.status(201).json({ post: detailedPost });
 });
 
+export const deletePost = catchAsync(async (req: Request, res: Response) => {
+  const postId = req.params.postId;
+
+  const post = await Post.findByPk(postId);
+
+  if (!post) {
+    throw new AppError(400, 'Failed to delete post!', {
+      type: 'general',
+      message: 'You are trying to delete a post that does not exist',
+    });
+  }
+
+  const thread = await Thread.findOne({
+    where: { id: post.threadId },
+    attributes: [
+      'id',
+      [
+        sequelize.literal(`(
+          SELECT COUNT(*)
+          FROM posts p
+          WHERE p.threadId = Thread.id
+        )`),
+        'posts',
+      ],
+    ],
+  });
+
+  if (Number(thread?.get('posts')) <= 1) {
+    await thread?.destroy();
+  }
+
+  await post.destroy();
+
+  res.status(200).json({});
+});
+
 export const likePost = catchAsync(async (req: Request, res: Response) => {
   const user = req.user!;
   const postId = req.params.postId;
