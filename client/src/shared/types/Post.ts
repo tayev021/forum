@@ -5,6 +5,7 @@ export interface Post {
   authorId: number | null;
   likes: number;
   isLiked: boolean;
+  isReported: boolean;
   createdAt: string;
   updatedAt: string;
 }
