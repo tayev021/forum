@@ -55,6 +55,15 @@ export const getThread = catchAsync(async (req: Request, res: Response) => {
         )`),
         'isLiked',
       ],
+      [
+        sequelize.literal(`EXISTS (
+          SELECT 1
+          FROM reports r
+          WHERE r.postId = Post.id
+            AND r.reporterId = ${user?.id || 0}
+        )`),
+        'isReported',
+      ],
     ],
     include: [
       {
