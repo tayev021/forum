@@ -93,14 +93,14 @@ export function useForm() {
       });
     }
 
-    function onChange(e: ChangeEvent<HTMLInputElement>) {
+    function onChange(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
       dispatch({
         type: 'change',
         payload: { inputName, value: e.target.value },
       });
     }
 
-    function onBlur(_e: FocusEvent<HTMLInputElement>) {
+    function onBlur(_e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) {
       if (state[inputName].validate) {
         const error = state[inputName].validate(state[inputName].value);
 
