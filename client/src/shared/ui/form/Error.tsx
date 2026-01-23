@@ -55,9 +55,9 @@ const ErrorContainer = styled.div<ErrorContainerProps>`
 const InputErrorContainer = styled(ErrorContainer)`
   width: 24rem;
   position: absolute;
-  top: 100%;
+  bottom: -0.8rem;
   left: 1rem;
-  transform: translateY(-40%);
+
   background-color: var(--color-primary);
 
   p {
