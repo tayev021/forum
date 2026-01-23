@@ -8,6 +8,7 @@ import { BackButton } from './BackButton';
 import { CreateButton } from './CreateButton';
 import { EditButton } from './EditButton';
 import { DeleteButton } from './DeleteButton';
+import { ReportButton } from './ReportButton';
 import { Confirm } from './Confirm';
 import { Loader } from './Loader';
 
@@ -22,6 +23,7 @@ export const Widget = {
   CreateButton,
   EditButton,
   DeleteButton,
+  ReportButton,
   Confirm,
   Loader,
 };
