@@ -6,6 +6,7 @@ import {
 import { createPost } from './model/thunks/createPost';
 import { updatePost } from './model/thunks/updatePost';
 import { likePost } from './model/thunks/likePost';
+import { reportPost } from './model/thunks/reportPost';
 import { deletePost } from './model/thunks/deletePost';
 import { usePost } from './lib/hooks/usePost';
 import { useLatestPosts } from './lib/hooks/useLatestPosts';
@@ -18,6 +19,7 @@ export {
   createPost,
   updatePost,
   likePost,
+  reportPost,
   deletePost,
   usePost,
   useLatestPosts,
