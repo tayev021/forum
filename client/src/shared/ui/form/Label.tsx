@@ -13,9 +13,8 @@ interface StyledLabelProps {
 
 const StyledLabel = styled.label<StyledLabelProps>`
   position: absolute;
-  top: 50%;
   left: 1rem;
-  transform: translateY(-50%);
+  top: 1.2rem;
   padding: 0.1rem 0.6rem;
   border-radius: 0.4rem;
   font-size: 1.4rem;
@@ -26,7 +25,7 @@ const StyledLabel = styled.label<StyledLabelProps>`
   ${(props) =>
     props.$hasValue
       ? `
-        top: -0.2rem;
+        top: -0.8rem;
         left: 1rem !important;
         color: var(--color-text-secondary);
         background-color: var(--color-primary);`
