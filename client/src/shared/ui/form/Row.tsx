@@ -11,10 +11,10 @@ interface StyledRow {
 }
 
 const StyledRow = styled.div<StyledRow>`
+  position: relative;
+  line-height: 1;
   ${(props) =>
     props.$hasError ? '--color-primary: var(--color-rose-500);' : ''}
-
-  position: relative;
 
   svg {
     width: 2rem;
@@ -31,15 +31,16 @@ const StyledRow = styled.div<StyledRow>`
   }
 
   &:has(svg) label {
-    left: 4rem;
+    left: 3.5rem;
   }
 
   &:has(label) input::placeholder {
     opacity: 0;
   }
 
-  &:has(input:focus) label {
-    top: -0.2rem;
+  &:has(input:focus) label,
+  &:has(textarea:focus) label {
+    top: -0.8rem;
     left: 1rem;
     color: var(--color-text-secondary);
     background-color: var(--color-primary);
