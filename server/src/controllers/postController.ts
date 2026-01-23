@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { catchAsync } from '../utils/catchAsync';
 import { LATEST_POSTS_LIMIT, PAGE_ITEMS_LIMIT } from '../constants';
-import { Like, Post, Thread, User } from '../models';
+import { Like, Post, Report, Thread, User } from '../models';
 import { AppError } from '../utils/AppError';
 import sequelize from 'sequelize';
 
@@ -248,6 +248,101 @@ export const likePost = catchAsync(async (req: Request, res: Response) => {
               AND l.userId = ${user.id}
           )`),
         'isLiked',
+      ],
+      [
+        sequelize.literal(`EXISTS (
+          SELECT 1
+          FROM reports r
+          WHERE r.postId = Post.id
+            AND r.reporterId = ${user.id}
+        )`),
+        'isReported',
+      ],
+    ],
+    include: [
+      {
+        model: User,
+        as: 'author',
+        attributes: ['id', 'username', 'avatar', 'role', 'lastSignIn'],
+      },
+
+      {
+        model: Thread,
+        as: 'thread',
+      },
+    ],
+  });
+
+  res.status(201).json({ post: detailedPost });
+});
+
+export const reportPost = catchAsync(async (req: Request, res: Response) => {
+  const user = req.user!;
+  const postId = req.params.postId;
+  const reason = req.body.reason;
+
+  const existingPost = await Post.findByPk(postId);
+
+  if (!existingPost) {
+    throw new AppError(400, 'Failed to report post!', {
+      type: 'general',
+      message: 'You are trying to report a post that does not exist',
+    });
+  }
+
+  if (existingPost.authorId === user.id) {
+    throw new AppError(400, 'Failed to report post!', {
+      type: 'general',
+      message: 'You are trying to report your own post',
+    });
+  }
+
+  const existingReport = await Report.findOne({
+    where: { reporterId: user.id, postId },
+  });
+
+  if (existingReport) {
+    throw new AppError(400, 'Failed to report post!', {
+      type: 'general',
+      message: 'You are trying to report a post that you already reported',
+    });
+  }
+
+  await Report.create({ reporterId: user.id, postId, reason: reason });
+
+  const detailedPost = await Post.findOne({
+    where: { id: postId },
+    attributes: [
+      'id',
+      'threadId',
+      'content',
+      'createdAt',
+      'updatedAt',
+      [
+        sequelize.literal(`(
+            SELECT COUNT(*)
+            FROM likes l
+            WHERE l.postId = Post.id
+          )`),
+        'likes',
+      ],
+      [
+        sequelize.literal(`EXISTS (
+            SELECT 1
+            FROM likes l
+            WHERE l.postId = Post.id
+              AND l.userId = ${user.id}
+          )`),
+        'isLiked',
+      ],
+      [
+        sequelize.literal(`EXISTS (
+            SELECT 1
+            FROM reports r
+            WHERE r.postId = Post.id
+              AND r.reporterId = ${user.id}
+          )`),
+        'isReported',
       ],
     ],
     include: [
