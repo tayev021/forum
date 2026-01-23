@@ -6,6 +6,7 @@ import { formatRelativeTime } from '../../../../shared/lib/utils/formatRelativeT
 import { DeletePost } from '../../../../features/deletePost';
 import { LikePost } from '../../../../features/likePost';
 import { Modal } from '../../../../shared/ui/Modal';
+import { ReportPost } from '../../../../features/reportPost';
 
 interface PostContentProps {
   post: ThreadPost;
@@ -49,6 +50,10 @@ const StyledDeleteButton = styled(Widget.DeleteButton)`
   ${styledButtonCss}
 `;
 
+const StyledReportButton = styled(Widget.ReportButton)`
+  ${styledButtonCss}
+`;
+
 const Main = styled.div`
   padding: 1rem;
   word-break: break-all;
@@ -71,6 +76,7 @@ const UpdatedTime = styled.p`
 export function PostContent({ post, handleUpdate }: PostContentProps) {
   const { user } = useUser();
   const hasModeratePermissions = useRestrictTo(['admin', 'moderator']);
+  const isReportable = user && !post.isReported && post.authorId !== user.id;
 
   return (
     <StyledPostContent>
@@ -79,6 +85,16 @@ export function PostContent({ post, handleUpdate }: PostContentProps) {
         <Actions>
           {user?.id === post?.author?.id && (
             <StyledEditButton onClick={handleUpdate} />
+          )}
+          {isReportable && (
+            <>
+              <Modal.Open windowName={`reportPost-${post.id}`}>
+                <StyledReportButton />
+              </Modal.Open>
+              <Modal.Window name={`reportPost-${post.id}`}>
+                <ReportPost post={post} />
+              </Modal.Window>
+            </>
           )}
           {hasModeratePermissions && (
             <>
