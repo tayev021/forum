@@ -6,6 +6,7 @@ import { Forum } from './ForumModel';
 import { Category } from './CategoryModel';
 import { User } from './UserModel';
 import { Like } from './LikeModel';
+import { Report } from './ReportModel';
 import { Subscription } from './SubscriptionModel';
 
 User.hasMany(Post, { foreignKey: 'authorId', as: 'posts' });
@@ -13,6 +14,9 @@ Post.belongsTo(User, { foreignKey: 'authorId', as: 'author' });
 
 User.hasMany(Like, { foreignKey: 'userId', as: 'likes' });
 Like.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+
+User.hasMany(Report, { foreignKey: 'reporterId', as: 'reports' });
+Report.belongsTo(User, { foreignKey: 'reporterId', as: 'reporter' });
 
 User.hasMany(Thread, { foreignKey: 'authorId', as: 'threads' });
 Thread.belongsTo(User, { foreignKey: 'authorId', as: 'author' });
@@ -30,6 +34,9 @@ User.hasMany(Subscription, {
   hooks: true,
 });
 Subscription.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+
+Post.hasMany(Report, { foreignKey: 'postId', as: 'reports' });
+Report.belongsTo(Post, { foreignKey: 'postId', as: 'post' });
 
 Post.hasMany(Like, { foreignKey: 'postId', as: 'likes' });
 Like.belongsTo(Post, { foreignKey: 'postId', as: 'post' });
@@ -65,5 +72,6 @@ export {
   Thread,
   Post,
   Like,
+  Report,
   Subscription,
 };
