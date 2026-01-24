@@ -56,6 +56,7 @@ export function ReportPost({ post, closeModal = () => {} }: ReportPostProps) {
       );
       dispatch(clearPost());
       closeModal();
+      toast.success('Your report has been received and will be reviewed');
     }
   }, [serverError, isLoading, serverPost, post]);
 
