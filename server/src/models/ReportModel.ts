@@ -1,11 +1,13 @@
 import { DataTypes, Model } from 'sequelize';
 import { database } from '../config/database';
+import { ReportStatus } from '../types/ReportStatus';
 
 export class Report extends Model {
   public id!: number;
   public postId!: number;
   public reporterId!: number;
   public reason!: string;
+  public status!: ReportStatus;
   public createdAt!: Date;
 }
 
@@ -32,6 +34,11 @@ Report.init(
     reason: {
       type: DataTypes.TEXT,
       allowNull: false,
+    },
+    status: {
+      type: DataTypes.ENUM,
+      values: ['pending', 'rejected', 'banned post', 'banned user and post'],
+      defaultValue: 'pending',
     },
   },
   {
