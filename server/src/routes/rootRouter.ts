@@ -6,6 +6,7 @@ import { postRouter } from './postRouter';
 import { threadRouter } from './threadRouter';
 import { forumRouter } from './forumRouter';
 import { categoryRouter } from './categoryRouter';
+import { reportRouter } from './reportRouter';
 import { statisticRouter } from './statisticRouter';
 import { notFound } from '../controllers/notFoundController';
 
@@ -18,6 +19,7 @@ rootRouter.use('/posts', postRouter);
 rootRouter.use('/threads', threadRouter);
 rootRouter.use('/forums', forumRouter);
 rootRouter.use('/categories', categoryRouter);
+rootRouter.use('/reports', reportRouter);
 rootRouter.use('/statistic', statisticRouter);
 rootRouter.use(notFound);
 
