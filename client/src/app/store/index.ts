@@ -5,6 +5,7 @@ import { postReducer } from '../../entities/post';
 import { threadReducer } from '../../entities/thread';
 import { forumReducer } from '../../entities/forum';
 import { categoryReducer } from '../../entities/category';
+import { reportReducer } from '../../entities/report';
 import { statisticReducer } from '../../entities/statistic';
 
 export const store = configureStore({
@@ -15,6 +16,7 @@ export const store = configureStore({
     thread: threadReducer,
     forum: forumReducer,
     category: categoryReducer,
+    report: reportReducer,
     statistic: statisticReducer,
   },
 });
