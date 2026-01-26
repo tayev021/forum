@@ -4,8 +4,8 @@ import { useAppDispatch } from '../../../../shared/lib/hooks/useAppDispatch';
 import { getStatistic } from '../../model/thunks/getStatistic';
 
 export function useStatistic() {
-  const { posts, threads, forums, members, isLoading } = useAppSelector(
-    (state) => state.statistic
+  const { posts, threads, forums, members, isLoading, error } = useAppSelector(
+    (state) => state.statistic,
   );
   const dispatch = useAppDispatch();
 
@@ -13,5 +13,5 @@ export function useStatistic() {
     dispatch(getStatistic());
   }, [dispatch]);
 
-  return { posts, threads, forums, members, isLoading };
+  return { posts, threads, forums, members, isLoading, error };
 }
