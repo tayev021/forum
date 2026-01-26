@@ -27,11 +27,14 @@ const List = styled.ul`
 `;
 
 export function LatestPostsWidget() {
-  const { latestPosts, isLoading } = useLatestPosts();
+  const { latestPosts, isLoading, error } = useLatestPosts();
 
   return (
     <Widget.Container>
       {isLoading && <Widget.Loader position="top" />}
+      {error?.type === 'general' && (
+        <Widget.Error>{error.message}</Widget.Error>
+      )}
       <StyledWidgetHeader>
         <StyledWidgetTitle>
           <HiOutlineChatBubbleBottomCenterText />
