@@ -36,11 +36,14 @@ const Row = styled.li`
 `;
 
 export function StatisticWidget() {
-  const { posts, threads, forums, members, isLoading } = useStatistic();
+  const { posts, threads, forums, members, isLoading, error } = useStatistic();
 
   return (
     <Widget.Container>
       {isLoading && <Widget.Loader />}
+      {error?.type === 'general' && (
+        <Widget.Error>{error.message}</Widget.Error>
+      )}
       <StyledWidgetHeader>
         <StyledWidgetTitle>
           <HiChartBar />
