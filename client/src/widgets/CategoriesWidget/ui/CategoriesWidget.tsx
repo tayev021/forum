@@ -1,13 +1,6 @@
 import styled from 'styled-components';
 import { PrimaryButton } from '../../../shared/ui/PrimaryButton';
-import {
-  clearCategoryError,
-  getCategories,
-  useCategories,
-} from '../../../entities/category';
-import { useAppDispatch } from '../../../shared/lib/hooks/useAppDispatch';
-import { useEffect } from 'react';
-import toast from 'react-hot-toast';
+import { useCategories } from '../../../entities/category';
 import { Widget } from '../../../shared/ui/WidgetKit';
 import { NoCategories } from './NoCategories';
 import { Category } from './category/Category';
@@ -29,22 +22,13 @@ const CreateButton = styled(PrimaryButton)`
 export function CategoriesWidget() {
   const { categories, isLoading, error: serverError } = useCategories();
   const hasPermissions = useRestrictTo(['admin', 'moderator']);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(getCategories());
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (serverError?.type === 'general') {
-      toast.error(serverError.message);
-      dispatch(clearCategoryError());
-    }
-  }, [serverError]);
 
   return (
     <Container>
       {isLoading && <Widget.Loader position="top" />}
+      {serverError?.type === 'general' && (
+        <Widget.Error>{serverError.message}</Widget.Error>
+      )}
       {categories.length === 0 && <NoCategories />}
       {categories.map((category) => (
         <Category key={category.id} category={category} />
