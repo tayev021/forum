@@ -39,6 +39,12 @@ const Row = styled.div`
   flex-wrap: wrap;
 `;
 
+const AuthorDeleted = styled.p`
+  &:hover {
+    color: var(--color-primary);
+  }
+`;
+
 const StyledLink = styled(Link)`
   &:hover {
     color: var(--color-primary);
@@ -71,10 +77,14 @@ export function ReportedPost({ post }: ReportedPostProps) {
   return (
     <StyledPost>
       <PostAuthor>
-        <UserAvatar user={post.author} size={5} />
-        <StyledLink to={`/author/${post.author.id}/profile`}>
-          {post.author.username}
-        </StyledLink>
+        <UserAvatar user={post.author || null} size={5} />
+        {post?.author ? (
+          <StyledLink to={`/author/${post.author.id}/profile`}>
+            {post.author.username}
+          </StyledLink>
+        ) : (
+          <AuthorDeleted>Deleted</AuthorDeleted>
+        )}
       </PostAuthor>
       <PostContent>
         <Row>
