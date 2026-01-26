@@ -13,22 +13,36 @@ export const getForum = createAsyncThunk<
   'forum/getForum',
   async function (
     { forumId, page = 1, sortKey = 'updatedAt', sortOrder = 'DESC' },
-    thunkAPI
+    thunkAPI,
   ) {
-    const response = await fetch(
-      `${API_URL}/forums/${forumId}?page=${page}&sortKey=${sortKey}&sortOrder=${sortOrder}`,
-      {
-        credentials: 'include',
+    try {
+      const response = await fetch(
+        `${API_URL}/forums/${forumId}?page=${page}&sortKey=${sortKey}&sortOrder=${sortOrder}`,
+        {
+          credentials: 'include',
+        },
+      );
+
+      if (!response.ok) {
+        const error = await response.json();
+        return thunkAPI.rejectWithValue(error);
       }
-    );
 
-    if (!response.ok) {
-      const error = await response.json();
-      return thunkAPI.rejectWithValue(error);
+      const json: { forum: Forum } = await response.json();
+
+      return json.forum;
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return thunkAPI.rejectWithValue({
+          type: 'general',
+          message: 'The server is not responding',
+        });
+      } else {
+        return thunkAPI.rejectWithValue({
+          type: 'general',
+          message: 'Unknown error',
+        });
+      }
     }
-
-    const json: { forum: Forum } = await response.json();
-
-    return json.forum;
-  }
+  },
 );
