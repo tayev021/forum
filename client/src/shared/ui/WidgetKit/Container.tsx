@@ -6,4 +6,5 @@ export const Container = styled.div`
   border-radius: 0.4rem;
   background-color: var(--color-bg-secondary);
   box-shadow: var(--shadow-small);
+  overflow: hidden;
 `;
