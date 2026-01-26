@@ -9,21 +9,35 @@ export const signin = createAsyncThunk<
   SigninData,
   { rejectValue: ServerError }
 >('user/signin', async function (signinData, thunkAPI) {
-  const response = await fetch(`${API_URL}/auth/signin`, {
-    method: 'POST',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(signinData),
-  });
+  try {
+    const response = await fetch(`${API_URL}/auth/signin`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(signinData),
+    });
 
-  if (!response.ok) {
-    const error = await response.json();
-    return thunkAPI.rejectWithValue(error);
+    if (!response.ok) {
+      const error = await response.json();
+      return thunkAPI.rejectWithValue(error);
+    }
+
+    const json: { user: User } = await response.json();
+
+    return json.user;
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return thunkAPI.rejectWithValue({
+        type: 'general',
+        message: 'The server is not responding',
+      });
+    } else {
+      return thunkAPI.rejectWithValue({
+        type: 'general',
+        message: 'Unknown error',
+      });
+    }
   }
-
-  const json: { user: User } = await response.json();
-
-  return json.user;
 });
