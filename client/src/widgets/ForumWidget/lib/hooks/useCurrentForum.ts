@@ -1,6 +1,5 @@
 import { useParams, useSearchParams } from 'react-router';
 import {
-  clearForumError,
   getForum,
   sortKeys,
   sortOrders,
@@ -10,7 +9,6 @@ import {
 } from '../../../../entities/forum';
 import { useAppDispatch } from '../../../../shared/lib/hooks/useAppDispatch';
 import { useEffect } from 'react';
-import toast from 'react-hot-toast';
 
 export function useCurrentForum() {
   const params = useParams();
@@ -36,13 +34,6 @@ export function useCurrentForum() {
 
     setSearchParams(newSearchParams);
   }, [searchParams, setSearchParams, sortKey, sortOrder]);
-
-  useEffect(() => {
-    if (error?.type === 'general') {
-      toast.error(error.message);
-      dispatch(clearForumError());
-    }
-  }, [error, dispatch]);
 
   useEffect(() => {
     if (forumId) {

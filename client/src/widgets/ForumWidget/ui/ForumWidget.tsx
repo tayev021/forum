@@ -11,28 +11,30 @@ const StyledPagination = styled(Pagination)`
 `;
 
 export function ForumWidget() {
-  const { forum, isLoading } = useCurrentForum();
-
-  if (!forum || isLoading) {
-    return <Widget.Loader />;
-  }
+  const { forum, isLoading, error: serverError } = useCurrentForum();
 
   return (
     <>
-      <title>{`Forum | ${forum.title}`}</title>
+      <title>{`Forum | ${forum?.title || 'Error'}`}</title>
       <Widget.Container>
-        <ForumWidgetHeader forum={forum} />
+        {isLoading && <Widget.Loader position="top" />}
+        {serverError?.type === 'general' && (
+          <Widget.Error>{serverError.message}</Widget.Error>
+        )}
+        {forum && <ForumWidgetHeader forum={forum} />}
         {!forum || forum.threads.length === 0 ? (
           <NoThreads />
         ) : (
           <ThreadsList threads={forum.threads} />
         )}
       </Widget.Container>
-      <StyledPagination
-        baseUrl={`/forums/${forum.id}`}
-        currentPage={forum.page}
-        totalPages={forum.totalPages}
-      />
+      {forum && (
+        <StyledPagination
+          baseUrl={`/forums/${forum.id}`}
+          currentPage={forum.page}
+          totalPages={forum.totalPages}
+        />
+      )}
     </>
   );
 }
