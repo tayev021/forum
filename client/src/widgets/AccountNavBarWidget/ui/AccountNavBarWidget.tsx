@@ -19,6 +19,7 @@ import {
 } from 'react-icons/hi2';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { Signout } from '../../../features/signout';
+import { getReports, useReports } from '../../../entities/report';
 
 const Container = styled(Widget.Container)`
   height: max-content;
@@ -88,15 +89,23 @@ const NotificationsCounter = styled.span`
 
 export function AccountNavBarWidget() {
   const { userNotifications } = useUserNotifications();
+  const { reports } = useReports();
   const hasModeratePermissions = useRestrictTo(['admin', 'moderator']);
   const dispatch = useAppDispatch();
-  const notificationsCount = userNotifications?.notifications.length || 0;
+  const notificationsCount = userNotifications?.totalNotifications || 0;
+  const reportsCount = reports?.totalReports || 0;
 
   useEffect(() => {
     if (!userNotifications) {
       dispatch(getUserNotifications({ page: 1 }));
     }
   }, [userNotifications]);
+
+  useEffect(() => {
+    if (!reports) {
+      dispatch(getReports({ page: 1 }));
+    }
+  }, [reports]);
 
   return (
     <Container>
@@ -141,6 +150,11 @@ export function AccountNavBarWidget() {
             <StyledNavLink to="/account/reports">
               <AiOutlineExclamationCircle />
               Reports
+              {reportsCount > 0 && (
+                <NotificationsCounter>
+                  {reportsCount > 9 ? '9+' : reportsCount}
+                </NotificationsCounter>
+              )}
             </StyledNavLink>
           </Item>
         )}
