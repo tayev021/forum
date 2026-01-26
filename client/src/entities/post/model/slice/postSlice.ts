@@ -45,9 +45,15 @@ const postSlice = createSlice({
         state.isLoading = false;
       },
     );
-    builder.addCase(getLatestPosts.rejected, (state, _action) => {
+    builder.addCase(getLatestPosts.rejected, (state, action) => {
       state.latestPosts = [];
       state.isLoading = false;
+
+      if (action.payload) {
+        state.error = action.payload;
+      } else {
+        state.error = { type: 'general', message: 'Unknown error!' };
+      }
     });
 
     builder.addCase(createPost.pending, (state, _action) => {
