@@ -14,12 +14,14 @@ import {
   AccountThreadsPage,
   AccountSubscriptionsPage,
   AccountNotificationsPage,
+  AccountReportsPage,
   AccountSettingsPage,
 } from '../../pages/account';
 import { AuthorProfilePage } from '../../pages/author';
 import { ForumPage } from '../../pages/forum';
 import { ThreadCreatePage, ThreadPage } from '../../pages/thread';
 import { PageNotFound } from '../../pages/pageNotFound';
+import { RestrictedToRoute } from './RestrictedToRoute';
 
 export function AppRouter() {
   const { initialized } = useUser();
@@ -53,6 +55,14 @@ export function AppRouter() {
             <Route
               path="notifications"
               element={<AccountNotificationsPage />}
+            />
+            <Route
+              path="reports"
+              element={
+                <RestrictedToRoute roles={['admin', 'moderator']}>
+                  <AccountReportsPage />
+                </RestrictedToRoute>
+              }
             />
             <Route path="settings" element={<AccountSettingsPage />} />
           </Route>
