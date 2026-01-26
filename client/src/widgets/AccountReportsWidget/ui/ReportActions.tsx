@@ -11,7 +11,8 @@ interface ReportActionsProps {
 }
 
 const Actions = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 10rem);
   justify-content: space-between;
   gap: 2rem;
 `;
@@ -60,19 +61,21 @@ export function ReportActions({ report }: ReportActionsProps) {
       <BanPost report={report}>
         <BanPostButton>Ban Post</BanPostButton>
       </BanPost>
-      <>
-        <Modal.Open windowName={`banUser-${report.post.author.id}`}>
-          <BanUserButton>Ban User</BanUserButton>
-        </Modal.Open>
-        <Modal.Window name={`banUser-${report.post.author.id}`}>
-          <BanUser report={report}>
-            <Widget.Confirm title="Ban User">
-              Are you sure you want to ban the "{report.post.author.username}"
-              user?
-            </Widget.Confirm>
-          </BanUser>
-        </Modal.Window>
-      </>
+      {report.post.author && (
+        <>
+          <Modal.Open windowName={`banUser-${report.post.author.id}`}>
+            <BanUserButton>Ban User</BanUserButton>
+          </Modal.Open>
+          <Modal.Window name={`banUser-${report.post.author.id}`}>
+            <BanUser report={report}>
+              <Widget.Confirm title="Ban User">
+                Are you sure you want to ban the "{report.post.author.username}"
+                user?
+              </Widget.Confirm>
+            </BanUser>
+          </Modal.Window>
+        </>
+      )}
     </Actions>
   );
 }
