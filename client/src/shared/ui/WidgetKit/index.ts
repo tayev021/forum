@@ -11,6 +11,7 @@ import { DeleteButton } from './DeleteButton';
 import { ReportButton } from './ReportButton';
 import { Confirm } from './Confirm';
 import { Loader } from './Loader';
+import { Error } from './Error';
 
 export const Widget = {
   Container,
@@ -26,4 +27,5 @@ export const Widget = {
   ReportButton,
   Confirm,
   Loader,
+  Error,
 };
