@@ -12,6 +12,8 @@ import { PostUpdate } from './posts/PostUpdate';
 import { SubscribeThread } from '../../../features/subscribeThread';
 
 const ThreadContainer = styled.div`
+  min-height: 10rem;
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -37,68 +39,75 @@ const StyledSubscribeThread = styled(SubscribeThread)`
 `;
 
 export function ThreadWidget() {
-  const { thread, isLoading } = useCurrentThread();
+  const { thread, isLoading, error: serverError } = useCurrentThread();
   const hasAdminsPermissions = useRestrictTo(['admin']);
   const hasModeratePermissions = useRestrictTo(['admin', 'moderator']);
 
-  if (!thread || isLoading) {
-    return <Widget.Loader />;
-  }
-
   return (
     <>
-      <title>{`Forum | ${thread.title}`}</title>
+      <title>{`Forum | ${thread?.title || 'Error'}`}</title>
       <ThreadContainer>
-        <StyledWidgetHeader>
-          <Widget.HeaderGroup>
-            <Widget.BackButton url={`/forums/${thread.forumId}`} />
-            <Widget.Title>{thread.title} Thread</Widget.Title>
-            <InlineModal.Window name={`editThreadTitle-${thread.id}`}>
-              <UpdateThreadTitle threadId={thread.id}>
-                <Widget.TitleInput currentTitle={thread.title} />
-              </UpdateThreadTitle>
-            </InlineModal.Window>
-          </Widget.HeaderGroup>
-          <Widget.HeaderGroup>
-            {hasModeratePermissions && (
-              <InlineModal.Open windowName={`editThreadTitle-${thread.id}`}>
-                <Widget.EditButton />
-              </InlineModal.Open>
-            )}
-            {hasAdminsPermissions && (
-              <>
-                <Modal.Open windowName={`deleteThread-${thread.id}`}>
-                  <Widget.DeleteButton />
-                </Modal.Open>
-                <Modal.Window name={`deleteThread-${thread.id}`}>
-                  <DeleteThread forumId={thread.forumId} threadId={thread.id}>
-                    <Widget.Confirm title="Delete Thread">
-                      Are you sure you want to delete the "{thread.title}"
-                      thread?
-                    </Widget.Confirm>
-                  </DeleteThread>
-                </Modal.Window>
-              </>
-            )}
-          </Widget.HeaderGroup>
-        </StyledWidgetHeader>
-        <RowContainer>
-          <Pagination
-            baseUrl={`/threads/${thread.id}`}
-            currentPage={thread.page}
-            totalPages={thread.totalPages}
-          />
-          <StyledSubscribeThread thread={thread} />
-        </RowContainer>
-        <PostsList posts={thread.posts} />
-        <RowContainer>
-          <Pagination
-            baseUrl={`/threads/${thread.id}`}
-            currentPage={thread.page}
-            totalPages={thread.totalPages}
-          />
-          <StyledSubscribeThread thread={thread} />
-        </RowContainer>
+        {isLoading && <Widget.Loader position="top" />}
+        {serverError?.type === 'general' && (
+          <Widget.Error>{serverError.message}</Widget.Error>
+        )}
+        {thread && (
+          <>
+            <StyledWidgetHeader>
+              <Widget.HeaderGroup>
+                <Widget.BackButton url={`/forums/${thread?.forumId}`} />
+                <Widget.Title>{thread.title} Thread</Widget.Title>
+                <InlineModal.Window name={`editThreadTitle-${thread.id}`}>
+                  <UpdateThreadTitle threadId={thread.id}>
+                    <Widget.TitleInput currentTitle={thread.title} />
+                  </UpdateThreadTitle>
+                </InlineModal.Window>
+              </Widget.HeaderGroup>
+              <Widget.HeaderGroup>
+                {hasModeratePermissions && (
+                  <InlineModal.Open windowName={`editThreadTitle-${thread.id}`}>
+                    <Widget.EditButton />
+                  </InlineModal.Open>
+                )}
+                {hasAdminsPermissions && (
+                  <>
+                    <Modal.Open windowName={`deleteThread-${thread.id}`}>
+                      <Widget.DeleteButton />
+                    </Modal.Open>
+                    <Modal.Window name={`deleteThread-${thread.id}`}>
+                      <DeleteThread
+                        forumId={thread.forumId}
+                        threadId={thread.id}
+                      >
+                        <Widget.Confirm title="Delete Thread">
+                          Are you sure you want to delete the "{thread.title}"
+                          thread?
+                        </Widget.Confirm>
+                      </DeleteThread>
+                    </Modal.Window>
+                  </>
+                )}
+              </Widget.HeaderGroup>
+            </StyledWidgetHeader>
+            <RowContainer>
+              <Pagination
+                baseUrl={`/threads/${thread.id}`}
+                currentPage={thread.page}
+                totalPages={thread.totalPages}
+              />
+              <StyledSubscribeThread thread={thread} />
+            </RowContainer>
+            <PostsList posts={thread.posts} />
+            <RowContainer>
+              <Pagination
+                baseUrl={`/threads/${thread.id}`}
+                currentPage={thread.page}
+                totalPages={thread.totalPages}
+              />
+              <StyledSubscribeThread thread={thread} />
+            </RowContainer>
+          </>
+        )}
       </ThreadContainer>
       <PostUpdate />
     </>

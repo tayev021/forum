@@ -1,12 +1,7 @@
 import { useParams, useSearchParams } from 'react-router';
-import {
-  clearThreadError,
-  getThread,
-  useThread,
-} from '../../../../entities/thread';
+import { getThread, useThread } from '../../../../entities/thread';
 import { useAppDispatch } from '../../../../shared/lib/hooks/useAppDispatch';
 import { useEffect } from 'react';
-import toast from 'react-hot-toast';
 import { getUserNotifications } from '../../../../entities/user';
 
 export function useCurrentThread() {
@@ -16,13 +11,6 @@ export function useCurrentThread() {
   const dispatch = useAppDispatch();
 
   const threadId = Number(params.threadId);
-
-  useEffect(() => {
-    if (error?.type === 'general') {
-      toast.error(error.message);
-      dispatch(clearThreadError());
-    }
-  }, [error, dispatch]);
 
   useEffect(() => {
     const page = Number(searchParams.get('page')) || 1;
