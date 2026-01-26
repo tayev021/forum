@@ -35,11 +35,17 @@ const categorySlice = createSlice({
       (state, action: PayloadAction<Category[]>) => {
         state.categories = action.payload;
         state.isLoading = false;
-      }
+      },
     );
-    builder.addCase(getCategories.rejected, (state, _action) => {
+    builder.addCase(getCategories.rejected, (state, action) => {
       state.categories = [];
       state.isLoading = false;
+
+      if (action.payload) {
+        state.error = action.payload;
+      } else {
+        state.error = { type: 'general', message: 'Unknown error!' };
+      }
     });
 
     builder.addCase(createCategory.pending, (state, _action) => {
@@ -50,7 +56,7 @@ const categorySlice = createSlice({
       (state, action: PayloadAction<Category>) => {
         state.categories = [...state.categories, action.payload];
         state.isLoading = false;
-      }
+      },
     );
     builder.addCase(createCategory.rejected, (state, action) => {
       state.isLoading = false;
@@ -76,7 +82,7 @@ const categorySlice = createSlice({
             return category;
           }
         });
-      }
+      },
     );
     builder.addCase(updateCategory.rejected, (state, action) => {
       state.isLoading = false;
@@ -96,9 +102,9 @@ const categorySlice = createSlice({
       (state, action: PayloadAction<number>) => {
         state.isLoading = false;
         state.categories = state.categories.filter(
-          (category) => category.id !== action.payload
+          (category) => category.id !== action.payload,
         );
-      }
+      },
     );
     builder.addCase(deleteCategory.rejected, (state, action) => {
       state.isLoading = false;
