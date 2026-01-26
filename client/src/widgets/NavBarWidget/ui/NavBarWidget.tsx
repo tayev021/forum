@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Container } from '../../../shared/ui/Container';
 import { useUser } from '../../../entities/user';
 import { NavList } from './NavList';
-import { UserPanel } from './UserPanel';
+import { AccountPanel } from './AccountPanel';
 import { AuthPanel } from './AuthPanel';
 import { ThemeToggler } from '../../../features/toggleTheme';
 
@@ -18,6 +18,7 @@ const StyledContainer = styled(Container)`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 2rem;
   padding: 1rem 1.6rem;
 `;
 
@@ -35,7 +36,7 @@ export function NavBarWidget() {
       <StyledContainer>
         <NavList />
         <Group>
-          {isLoading ? null : user ? <UserPanel /> : <AuthPanel />}
+          {isLoading ? null : user ? <AccountPanel /> : <AuthPanel />}
           <ThemeToggler />
         </Group>
       </StyledContainer>

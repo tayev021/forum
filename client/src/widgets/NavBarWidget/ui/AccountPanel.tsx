@@ -15,7 +15,8 @@ const Container = styled.div`
 `;
 
 const Account = styled.button`
-  display: flex;
+  display: grid;
+  grid-template-columns: min-content minmax(7rem, max-content);
   align-items: center;
   gap: 1rem;
   cursor: pointer;
@@ -23,6 +24,14 @@ const Account = styled.button`
   &:hover {
     color: var(--color-text-tertiary);
   }
+`;
+
+const UserName = styled.h4`
+  width: 100%;
+  font-weight: 400;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 `;
 
 const StyledSignout = styled(Signout)`
@@ -34,9 +43,9 @@ const StyledSignout = styled(Signout)`
   }
 `;
 
-export function UserPanel() {
-  const navigate = useNavigate();
+export function AccountPanel() {
   const { user } = useUser();
+  const navigate = useNavigate();
 
   if (!user) return null;
 
@@ -45,7 +54,7 @@ export function UserPanel() {
       <ShowNotifications />
       <Account onClick={() => navigate('/account')}>
         <UserAvatar user={user} />
-        {user.username}
+        <UserName>{user.username}</UserName>
       </Account>
       <StyledSignout>
         <HiArrowRightOnRectangle />
