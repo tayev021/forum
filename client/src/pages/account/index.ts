@@ -3,6 +3,7 @@ import { AccountPostsPage } from './posts';
 import { AccountThreadsPage } from './threads';
 import { AccountSubscriptionsPage } from './subscriptions';
 import { AccountNotificationsPage } from './notifications';
+import { AccountReportsPage } from './reports';
 import { AccountSettingsPage } from './settings';
 
 export {
@@ -11,5 +12,6 @@ export {
   AccountThreadsPage,
   AccountSubscriptionsPage,
   AccountNotificationsPage,
+  AccountReportsPage,
   AccountSettingsPage,
 };
