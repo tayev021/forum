@@ -56,7 +56,7 @@ export function ReportPost({ post, closeModal = () => {} }: ReportPostProps) {
       );
       dispatch(clearPost());
       closeModal();
-      toast.success('Your report has been received and will be reviewed');
+      toast.success('Your report will be reviewed');
     }
   }, [serverError, isLoading, serverPost, post]);
 
@@ -75,6 +75,7 @@ export function ReportPost({ post, closeModal = () => {} }: ReportPostProps) {
         <Form.TextArea
           id="reason"
           name="content"
+          autoFocus={true}
           minLength={1}
           maxLength={1024}
           value={values['reason']}
