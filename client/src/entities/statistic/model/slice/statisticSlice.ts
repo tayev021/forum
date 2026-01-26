@@ -1,9 +1,11 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { Statistic } from '../types/Statistic';
 import { getStatistic } from '../thunks/getStatistic';
+import type { ServerError } from '../../../../shared/types/ServerError';
 
 interface StatisticState extends Statistic {
   isLoading: boolean;
+  error: ServerError | null;
 }
 
 const initialState: StatisticState = {
@@ -12,6 +14,7 @@ const initialState: StatisticState = {
   forums: 0,
   members: 0,
   isLoading: false,
+  error: null,
 };
 
 const statisticSlice = createSlice({
@@ -21,6 +24,7 @@ const statisticSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getStatistic.pending, (state, _action) => {
       state.isLoading = true;
+      state.error = null;
     });
     builder.addCase(
       getStatistic.fulfilled,
@@ -30,14 +34,17 @@ const statisticSlice = createSlice({
         state.forums = action.payload.forums;
         state.members = action.payload.members;
         state.isLoading = false;
-      }
+        state.error = null;
+      },
     );
-    builder.addCase(getStatistic.rejected, (state, _action) => {
-      state.posts = 0;
-      state.threads = 0;
-      state.forums = 0;
-      state.members = 0;
+    builder.addCase(getStatistic.rejected, (state, action) => {
       state.isLoading = false;
+
+      if (action.payload) {
+        state.error = action.payload;
+      } else {
+        state.error = { type: 'general', message: 'Unknown error!' };
+      }
     });
   },
 });
