@@ -2,7 +2,7 @@ import type { Report } from './Report';
 
 export type Reports = {
   list: Report[];
-  total: number;
+  totalReports: number;
   page: number;
   totalPages: number;
 };

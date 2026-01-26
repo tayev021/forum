@@ -3,6 +3,6 @@ import type { ReportedPostAuthor } from './ReportedPostAuthor';
 import type { ReportedPostThread } from './ReportedPostThread';
 
 export type ReportedPost = Pick<Post, 'id' | 'content' | 'createdAt'> & {
-  author: ReportedPostAuthor;
+  author?: ReportedPostAuthor;
   thread: ReportedPostThread;
 };
