@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 import { NavLink } from 'react-router';
 import {
   getUserNotifications,
+  useRestrictTo,
   useUserNotifications,
 } from '../../../entities/user';
 import { useAppDispatch } from '../../../shared/lib/hooks/useAppDispatch';
@@ -16,6 +17,7 @@ import {
   HiOutlineSquare2Stack,
   HiOutlineUserCircle,
 } from 'react-icons/hi2';
+import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { Signout } from '../../../features/signout';
 
 const Container = styled(Widget.Container)`
@@ -86,6 +88,7 @@ const NotificationsCounter = styled.span`
 
 export function AccountNavBarWidget() {
   const { userNotifications } = useUserNotifications();
+  const hasModeratePermissions = useRestrictTo(['admin', 'moderator']);
   const dispatch = useAppDispatch();
   const notificationsCount = userNotifications?.notifications.length || 0;
 
@@ -133,6 +136,14 @@ export function AccountNavBarWidget() {
             )}
           </StyledNavLink>
         </Item>
+        {hasModeratePermissions && (
+          <Item>
+            <StyledNavLink to="/account/reports">
+              <AiOutlineExclamationCircle />
+              Reports
+            </StyledNavLink>
+          </Item>
+        )}
         <Item>
           <StyledNavLink to="/account/settings">
             <HiOutlineCog6Tooth />
