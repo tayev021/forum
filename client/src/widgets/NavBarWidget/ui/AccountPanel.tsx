@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useNavigate } from 'react-router';
+import { Link } from 'react-router';
 import { useUser } from '../../../entities/user';
 import { ShowNotifications } from '../../../features/showNotifications';
 import { UserAvatar } from '../../../entities/user/ui/UserAvatar';
@@ -14,11 +14,11 @@ const Container = styled.div`
   color: var(--color-text-secondary);
 `;
 
-const Account = styled.button`
+const AccountLink = styled(Link)`
   display: grid;
-  grid-template-columns: min-content minmax(7rem, max-content);
+  grid-template-columns: min-content minmax(4rem, max-content);
   align-items: center;
-  gap: 1rem;
+  gap: 0.5rem;
   cursor: pointer;
 
   &:hover {
@@ -45,17 +45,16 @@ const StyledSignout = styled(Signout)`
 
 export function AccountPanel() {
   const { user } = useUser();
-  const navigate = useNavigate();
 
   if (!user) return null;
 
   return (
     <Container>
       <ShowNotifications />
-      <Account onClick={() => navigate('/account')}>
+      <AccountLink to="/account">
         <UserAvatar user={user} />
         <UserName>{user.username}</UserName>
-      </Account>
+      </AccountLink>
       <StyledSignout>
         <HiArrowRightOnRectangle />
       </StyledSignout>
