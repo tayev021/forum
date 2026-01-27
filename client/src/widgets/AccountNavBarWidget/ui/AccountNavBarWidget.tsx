@@ -102,10 +102,10 @@ export function AccountNavBarWidget() {
   }, [userNotifications]);
 
   useEffect(() => {
-    if (!reports) {
+    if (!reports && hasModeratePermissions) {
       dispatch(getReports({ page: 1 }));
     }
-  }, [reports]);
+  }, [reports, hasModeratePermissions]);
 
   return (
     <Container>
