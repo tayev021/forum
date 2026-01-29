@@ -2,10 +2,9 @@ import { DEFAULT_PAGE, PAGE_ITEMS_LIMIT } from '../constants';
 import { Post, Subscription, Thread, User } from '../models';
 import sequelize from 'sequelize';
 import bcrypt from 'bcryptjs';
-import multer from 'multer';
 import sharp from 'sharp';
 import { v4 as uuid } from 'uuid';
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { catchAsync } from '../utils/catchAsync';
 import { AppError } from '../utils/AppError';
 import { removeFile } from '../utils/removeFile';
@@ -309,48 +308,6 @@ export const updatePassword = catchAsync(
     });
   }
 );
-
-const avatarFilter = (
-  _req: Request,
-  file: Express.Multer.File,
-  callback: multer.FileFilterCallback
-) => {
-  if (file.mimetype.startsWith('image')) {
-    callback(null, true);
-  } else {
-    callback(
-      new AppError(400, 'Fail to upload avatar!', {
-        type: 'general',
-        message: 'Not an image! Please upload only images',
-      })
-    );
-  }
-};
-
-export const uploadAvatar = multer({
-  storage: multer.memoryStorage(),
-  fileFilter: avatarFilter,
-  limits: {
-    fileSize: 2 * 1024 * 1024,
-  },
-}).single('avatar');
-
-export async function resizeAvatar(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
-  if (!req.file) return next();
-
-  const resizedImage = await sharp(req.file.buffer)
-    .resize(500, 500, { fit: 'cover' })
-    .toFormat('jpg')
-    .toBuffer();
-
-  req.file.buffer = resizedImage;
-
-  next();
-}
 
 export const updateAvatar = catchAsync(async (req: Request, res: Response) => {
   if (!req.file) {
