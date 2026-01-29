@@ -9,14 +9,14 @@ import {
   getUserThreads,
   updateBio,
   updatePassword,
-  uploadAvatar,
-  resizeAvatar,
   updateAvatar,
   deleteUser,
   getUserPosts,
   getUserSubscriptions,
   getUserNotifications,
 } from '../controllers/userController';
+import { uploadAvatar } from '../middleware/upload';
+import { resizeAvatar } from '../middleware/resizeAvatar';
 
 const userRouter = Router();
 
