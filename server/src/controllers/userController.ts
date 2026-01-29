@@ -348,6 +348,10 @@ export const updateAvatar = catchAsync(async (req: Request, res: Response) => {
 export const deleteUser = catchAsync(async (req: Request, res: Response) => {
   const user = req.user!;
 
+  if (user.avatar) {
+    removeFile(`public/images/avatars/${user.avatar}`);
+  }
+
   await user.destroy();
 
   res.status(204).json({});
