@@ -34,6 +34,7 @@ export function DeleteAccount({
   function confirm() {
     dispatch(deleteAccount());
     setIsDeleted(true);
+    closeModal();
   }
 
   return cloneElement(children as React.ReactElement<ChildElementProps>, {
