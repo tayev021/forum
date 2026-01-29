@@ -4,11 +4,11 @@ import { UserAvatar } from '../../../../entities/user/ui/UserAvatar';
 import { formatRelativeTime } from '../../../../shared/lib/utils/formatRelativeTime';
 import { Link } from 'react-router';
 
-interface PostAuthorProps {
+interface AuthorProps {
   author: ThreadPostAuthor | null;
 }
 
-const StyledPostAuthor = styled.div`
+const StyledAuthor = styled.div`
   min-height: 25rem;
   display: grid;
   grid-template-rows: repeat(2, min-content) 1fr repeat(2, min-content);
@@ -56,9 +56,9 @@ const SignInTime = styled.p`
   color: var(--color-grey-500);
 `;
 
-export function PostAuthor({ author }: PostAuthorProps) {
+export function Author({ author }: AuthorProps) {
   return (
-    <StyledPostAuthor>
+    <StyledAuthor>
       <StyledAuthorAvatar user={author} size={8} />
       {author ? (
         <AuthorLink to={`/author/${author.id}/profile`}>
@@ -78,6 +78,6 @@ export function PostAuthor({ author }: PostAuthorProps) {
           <SignInTime>{formatRelativeTime(author.lastSignIn)}</SignInTime>
         </>
       )}
-    </StyledPostAuthor>
+    </StyledAuthor>
   );
 }

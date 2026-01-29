@@ -1,6 +1,6 @@
 import type { ThreadPost } from '../../../../entities/thread';
 import styled from 'styled-components';
-import { PostItem } from './PostItem';
+import { Post } from './Post';
 
 interface PostsListProps {
   posts: ThreadPost[];
@@ -16,7 +16,7 @@ export function PostsList({ posts }: PostsListProps) {
   return (
     <StyledPostsList>
       {posts.map((post) => (
-        <PostItem key={post.id} post={post} />
+        <Post key={post.id} post={post} />
       ))}
     </StyledPostsList>
   );

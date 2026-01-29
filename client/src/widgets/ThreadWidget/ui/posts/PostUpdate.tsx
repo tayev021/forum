@@ -1,8 +1,8 @@
+import type { Ref } from 'react';
 import styled from 'styled-components';
 import { UpdatePostForm } from '../../../../features/updatePost';
 import { useUser } from '../../../../entities/user';
-import { PostAuthor } from './PostAuthor';
-import type { Ref } from 'react';
+import { Author } from './Author';
 
 interface PostUpdateProps {
   ref?: Ref<any>;
@@ -25,7 +25,7 @@ export function PostUpdate({ ref, postId, postContent }: PostUpdateProps) {
 
   return (
     <StyledPostUpdate ref={ref}>
-      <PostAuthor author={{ ...user, lastSignIn: '' }} />
+      <Author author={{ ...user, lastSignIn: '' }} />
       <UpdatePostForm postId={postId} postContent={postContent} />
     </StyledPostUpdate>
   );

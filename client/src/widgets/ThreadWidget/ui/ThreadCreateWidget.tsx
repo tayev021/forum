@@ -3,7 +3,7 @@ import { Widget } from '../../../shared/ui/WidgetKit';
 import { useNavigate, useSearchParams } from 'react-router';
 import { useUser } from '../../../entities/user';
 import { useEffect } from 'react';
-import { PostAuthor } from './posts/PostAuthor';
+import { Author } from './posts/Author';
 import { CreateThreadForm } from '../../../features/createThread';
 
 const Container = styled.div`
@@ -51,7 +51,7 @@ export function ThreadCreateWidget() {
         </Widget.HeaderGroup>
       </StyledWidgetHeader>
       <ThreadCreate>
-        <PostAuthor author={{ ...user, lastSignIn: '' }} />
+        <Author author={{ ...user, lastSignIn: '' }} />
         <CreateThreadForm />
       </ThreadCreate>
     </Container>

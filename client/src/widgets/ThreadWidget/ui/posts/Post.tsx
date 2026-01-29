@@ -1,20 +1,20 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { PostUpdate } from './PostUpdate';
-import { PostAuthor } from './PostAuthor';
-import { PostContent } from './PostContent';
+import { Author } from './Author';
+import { Content } from './Content';
 import { useOutsideClick } from '../../../../shared/lib/hooks/useOutsideClick';
 import type { ThreadPost } from '../../../../entities/thread';
 
-interface PostItemProps {
+interface PostProps {
   post: ThreadPost;
 }
 
-interface StyledPostItemProps {
+interface StyledPostProps {
   id: number;
 }
 
-const StyledPostItem = styled.li<StyledPostItemProps>`
+const StyledPost = styled.li<StyledPostProps>`
   display: grid;
   grid-template-columns: 18rem minmax(32rem, 1fr);
   border: 1px solid var(--color-grey-300);
@@ -22,7 +22,7 @@ const StyledPostItem = styled.li<StyledPostItemProps>`
   box-shadow: var(--shadow-small);
 `;
 
-export function PostItem({ post }: PostItemProps) {
+export function Post({ post }: PostProps) {
   const [isUpdating, setIsUpdating] = useState(false);
   const ref = useOutsideClick(() => setIsUpdating(false));
 
@@ -47,12 +47,12 @@ export function PostItem({ post }: PostItemProps) {
   }
 
   return (
-    <StyledPostItem id={post.id}>
-      <PostAuthor author={post?.author} />
-      <PostContent
+    <StyledPost id={post.id}>
+      <Author author={post?.author} />
+      <Content
         post={post}
         handleUpdate={() => setIsUpdating((current) => !current)}
       />
-    </StyledPostItem>
+    </StyledPost>
   );
 }

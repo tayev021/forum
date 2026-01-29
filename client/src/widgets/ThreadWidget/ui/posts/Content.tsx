@@ -7,13 +7,14 @@ import { DeletePost } from '../../../../features/deletePost';
 import { LikePost } from '../../../../features/likePost';
 import { Modal } from '../../../../shared/ui/Modal';
 import { ReportPost } from '../../../../features/reportPost';
+import { Attachments } from './Attachments';
 
-interface PostContentProps {
+interface ContentProps {
   post: ThreadPost;
   handleUpdate: () => void;
 }
 
-const StyledPostContent = styled.div`
+const StyledContent = styled.div`
   display: grid;
   grid-template-rows: min-content 1fr min-content;
 `;
@@ -55,6 +56,10 @@ const StyledReportButton = styled(Widget.ReportButton)`
 `;
 
 const Main = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
   padding: 1rem;
   word-break: break-all;
 `;
@@ -73,13 +78,13 @@ const UpdatedTime = styled.p`
   color: var(--color-grey-500);
 `;
 
-export function PostContent({ post, handleUpdate }: PostContentProps) {
+export function Content({ post, handleUpdate }: ContentProps) {
   const { user } = useUser();
   const hasModeratePermissions = useRestrictTo(['admin', 'moderator']);
   const isReportable = user && !post.isReported && post.authorId !== user.id;
 
   return (
-    <StyledPostContent>
+    <StyledContent>
       <Header>
         <Time>{formatRelativeTime(post.createdAt)}</Time>
         <Actions>
@@ -112,7 +117,10 @@ export function PostContent({ post, handleUpdate }: PostContentProps) {
           )}
         </Actions>
       </Header>
-      <Main>{post.content}</Main>
+      <Main>
+        <p>{post.content}</p>
+        <Attachments attachments={post.attachments} />
+      </Main>
       <Footer>
         <UpdatedTime>
           {post.createdAt !== post.updatedAt &&
@@ -120,6 +128,6 @@ export function PostContent({ post, handleUpdate }: PostContentProps) {
         </UpdatedTime>
         <LikePost post={post} />
       </Footer>
-    </StyledPostContent>
+    </StyledContent>
   );
 }
