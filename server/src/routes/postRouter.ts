@@ -12,25 +12,34 @@ import {
 } from '../controllers/postController';
 import { restrictTo } from '../middleware/restrictTo';
 import { reportSchema } from '../validators/reportSchemas';
+import { uploadPostImages } from '../middleware/upload';
+import { resizePostImages } from '../middleware/resizePostImages';
 
 const postRouter = Router();
 
 postRouter.get('/latest', getLatestPosts);
-postRouter.post('/', protect, validate(postContentSchema), createPost);
+postRouter.post(
+  '/',
+  protect,
+  uploadPostImages,
+  resizePostImages,
+  validate(postContentSchema),
+  createPost
+);
 postRouter.post('/:postId/like', protect, likePost);
 postRouter.post(
   '/:postId/report',
   protect,
   restrictTo('user'),
   validate(reportSchema),
-  reportPost,
+  reportPost
 );
 postRouter.patch('/:postId', protect, validate(postContentSchema), updatePost);
 postRouter.delete(
   '/:postId',
   protect,
   restrictTo('admin', 'moderator'),
-  deletePost,
+  deletePost
 );
 
 export { postRouter };
