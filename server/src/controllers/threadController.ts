@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { catchAsync } from '../utils/catchAsync';
 import { DEFAULT_PAGE, PAGE_ITEMS_LIMIT } from '../constants';
-import { Forum, Post, Subscription, Thread, User } from '../models';
+import { Attachment, Forum, Post, Subscription, Thread, User } from '../models';
 import { AppError } from '../utils/AppError';
 import { capitalize } from '../utils/capitalize';
 import sequelize from 'sequelize';
@@ -70,6 +70,13 @@ export const getThread = catchAsync(async (req: Request, res: Response) => {
         model: User,
         as: 'author',
         attributes: ['id', 'username', 'avatar', 'role', 'lastSignIn'],
+      },
+      {
+        model: Attachment,
+        as: 'attachments',
+        attributes: ['id', 'type', 'fileName', 'createdAt'],
+        separate: true,
+        order: [['id', 'ASC']],
       },
     ],
     order: [['createdAt', 'ASC']],
@@ -244,7 +251,7 @@ export const subscribeThread = catchAsync(
     });
 
     res.status(204).json({});
-  },
+  }
 );
 
 export const unsubscribeThread = catchAsync(
@@ -259,5 +266,5 @@ export const unsubscribeThread = catchAsync(
     await subscription?.destroy();
 
     res.status(204).json({});
-  },
+  }
 );
