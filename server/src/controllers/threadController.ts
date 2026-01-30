@@ -163,6 +163,13 @@ export const createThread = catchAsync(async (req: Request, res: Response) => {
         as: 'author',
         attributes: ['id', 'username', 'avatar', 'role', 'lastSignIn'],
       },
+      {
+        model: Attachment,
+        as: 'attachments',
+        attributes: ['id', 'type', 'fileName', 'createdAt'],
+        separate: true,
+        order: [['id', 'ASC']],
+      },
     ],
   });
 
