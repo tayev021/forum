@@ -5,6 +5,7 @@ import { Attachment, Forum, Post, Subscription, Thread, User } from '../models';
 import { AppError } from '../utils/AppError';
 import { capitalize } from '../utils/capitalize';
 import sequelize from 'sequelize';
+import { deletePostImages } from '../utils/deletePostImages';
 
 export const getThread = catchAsync(async (req: Request, res: Response) => {
   const isSignedIn = req.isSignedIn;
@@ -220,6 +221,12 @@ export const deleteThread = catchAsync(async (req: Request, res: Response) => {
       type: 'general',
       message: 'You are trying to delete a thread that does not exist',
     });
+  }
+
+  const posts = await Post.findAll({ where: { threadId: thread.id } });
+
+  for (const post of posts) {
+    await deletePostImages(post.id);
   }
 
   await thread.destroy();
