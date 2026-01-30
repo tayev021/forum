@@ -157,7 +157,40 @@ export const createThread = catchAsync(async (req: Request, res: Response) => {
 
   const post = await Post.findOne({
     where: { id: createdPost.id },
-    attributes: ['id', 'threadId', 'content', 'createdAt', 'updatedAt'],
+    attributes: [
+      'id',
+      'threadId',
+      'authorId',
+      'content',
+      'createdAt',
+      'updatedAt',
+      [
+        sequelize.literal(`(
+          SELECT COUNT(*)
+          FROM likes l
+          WHERE l.postId = Post.id
+        )`),
+        'likes',
+      ],
+      [
+        sequelize.literal(`EXISTS (
+          SELECT 1
+          FROM likes l
+          WHERE l.postId = Post.id
+            AND l.userId = ${user?.id || 0}
+        )`),
+        'isLiked',
+      ],
+      [
+        sequelize.literal(`EXISTS (
+          SELECT 1
+          FROM reports r
+          WHERE r.postId = Post.id
+            AND r.reporterId = ${user?.id || 0}
+        )`),
+        'isReported',
+      ],
+    ],
     include: [
       {
         model: User,
