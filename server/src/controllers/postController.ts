@@ -6,6 +6,7 @@ import { AppError } from '../utils/AppError';
 import sequelize from 'sequelize';
 import { v4 as uuid } from 'uuid';
 import sharp from 'sharp';
+import { deletePostImages } from '../utils/deletePostImages';
 
 export const getLatestPosts = catchAsync(
   async (req: Request, res: Response) => {
@@ -196,6 +197,8 @@ export const deletePost = catchAsync(async (req: Request, res: Response) => {
       message: 'You are trying to delete a post that does not exist',
     });
   }
+
+  await deletePostImages(post.id);
 
   const thread = await Thread.findOne({
     where: { id: post.threadId },
