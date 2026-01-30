@@ -36,7 +36,12 @@ User.hasMany(Subscription, {
 });
 Subscription.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 
-Post.hasMany(Attachment, { foreignKey: 'postId', as: 'attachments' });
+Post.hasMany(Attachment, {
+  foreignKey: 'postId',
+  as: 'attachments',
+  onDelete: 'CASCADE',
+  hooks: true,
+});
 Attachment.belongsTo(Post, { foreignKey: 'postId', as: 'post' });
 
 Post.hasMany(Report, { foreignKey: 'postId', as: 'reports' });
