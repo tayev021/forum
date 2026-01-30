@@ -4,6 +4,7 @@ import { DEFAULT_PAGE, PAGE_ITEMS_LIMIT } from '../constants';
 import { Post, Report, Thread, User } from '../models';
 import { AppError } from '../utils/AppError';
 import sequelize from 'sequelize';
+import { deletePostImages } from '../utils/deletePostImages';
 
 export const getReports = catchAsync(async (req: Request, res: Response) => {
   const page = Number(req.query.page) || DEFAULT_PAGE;
@@ -76,7 +77,7 @@ export const rejectReport = catchAsync(
     await report.save();
 
     next();
-  },
+  }
 );
 
 export const banPost = catchAsync(
@@ -110,6 +111,8 @@ export const banPost = catchAsync(
       });
     }
 
+    await deletePostImages(post.id);
+
     const thread = await Thread.findOne({
       where: { id: post.threadId },
       attributes: [
@@ -135,7 +138,7 @@ export const banPost = catchAsync(
     await report.save();
 
     next();
-  },
+  }
 );
 
 export const banUser = catchAsync(
@@ -174,11 +177,12 @@ export const banUser = catchAsync(
       await user?.destroy();
     }
 
+    await deletePostImages(post.id);
     await post.destroy();
 
     report.status = 'banned user and post';
     await report.save();
 
     next();
-  },
+  }
 );
