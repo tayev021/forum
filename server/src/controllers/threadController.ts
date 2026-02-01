@@ -6,6 +6,7 @@ import { AppError } from '../utils/AppError';
 import { capitalize } from '../utils/capitalize';
 import sequelize from 'sequelize';
 import { deletePostImages } from '../utils/deletePostImages';
+import { savePostImages } from '../utils/savePostImages';
 
 export const getThread = catchAsync(async (req: Request, res: Response) => {
   const isSignedIn = req.isSignedIn;
@@ -154,6 +155,10 @@ export const createThread = catchAsync(async (req: Request, res: Response) => {
     threadId: thread.id,
     content,
   });
+
+  if (Array.isArray(req.files) && req.files.length > 0) {
+    await savePostImages(createdPost.id, req.files);
+  }
 
   const post = await Post.findOne({
     where: { id: createdPost.id },
