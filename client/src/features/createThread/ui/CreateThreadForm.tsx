@@ -1,6 +1,12 @@
 import styled from 'styled-components';
 import { PrimaryButton } from '../../../shared/ui/PrimaryButton';
-import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react';
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ChangeEvent,
+  type FormEvent,
+} from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
 import { useAppDispatch } from '../../../shared/lib/hooks/useAppDispatch';
 import {
@@ -9,7 +15,8 @@ import {
   useThread,
 } from '../../../entities/thread';
 import toast from 'react-hot-toast';
-import { HiChevronRight } from 'react-icons/hi2';
+import { HiChevronRight, HiPaperClip } from 'react-icons/hi2';
+import { POST_ATTACHMENTS_LIMIT } from '../../../shared/constants';
 
 const Form = styled.form`
   display: flex;
@@ -36,6 +43,50 @@ const Textarea = styled.textarea`
   resize: none;
 `;
 
+const Row = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+`;
+
+const AttachmentsLabel = styled.label`
+  height: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--color-primary);
+  }
+
+  svg {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+`;
+
+const AttachmentsCounter = styled.span`
+  width: 1.8rem;
+  height: 1.8rem;
+  position: absolute;
+  top: 1.5rem;
+  left: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  font-size: 1.4rem;
+  color: var(--color-text-secondary);
+  background-color: var(--color-rose-500);
+`;
+
+const AttachmentsInput = styled.input`
+  display: none;
+`;
+
 const Button = styled(PrimaryButton)`
   align-self: flex-end;
   display: flex;
@@ -57,7 +108,9 @@ const Button = styled(PrimaryButton)`
 export function CreateThreadForm() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [attachments, setAttachments] = useState<File[]>([]);
   const [isCreated, setIsCreated] = useState(false);
+  const refImagesInput = useRef<HTMLInputElement>(null);
   const { thread, isLoading, error: serverError } = useThread();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -83,10 +136,30 @@ export function CreateThreadForm() {
     setContent(event.target.value);
   }
 
+  function handleChangeAttachments(event: ChangeEvent<HTMLInputElement>) {
+    const files = event.target.files;
+
+    if (files) {
+      if (files.length > POST_ATTACHMENTS_LIMIT) {
+        toast.error('You can attach to post a maximum of 8 images');
+      }
+
+      setAttachments(Array.from(files).slice(0, POST_ATTACHMENTS_LIMIT));
+    }
+  }
+
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
 
-    dispatch(createThread({ forumId, title, content }));
+    if (!title || !content) return;
+
+    const formData = new FormData();
+
+    formData.append('title', title);
+    formData.append('content', content);
+    attachments.forEach((attachment) => formData.append('images', attachment));
+
+    dispatch(createThread({ forumId, formData }));
     setIsCreated(true);
   }
 
@@ -109,9 +182,28 @@ export function CreateThreadForm() {
         value={content}
         onChange={handleContentChange}
       />
-      <Button type="submit" disabled={isLoading}>
-        Post <HiChevronRight />
-      </Button>
+      <Row>
+        <div>
+          <AttachmentsLabel htmlFor="postAttachments">
+            <HiPaperClip />
+            {attachments.length > 0 && (
+              <AttachmentsCounter>{attachments.length}</AttachmentsCounter>
+            )}
+          </AttachmentsLabel>
+          <AttachmentsInput
+            type="file"
+            name="images"
+            id="postAttachments"
+            accept="image/png, image/jpeg"
+            multiple
+            ref={refImagesInput}
+            onChange={handleChangeAttachments}
+          />
+        </div>
+        <Button type="submit" disabled={isLoading}>
+          Post <HiChevronRight />
+        </Button>
+      </Row>
     </Form>
   );
 }
