@@ -43,7 +43,7 @@ export function Post({ post }: PostProps) {
   }, []);
 
   if (isUpdating) {
-    return <PostUpdate ref={ref} postId={post.id} postContent={post.content} />;
+    return <PostUpdate ref={ref} post={post} postContent={post.content} />;
   }
 
   return (

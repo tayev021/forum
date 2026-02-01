@@ -1,4 +1,5 @@
 import type { Ref } from 'react';
+import type { ThreadPost } from '../../../../entities/thread';
 import styled from 'styled-components';
 import { UpdatePostForm } from '../../../../features/updatePost';
 import { useUser } from '../../../../entities/user';
@@ -6,7 +7,7 @@ import { Author } from './Author';
 
 interface PostUpdateProps {
   ref?: Ref<any>;
-  postId?: number;
+  post?: ThreadPost;
   postContent?: string;
 }
 
@@ -18,7 +19,7 @@ const StyledPostUpdate = styled.li`
   box-shadow: var(--shadow-small);
 `;
 
-export function PostUpdate({ ref, postId, postContent }: PostUpdateProps) {
+export function PostUpdate({ ref, post, postContent }: PostUpdateProps) {
   const { user } = useUser();
 
   if (!user) return null;
@@ -26,7 +27,7 @@ export function PostUpdate({ ref, postId, postContent }: PostUpdateProps) {
   return (
     <StyledPostUpdate ref={ref}>
       <Author author={{ ...user, lastSignIn: '' }} />
-      <UpdatePostForm postId={postId} postContent={postContent} />
+      <UpdatePostForm post={post} postContent={postContent} />
     </StyledPostUpdate>
   );
 }
