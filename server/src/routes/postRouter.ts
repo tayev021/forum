@@ -34,7 +34,14 @@ postRouter.post(
   validate(reportSchema),
   reportPost
 );
-postRouter.patch('/:postId', protect, validate(postContentSchema), updatePost);
+postRouter.patch(
+  '/:postId',
+  protect,
+  uploadPostImages,
+  resizePostImages,
+  validate(postContentSchema),
+  updatePost
+);
 postRouter.delete(
   '/:postId',
   protect,
