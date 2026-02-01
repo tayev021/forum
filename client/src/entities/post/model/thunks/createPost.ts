@@ -8,14 +8,11 @@ export const createPost = createAsyncThunk<
   Post,
   PostData,
   { rejectValue: ServerError }
->('post/createPost', async function ({ threadId, content }, thunkAPI) {
+>('post/createPost', async function ({ threadId, formData }, thunkAPI) {
   const response = await fetch(`${API_URL}/posts?threadId=${threadId}`, {
     method: 'POST',
     credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ content }),
+    body: formData,
   });
 
   if (!response.ok) {
