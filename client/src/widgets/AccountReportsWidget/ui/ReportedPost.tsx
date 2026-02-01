@@ -3,6 +3,7 @@ import type { ReportedPost } from '../../../entities/report';
 import { UserAvatar } from '../../../entities/user/ui/UserAvatar';
 import styled from 'styled-components';
 import { formatRelativeTime } from '../../../shared/lib/utils/formatRelativeTime';
+import { Attachments } from './Attachments';
 
 interface ReportedPostProps {
   post: ReportedPost;
@@ -94,6 +95,9 @@ export function ReportedPost({ post }: ReportedPostProps) {
           <Time>{formatRelativeTime(post.createdAt)}</Time>
         </Row>
         <Content>{post.content}</Content>
+        {post.attachments.length > 0 && (
+          <Attachments attachments={post.attachments} />
+        )}
       </PostContent>
     </StyledPost>
   );
