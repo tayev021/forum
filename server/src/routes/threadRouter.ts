@@ -13,6 +13,8 @@ import {
   subscribeThread,
   unsubscribeThread,
 } from '../controllers/threadController';
+import { uploadPostImages } from '../middleware/upload';
+import { resizePostImages } from '../middleware/resizePostImages';
 
 const threadRouter = Router();
 
@@ -22,6 +24,8 @@ threadRouter.post('/:threadId/unsubscribe', protect, unsubscribeThread);
 threadRouter.post(
   '/',
   protect,
+  uploadPostImages,
+  resizePostImages,
   validate(threadTitleSchema, postContentSchema),
   createThread
 );
