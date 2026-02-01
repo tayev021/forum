@@ -1,6 +1,7 @@
 import {
   threadReducer,
   updateThreadPost,
+  deleteAttachment,
   clearThreadError,
 } from './model/slice/threadSlice';
 import { getThread } from './model/thunks/getThread';
@@ -21,6 +22,7 @@ export {
   getThread,
   createThread,
   updateThread,
+  deleteAttachment,
   deleteThread,
   subscribeThread,
   unsubscribeThread,
