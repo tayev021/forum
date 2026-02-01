@@ -1,7 +1,7 @@
 import { catchAsync } from '../utils/catchAsync';
 import { NextFunction, Request, Response } from 'express';
 import { DEFAULT_PAGE, PAGE_ITEMS_LIMIT } from '../constants';
-import { Post, Report, Thread, User } from '../models';
+import { Attachment, Post, Report, Thread, User } from '../models';
 import { AppError } from '../utils/AppError';
 import sequelize from 'sequelize';
 import { deletePostImages } from '../utils/deletePostImages';
@@ -36,6 +36,13 @@ export const getReports = catchAsync(async (req: Request, res: Response) => {
             model: Thread,
             as: 'thread',
             attributes: ['id', 'title', 'createdAt'],
+          },
+          {
+            model: Attachment,
+            as: 'attachments',
+            attributes: ['id', 'type', 'fileName', 'createdAt'],
+            separate: true,
+            order: [['id', 'ASC']],
           },
         ],
       },
