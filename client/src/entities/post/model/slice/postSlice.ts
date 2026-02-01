@@ -8,6 +8,7 @@ import type { Post } from '../types/Post';
 import { likePost } from '../thunks/likePost';
 import { deletePost } from '../thunks/deletePost';
 import { reportPost } from '../thunks/reportPost';
+import { deletePostAttachment } from '../thunks/deletePostAttachment';
 
 interface PostState {
   post: Post | null;
@@ -43,7 +44,7 @@ const postSlice = createSlice({
       (state, action: PayloadAction<LatestPost[]>) => {
         state.latestPosts = action.payload;
         state.isLoading = false;
-      },
+      }
     );
     builder.addCase(getLatestPosts.rejected, (state, action) => {
       state.latestPosts = [];
@@ -65,7 +66,7 @@ const postSlice = createSlice({
       (state, action: PayloadAction<Post>) => {
         state.post = action.payload;
         state.isLoading = false;
-      },
+      }
     );
     builder.addCase(createPost.rejected, (state, action) => {
       state.isLoading = false;
@@ -86,7 +87,7 @@ const postSlice = createSlice({
       (state, action: PayloadAction<Post>) => {
         state.post = action.payload;
         state.isLoading = false;
-      },
+      }
     );
     builder.addCase(updatePost.rejected, (state, action) => {
       state.isLoading = false;
@@ -107,7 +108,7 @@ const postSlice = createSlice({
       (state, action: PayloadAction<Post>) => {
         state.post = action.payload;
         state.isLoading = false;
-      },
+      }
     );
     builder.addCase(likePost.rejected, (state, action) => {
       state.isLoading = false;
@@ -128,7 +129,7 @@ const postSlice = createSlice({
       (state, action: PayloadAction<Post>) => {
         state.post = action.payload;
         state.isLoading = false;
-      },
+      }
     );
     builder.addCase(reportPost.rejected, (state, action) => {
       state.isLoading = false;
@@ -149,6 +150,23 @@ const postSlice = createSlice({
       state.isLoading = false;
     });
     builder.addCase(deletePost.rejected, (state, action) => {
+      state.isLoading = false;
+
+      if (action.payload) {
+        state.error = action.payload;
+      } else {
+        state.error = { type: 'general', message: 'Unknown error!' };
+      }
+    });
+
+    builder.addCase(deletePostAttachment.pending, (state, _action) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(deletePostAttachment.fulfilled, (state, _action) => {
+      state.isLoading = false;
+    });
+    builder.addCase(deletePostAttachment.rejected, (state, action) => {
       state.isLoading = false;
 
       if (action.payload) {
