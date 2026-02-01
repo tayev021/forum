@@ -4,9 +4,8 @@ import { LATEST_POSTS_LIMIT, PAGE_ITEMS_LIMIT } from '../constants';
 import { Attachment, Like, Post, Report, Thread, User } from '../models';
 import { AppError } from '../utils/AppError';
 import sequelize from 'sequelize';
-import { v4 as uuid } from 'uuid';
-import sharp from 'sharp';
 import { deletePostImages } from '../utils/deletePostImages';
+import { savePostImages } from '../utils/savePostImages';
 
 export const getLatestPosts = catchAsync(
   async (req: Request, res: Response) => {
@@ -75,17 +74,7 @@ export const createPost = catchAsync(async (req: Request, res: Response) => {
   await thread.save();
 
   if (Array.isArray(req.files) && req.files.length > 0) {
-    for (const file of req.files) {
-      const imageFileName = `image-${uuid()}.jpeg`;
-      const imagePath = `public/images/posts/${imageFileName}`;
-
-      await sharp(file.buffer).toFile(imagePath);
-      await Attachment.create({
-        postId: post.id,
-        type: 'image',
-        fileName: imageFileName,
-      });
-    }
+    await savePostImages(post.id, req.files);
   }
 
   const detailedPost = await Post.findOne({
@@ -148,6 +137,10 @@ export const updatePost = catchAsync(async (req: Request, res: Response) => {
 
   post.content = content;
   await post.save();
+
+  if (Array.isArray(req.files) && req.files.length > 0) {
+    await savePostImages(post.id, req.files);
+  }
 
   const detailedPost = await Post.findOne({
     where: { id: post.id },
