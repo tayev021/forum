@@ -5,16 +5,13 @@ import type { Post } from '../types/Post';
 
 export const updatePost = createAsyncThunk<
   Post,
-  { postId: number; content: string },
+  { postId: number; formData: FormData },
   { rejectValue: ServerError }
->('post/updatePost', async function ({ postId, content }, thunkAPI) {
+>('post/updatePost', async function ({ postId, formData }, thunkAPI) {
   const response = await fetch(`${API_URL}/posts/${postId}`, {
     method: 'PATCH',
     credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ content }),
+    body: formData,
   });
 
   if (!response.ok) {
