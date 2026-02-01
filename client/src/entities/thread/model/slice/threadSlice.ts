@@ -27,13 +27,32 @@ const threadSlice = createSlice({
   reducers: {
     updateThreadPost: (
       state,
-      action: PayloadAction<{ postId: number; post: Partial<ThreadPost> }>,
+      action: PayloadAction<{ postId: number; post: Partial<ThreadPost> }>
     ) => {
       if (!state.thread) return;
 
       state.thread.posts = state.thread?.posts.map((post) => {
         if (post.id === action.payload.postId) {
           return { ...post, ...action.payload.post };
+        } else {
+          return post;
+        }
+      });
+    },
+    deleteAttachment: (
+      state,
+      action: PayloadAction<{ postId: number; attachmentId: number }>
+    ) => {
+      if (!state.thread) return;
+
+      state.thread.posts = state.thread?.posts.map((post) => {
+        if (post.id === action.payload.postId) {
+          return {
+            ...post,
+            attachments: post.attachments.filter(
+              (attachment) => attachment.id !== action.payload.attachmentId
+            ),
+          };
         } else {
           return post;
         }
@@ -54,7 +73,7 @@ const threadSlice = createSlice({
       (state, action: PayloadAction<Thread>) => {
         state.thread = action.payload;
         state.isLoading = false;
-      },
+      }
     );
     builder.addCase(getThread.rejected, (state, action) => {
       state.isLoading = false;
@@ -76,7 +95,7 @@ const threadSlice = createSlice({
       (state, action: PayloadAction<Thread>) => {
         state.thread = action.payload;
         state.isLoading = false;
-      },
+      }
     );
     builder.addCase(createThread.rejected, (state, action) => {
       state.isLoading = false;
@@ -96,7 +115,7 @@ const threadSlice = createSlice({
       (state, action: PayloadAction<string>) => {
         state.thread = { ...state.thread, title: action.payload } as Thread;
         state.isLoading = false;
-      },
+      }
     );
     builder.addCase(updateThread.rejected, (state, action) => {
       state.isLoading = false;
@@ -169,4 +188,5 @@ const threadSlice = createSlice({
 });
 
 export const threadReducer = threadSlice.reducer;
-export const { updateThreadPost, clearThreadError } = threadSlice.actions;
+export const { updateThreadPost, deleteAttachment, clearThreadError } =
+  threadSlice.actions;
