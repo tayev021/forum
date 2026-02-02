@@ -81,7 +81,12 @@ const UpdatedTime = styled.p`
 export function Content({ post, handleUpdate }: ContentProps) {
   const { user } = useUser();
   const hasModeratePermissions = useRestrictTo(['admin', 'moderator']);
-  const isReportable = user && !post.isReported && post.authorId !== user.id;
+  const isReportable =
+    user &&
+    !post.isReported &&
+    post.authorId !== user.id &&
+    post.author.role === 'user' &&
+    !hasModeratePermissions;
 
   return (
     <StyledContent>
