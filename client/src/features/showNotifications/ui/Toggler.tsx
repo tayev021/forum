@@ -13,6 +13,10 @@ const Button = styled.button`
   align-items: center;
   position: relative;
   cursor: pointer;
+
+  &:hover {
+    color: var(--color-text-tertiary);
+  }
 `;
 
 const Counter = styled.span`
@@ -27,6 +31,7 @@ const Counter = styled.span`
   border-radius: 50%;
   font-size: 1.2rem;
   line-height: 1;
+  color: var(--color-white);
   background-color: var(--color-rose-500);
 `;
 
