@@ -8,24 +8,23 @@ const Header = styled.header`
 `;
 
 const StyledContainer = styled(Container)`
-  padding: 0.6rem 2.4rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding: 0.8rem 1.6rem;
   line-height: 1;
-  color: var(--color-text-secondary);
+  color: var(--color-white);
 `;
 
-const Row = styled.div`
+const Column = styled.div`
   display: flex;
   justify-content: center;
-
-  &:not(:last-child) {
-    margin-bottom: 1rem;
-  }
 `;
 
 const Logo = styled.img`
   width: 3.2rem;
   height: 3.2rem;
-  margin-right: 3rem;
+  margin-right: 2rem;
 `;
 
 const Title = styled.h1`
@@ -43,13 +42,13 @@ export function AppHeader() {
   return (
     <Header>
       <StyledContainer>
-        <Row>
+        <Column>
           <Logo src={LogoImage} alt="Forum logo" />
           <Title>Forum</Title>
-        </Row>
-        <Row>
+        </Column>
+        <Column>
           <Slogan>Your space to share and discover</Slogan>
-        </Row>
+        </Column>
       </StyledContainer>
     </Header>
   );
