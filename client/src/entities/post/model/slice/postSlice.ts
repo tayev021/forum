@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { ServerError } from '../../../../shared/types/ServerError';
-import type { LatestPost } from '../types/LatestPost';
+import type { SearchedPost } from '../types/SearchedPost';
 import { getLatestPosts } from '../thunks/getLatestPosts';
 import { createPost } from '../thunks/createPost';
 import { updatePost } from '../thunks/updatePost';
@@ -12,7 +12,7 @@ import { deletePostAttachment } from '../thunks/deletePostAttachment';
 
 interface PostState {
   post: Post | null;
-  latestPosts: LatestPost[];
+  latestPosts: SearchedPost[];
   isLoading: boolean;
   error: ServerError | null;
 }
@@ -41,7 +41,7 @@ const postSlice = createSlice({
     });
     builder.addCase(
       getLatestPosts.fulfilled,
-      (state, action: PayloadAction<LatestPost[]>) => {
+      (state, action: PayloadAction<SearchedPost[]>) => {
         state.latestPosts = action.payload;
         state.isLoading = false;
       }

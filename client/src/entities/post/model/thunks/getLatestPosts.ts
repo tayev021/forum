@@ -1,10 +1,10 @@
-import type { LatestPost } from '../types/LatestPost';
+import type { SearchedPost } from '../types/SearchedPost';
 import type { ServerError } from '../../../../shared/types/ServerError';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { API_URL } from '../../../../shared/constants';
 
 export const getLatestPosts = createAsyncThunk<
-  LatestPost[],
+  SearchedPost[],
   void,
   { rejectValue: ServerError }
 >('post/getLatestPosts', async function (_, thunkAPI) {
@@ -18,7 +18,7 @@ export const getLatestPosts = createAsyncThunk<
       return thunkAPI.rejectWithValue(errors);
     }
 
-    const json: { posts: LatestPost[] } = await response.json();
+    const json: { posts: SearchedPost[] } = await response.json();
 
     return json.posts;
   } catch (error: unknown) {
