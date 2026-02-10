@@ -55,6 +55,7 @@ const DeleteButton = styled.button`
   svg {
     width: 2rem;
     height: 2rem;
+    color: var(--color-white);
   }
 `;
 
