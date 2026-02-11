@@ -31,7 +31,7 @@ export function LatestPostsWidget() {
 
   return (
     <Widget.Container>
-      {isLoading && <Widget.Loader position="top" />}
+      {isLoading && latestPosts.length <= 0 && <Widget.Loader position="top" />}
       {error?.type === 'general' && (
         <Widget.Error>{error.message}</Widget.Error>
       )}
