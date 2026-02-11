@@ -1,6 +1,10 @@
 import styled, { keyframes } from 'styled-components';
 import spinnerBg from '../assets/spinner-bg.png';
 
+interface SpinnerProps {
+  className?: string;
+}
+
 const spin = keyframes`
   0% {
     transform: rotate(0deg);
@@ -56,9 +60,9 @@ const StyledSpinner = styled.span`
   }
 `;
 
-export function Spinner() {
+export function Spinner({ className }: SpinnerProps) {
   return (
-    <SpinnerContainer>
+    <SpinnerContainer className={className}>
       <SpinnerBackground src={spinnerBg} />
       <StyledSpinner />
     </SpinnerContainer>
