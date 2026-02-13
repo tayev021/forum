@@ -12,12 +12,14 @@ import {
   deleteThread,
   subscribeThread,
   unsubscribeThread,
+  searchThread,
 } from '../controllers/threadController';
 import { uploadPostImages } from '../middleware/upload';
 import { resizePostImages } from '../middleware/resizePostImages';
 
 const threadRouter = Router();
 
+threadRouter.get('/search', searchThread);
 threadRouter.get('/:threadId', isSignedIn, getThread);
 threadRouter.post('/:threadId/subscribe', protect, subscribeThread);
 threadRouter.post('/:threadId/unsubscribe', protect, unsubscribeThread);
