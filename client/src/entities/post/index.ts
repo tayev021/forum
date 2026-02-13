@@ -9,8 +9,10 @@ import { likePost } from './model/thunks/likePost';
 import { reportPost } from './model/thunks/reportPost';
 import { deletePost } from './model/thunks/deletePost';
 import { deletePostAttachment } from './model/thunks/deletePostAttachment';
+import { searchPosts } from './model/thunks/searchPosts';
 import { usePost } from './lib/hooks/usePost';
 import { useLatestPosts } from './lib/hooks/useLatestPosts';
+import { useSearchedPosts } from './lib/hooks/useSearchedPosts';
 import type { Post } from './model/types/Post';
 
 export {
@@ -23,7 +25,9 @@ export {
   reportPost,
   deletePost,
   deletePostAttachment,
+  searchPosts,
   usePost,
   useLatestPosts,
+  useSearchedPosts,
   type Post,
 };
