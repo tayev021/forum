@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import { catchAsync } from '../utils/catchAsync';
-import { DEFAULT_PAGE, PAGE_ITEMS_LIMIT } from '../constants';
+import { DEFAULT_PAGE, PAGE_ITEMS_LIMIT, SEARCH_LIMIT } from '../constants';
 import { Attachment, Forum, Post, Subscription, Thread, User } from '../models';
 import { AppError } from '../utils/AppError';
 import { capitalize } from '../utils/capitalize';
-import sequelize from 'sequelize';
+import sequelize, { Op, col, fn, where } from 'sequelize';
 import { deletePostImages } from '../utils/deletePostImages';
 import { savePostImages } from '../utils/savePostImages';
 
@@ -320,3 +320,30 @@ export const unsubscribeThread = catchAsync(
     res.status(204).json({});
   }
 );
+
+export const searchThread = catchAsync(async (req: Request, res: Response) => {
+  const limit = Number(req.query.limit) || SEARCH_LIMIT;
+  const query = String(req.query.query);
+
+  if (!query) {
+    throw new AppError(400, 'Failed to search authors!', {
+      type: 'general',
+      message: 'You are trying to search authors using the empty query',
+    });
+  }
+
+  const threads = await Thread.findAll({
+    where: {
+      [Op.and]: where(
+        fn('LOWER', col('title')),
+        'LIKE',
+        `%${query.toLowerCase()}%`
+      ),
+    },
+    order: [['title', 'DESC']],
+    limit: limit > 10 ? 10 : limit,
+    attributes: ['id', 'title'],
+  });
+
+  res.status(200).json({ threads });
+});
