@@ -1,8 +1,10 @@
 import { catchAsync } from '../utils/catchAsync';
 import { Request, Response } from 'express';
 import { User } from '../models';
-import sequelize from 'sequelize';
+import sequelize, { col, fn, where } from 'sequelize';
 import { AppError } from '../utils/AppError';
+import { SEARCH_LIMIT } from '../constants';
+import { Op } from 'sequelize';
 
 export const getAuthorProfile = catchAsync(
   async (req: Request, res: Response) => {
@@ -55,3 +57,30 @@ export const getAuthorProfile = catchAsync(
     });
   }
 );
+
+export const searchAuthors = catchAsync(async (req: Request, res: Response) => {
+  const limit = Number(req.query.limit) || SEARCH_LIMIT;
+  const query = String(req.query.query);
+
+  if (!query) {
+    throw new AppError(400, 'Failed to search authors!', {
+      type: 'general',
+      message: 'You are trying to search authors using the empty query',
+    });
+  }
+
+  const authors = await User.findAll({
+    where: {
+      [Op.and]: where(
+        fn('LOWER', col('username')),
+        'LIKE',
+        `%${query.toLowerCase()}%`
+      ),
+    },
+    order: [['username', 'DESC']],
+    limit: limit > 10 ? 10 : limit,
+    attributes: ['id', 'username', 'avatar'],
+  });
+
+  res.status(200).json({ authors });
+});
