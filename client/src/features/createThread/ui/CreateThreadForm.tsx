@@ -119,8 +119,13 @@ export function CreateThreadForm() {
   const forumId = Number(searchParams.get('forumId'));
 
   useEffect(() => {
-    if (serverError?.type === 'general') {
-      toast.error(serverError.message);
+    if (serverError) {
+      if (serverError.type === 'general') {
+        toast.error(serverError.message);
+      } else if (serverError?.type === 'validation') {
+        serverError.fields.forEach((field) => toast.error(field.message));
+      }
+
       dispatch(clearThreadError());
       setIsCreated(false);
     } else if (!serverError && !isLoading && isCreated && thread) {
