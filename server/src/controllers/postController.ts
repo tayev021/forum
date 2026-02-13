@@ -1,9 +1,13 @@
 import { Request, Response } from 'express';
 import { catchAsync } from '../utils/catchAsync';
-import { LATEST_POSTS_LIMIT, PAGE_ITEMS_LIMIT } from '../constants';
+import {
+  LATEST_POSTS_LIMIT,
+  PAGE_ITEMS_LIMIT,
+  SEARCH_LIMIT,
+} from '../constants';
 import { Attachment, Like, Post, Report, Thread, User } from '../models';
 import { AppError } from '../utils/AppError';
-import sequelize from 'sequelize';
+import sequelize, { col, fn, where, Op } from 'sequelize';
 import { deletePostImages } from '../utils/deletePostImages';
 import { savePostImages } from '../utils/savePostImages';
 
@@ -48,6 +52,61 @@ export const getLatestPosts = catchAsync(
     res.status(200).json({ posts });
   }
 );
+
+export const searchPosts = catchAsync(async (req: Request, res: Response) => {
+  const limit = Number(req.query.limit) || SEARCH_LIMIT;
+  const query = String(req.query.query);
+
+  if (!query) {
+    throw new AppError(400, 'Failed to search posts!', {
+      type: 'general',
+      message: 'You are trying to search posts using the empty query',
+    });
+  }
+
+  const posts = await Post.findAll({
+    where: {
+      [Op.and]: where(
+        fn('LOWER', col('content')),
+        'LIKE',
+        `%${query.toLowerCase()}%`
+      ),
+    },
+    order: [['createdAt', 'DESC']],
+    limit: limit > 10 ? 10 : limit,
+    attributes: ['id', 'content', 'createdAt'],
+    include: [
+      {
+        model: Thread,
+        as: 'thread',
+        attributes: [
+          'id',
+          'title',
+          [
+            sequelize.literal(`
+              CEIL(
+                (
+                  SELECT COUNT(*)
+                  FROM posts p2
+                  WHERE p2.threadId = Post.threadId
+                    AND p2.createdAt <= Post.createdAt
+                ) / ${PAGE_ITEMS_LIMIT}
+              ) 
+            `),
+            'page',
+          ],
+        ],
+      },
+      {
+        model: User,
+        as: 'author',
+        attributes: ['username', 'avatar'],
+      },
+    ],
+  });
+
+  res.status(200).json({ posts });
+});
 
 export const createPost = catchAsync(async (req: Request, res: Response) => {
   const user = req.user;
