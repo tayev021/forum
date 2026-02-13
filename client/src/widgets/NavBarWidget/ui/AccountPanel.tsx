@@ -9,9 +9,9 @@ import { HiArrowRightOnRectangle } from 'react-icons/hi2';
 const Container = styled.div`
   display: flex;
   gap: 2rem;
-  font-size: 1.8rem;
-  line-height: 1;
-  color: var(--color-text-secondary);
+  font-size: 1.6rem;
+  line-height: 1.2;
+  color: var(--color-white);
 `;
 
 const AccountLink = styled(Link)`

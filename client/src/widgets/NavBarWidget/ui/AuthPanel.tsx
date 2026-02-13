@@ -7,7 +7,8 @@ const StyledLink = styled(Link)`
   align-items: center;
   gap: 0.5rem;
   line-height: 1;
-  color: var(--color-text-secondary);
+  white-space: nowrap;
+  color: var(--color-white);
   transition: all linear 0.1s;
 
   &:hover {

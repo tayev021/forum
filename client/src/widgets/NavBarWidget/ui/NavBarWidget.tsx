@@ -2,11 +2,12 @@ import styled from 'styled-components';
 import { Container } from '../../../shared/ui/Container';
 import { useUser } from '../../../entities/user';
 import { NavList } from './NavList';
+import { Search } from '../../../features/search';
 import { AccountPanel } from './AccountPanel';
 import { AuthPanel } from './AuthPanel';
 import { ThemeToggler } from '../../../features/toggleTheme';
 
-const Nav = styled.nav`
+const NavBar = styled.div`
   position: sticky;
   top: 0;
   background-color: var(--color-primary);
@@ -15,7 +16,11 @@ const Nav = styled.nav`
 `;
 
 const StyledContainer = styled(Container)`
-  display: flex;
+  display: grid;
+  grid-template-columns: min-content minmax(20rem, 30rem) minmax(
+      min-content,
+      max-content
+    );
   justify-content: space-between;
   align-items: center;
   gap: 2rem;
@@ -32,14 +37,15 @@ export function NavBarWidget() {
   const { user, isLoading } = useUser();
 
   return (
-    <Nav>
+    <NavBar>
       <StyledContainer>
         <NavList />
+        <Search />
         <Group>
           {isLoading ? null : user ? <AccountPanel /> : <AuthPanel />}
           <ThemeToggler />
         </Group>
       </StyledContainer>
-    </Nav>
+    </NavBar>
   );
 }
