@@ -4,6 +4,7 @@ import { validate } from '../middleware/validate';
 import { postContentSchema } from '../validators/postSchemas';
 import {
   getLatestPosts,
+  searchPosts,
   createPost,
   updatePost,
   deletePost,
@@ -18,6 +19,7 @@ import { resizePostImages } from '../middleware/resizePostImages';
 const postRouter = Router();
 
 postRouter.get('/latest', getLatestPosts);
+postRouter.get('/search', searchPosts);
 postRouter.post(
   '/',
   protect,
