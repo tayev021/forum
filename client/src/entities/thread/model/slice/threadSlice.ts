@@ -1,6 +1,7 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type { ServerError } from '../../../../shared/types/ServerError';
 import type { Thread } from '../types/Thread';
+import type { SearchedThread } from '../types/SearchedThread';
+import type { ServerError } from '../../../../shared/types/ServerError';
 import { getThread } from '../thunks/getThread';
 import { createThread } from '../thunks/createThread';
 import { deleteThread } from '../thunks/deleteThread';
@@ -8,15 +9,18 @@ import { updateThread } from '../thunks/updateThread';
 import { subscribeThread } from '../thunks/subscribeThread';
 import { unsubscribeThread } from '../thunks/unsubscribeThread';
 import type { ThreadPost } from '../types/ThreadPost';
+import { searchThreads } from '../thunks/searchThreads';
 
 interface ThreadState {
   thread: Thread | null;
+  searchedThreads: SearchedThread[];
   isLoading: boolean;
   error: ServerError | null;
 }
 
 const initialState: ThreadState = {
   thread: null,
+  searchedThreads: [],
   isLoading: false,
   error: null,
 };
@@ -176,6 +180,27 @@ const threadSlice = createSlice({
       state.isLoading = false;
     });
     builder.addCase(unsubscribeThread.rejected, (state, action) => {
+      state.isLoading = false;
+
+      if (action.payload) {
+        state.error = action.payload;
+      } else {
+        state.error = { type: 'general', message: 'Unknown error!' };
+      }
+    });
+
+    builder.addCase(searchThreads.pending, (state, _action) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(
+      searchThreads.fulfilled,
+      (state, action: PayloadAction<SearchedThread[]>) => {
+        state.searchedThreads = action.payload;
+        state.isLoading = false;
+      }
+    );
+    builder.addCase(searchThreads.rejected, (state, action) => {
       state.isLoading = false;
 
       if (action.payload) {
