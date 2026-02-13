@@ -9,10 +9,12 @@ import { likePost } from '../thunks/likePost';
 import { deletePost } from '../thunks/deletePost';
 import { reportPost } from '../thunks/reportPost';
 import { deletePostAttachment } from '../thunks/deletePostAttachment';
+import { searchPosts } from '../thunks/searchPosts';
 
 interface PostState {
   post: Post | null;
   latestPosts: SearchedPost[];
+  searchedPosts: SearchedPost[];
   isLoading: boolean;
   error: ServerError | null;
 }
@@ -20,6 +22,7 @@ interface PostState {
 const initialState: PostState = {
   post: null,
   latestPosts: [],
+  searchedPosts: [],
   isLoading: false,
   error: null,
 };
@@ -48,6 +51,27 @@ const postSlice = createSlice({
     );
     builder.addCase(getLatestPosts.rejected, (state, action) => {
       state.latestPosts = [];
+      state.isLoading = false;
+
+      if (action.payload) {
+        state.error = action.payload;
+      } else {
+        state.error = { type: 'general', message: 'Unknown error!' };
+      }
+    });
+
+    builder.addCase(searchPosts.pending, (state, _action) => {
+      state.isLoading = true;
+    });
+    builder.addCase(
+      searchPosts.fulfilled,
+      (state, action: PayloadAction<SearchedPost[]>) => {
+        state.searchedPosts = action.payload;
+        state.isLoading = false;
+      }
+    );
+    builder.addCase(searchPosts.rejected, (state, action) => {
+      state.searchedPosts = [];
       state.isLoading = false;
 
       if (action.payload) {
