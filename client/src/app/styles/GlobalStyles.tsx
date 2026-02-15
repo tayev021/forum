@@ -4,11 +4,21 @@ export const GlobalStyles = createGlobalStyle`
 :root {
   &.light-theme {
     --color-primary: #059669;
+
     --color-text-primary: #022c22;
     --color-text-secondary: #d1fae5;
     --color-text-tertiary: #6ee7b7;
+
     --color-bg: #ecfdf5;
     --color-bg-secondary: #ffffff;
+
+    --color-white: #ffffff;
+    --color-white-secondary: #d1fae5;
+
+    --color-grey-light: #a1a1aa;
+
+    --color-black: #000000;
+    --color-black-secondary: #022c22;
 
     --color-grey-0: #ffffff;
     --color-grey-50: #fafafa;
@@ -73,18 +83,28 @@ export const GlobalStyles = createGlobalStyle`
     --color-yellow-950:	#422006;
 
     --shadow-small: 1px 2px 2px rgba(0,0,0, 0.2);
-    --shadow-medium: 2px 4px 8px rgba(0,0,0, 0.2);
+    --shadow-medium: 2px 2px 6px rgba(0,0,0, 0.2);
     --shadow-top-medium: 0 -4px 6px rgba(0,0,0, 0.2);
     --shadow-bottom-medium: 0 4px 6px rgba(0,0,0, 0.2);
   }
 
   &.dark-theme {
     --color-primary: #059669;
+
     --color-text-primary: #ecfdf5;
     --color-text-secondary: #d1fae5;
     --color-text-tertiary: #6ee7b7;
+
     --color-bg: #27272a;
     --color-bg-secondary: #3f3f46;
+
+    --color-white: #ffffff;
+    --color-white-secondary: #d1fae5;
+
+    --color-grey-light: #a1a1aa;
+
+    --color-black: #000000;
+    --color-black-secondary: #022c22;
 
     --color-grey-999: #ffffff;
     --color-grey-950: #fafafa;
@@ -136,10 +156,10 @@ export const GlobalStyles = createGlobalStyle`
     --color-yellow-100:	#713f12;
     --color-yellow-50:	#422006;
 
-    --shadow-small: 1px 2px 2px rgba(255,255,255, 0.2);
-    --shadow-medium: 2px 4px 8px rgba(255,255,255, 0.2);
-    --shadow-top-medium: 0 -4px 6px rgba(255,255,255, 0.2);
-    --shadow-bottom-medium: 0 4px 6px rgba(255,255,255, 0.2);
+    --shadow-small: 1px 2px 2px rgba(0,0,0, 0.4);
+    --shadow-medium: 2px 2px 6px rgba(0,0,0, 0.4);
+    --shadow-top-medium: 0 -4px 6px rgba(0,0,0, 0.4);
+    --shadow-bottom-medium: 0 4px 6px rgba(0,0,0, 0.4);
   }
 }
 
