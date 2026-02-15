@@ -85,7 +85,7 @@ export function Content({ post, handleUpdate }: ContentProps) {
     user &&
     !post.isReported &&
     post.authorId !== user.id &&
-    post.author.role === 'user' &&
+    post.author?.role === 'user' &&
     !hasModeratePermissions;
 
   return (
