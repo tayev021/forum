@@ -8,21 +8,13 @@ import { HiPencilSquare } from 'react-icons/hi2';
 import { UpdateBioForm } from '../../../features/updateBio';
 
 const Main = styled.div`
+  max-width: 90rem;
   display: grid;
-  grid-template-columns: max-content 1fr;
-  gap: 4rem;
-  padding: 2rem 4rem;
-
-  @media (max-width: 1100px) {
-    gap: 2rem;
-    padding: 2rem;
-  }
-
-  @media (max-width: 900px) {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(2, max-content);
-  }
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(2, max-content);
+  gap: 2rem;
+  padding: 2rem;
+  margin: 0 auto;
 `;
 
 const AvatarContainer = styled.div`
