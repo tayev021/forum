@@ -240,6 +240,7 @@ export function Search() {
         <Input
           ref={refInput}
           type="text"
+          name="search"
           placeholder="type to search..."
           value={query}
           $isOpen={isOpen}
