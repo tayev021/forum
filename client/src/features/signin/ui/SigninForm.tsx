@@ -60,7 +60,6 @@ export function SigninForm() {
           value={values['email']}
           {...register('email', {
             validate: validate(emailSchema),
-            defaultValue: 'test@test.com',
           })}
         />
         <Form.InputError message={errors['email']} />
@@ -77,7 +76,6 @@ export function SigninForm() {
           value={values['password']}
           {...register('password', {
             validate: validate(passwordSchema),
-            defaultValue: 'test',
           })}
         />
         <Form.InputError message={errors['password']} />

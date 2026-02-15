@@ -82,7 +82,6 @@ export function SignupForm() {
           value={values['username']}
           {...register('username', {
             validate: validate(usernameSchema),
-            defaultValue: 'test',
           })}
         />
         <Form.InputError message={errors['username']} />
@@ -99,7 +98,6 @@ export function SignupForm() {
           value={values['email']}
           {...register('email', {
             validate: validate(emailSchema),
-            defaultValue: 'test@test.com',
           })}
         />
         <Form.InputError message={errors['email']} />
@@ -116,7 +114,6 @@ export function SignupForm() {
           value={values['password']}
           {...register('password', {
             validate: validate(passwordSchema),
-            defaultValue: 'test',
           })}
         />
         <Form.InputError message={errors['password']} />
@@ -138,7 +135,6 @@ export function SignupForm() {
           value={values['confirmPassword']}
           {...register('confirmPassword', {
             validate: validate(passwordSchema),
-            defaultValue: 'test',
           })}
         />
         <Form.InputError message={errors['confirmPassword']} />
