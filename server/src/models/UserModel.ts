@@ -38,7 +38,7 @@ User.init(
       type: DataTypes.STRING,
     },
     bio: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
     },
     role: {
       type: DataTypes.ENUM,
