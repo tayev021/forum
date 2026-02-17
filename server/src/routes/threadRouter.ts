@@ -34,6 +34,7 @@ threadRouter.post(
 threadRouter.patch(
   '/:threadId',
   protect,
+  restrictTo('admin', 'moderator'),
   validate(threadTitleSchema),
   updateThread
 );
