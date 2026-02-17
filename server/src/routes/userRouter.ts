@@ -17,6 +17,7 @@ import {
 } from '../controllers/userController';
 import { uploadAvatar } from '../middleware/upload';
 import { resizeAvatar } from '../middleware/resizeAvatar';
+import { restrictTo } from '../middleware/restrictTo';
 
 const userRouter = Router();
 
@@ -32,6 +33,6 @@ userRouter.patch(
   updatePassword
 );
 userRouter.patch('/avatar', protect, uploadAvatar, resizeAvatar, updateAvatar);
-userRouter.delete('/', protect, deleteUser);
+userRouter.delete('/', protect, restrictTo('user'), deleteUser);
 
 export { userRouter };
