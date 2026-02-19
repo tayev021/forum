@@ -13,6 +13,11 @@ const StyledContainer = styled(Container)`
   grid-template-columns: 20rem minmax(30rem, 1fr);
   gap: 2rem;
   padding: 4rem 2rem;
+
+  @media (max-width: 600px) {
+    grid-template-columns: minmax(20rem, 1fr);
+    padding: 3rem 1rem;
+  }
 `;
 
 export function AccountLayout({ NavBar }: AccountLayoutProps) {

@@ -16,10 +16,29 @@ const StyledAuthor = styled.div`
   padding: 2rem;
   border-right: 2px solid var(--color-grey-200);
   font-size: 1.4rem;
+
+  @media (max-width: 600px) {
+    min-height: auto;
+    grid-template-columns:
+      max-content minmax(5rem, max-content)
+      max-content;
+    grid-template-rows: min-content;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border-bottom: 2px solid var(--color-grey-200);
+    border-right: none;
+  }
 `;
 
 const StyledAuthorAvatar = styled(UserAvatar)`
   margin-bottom: 1rem;
+
+  @media (max-width: 600px) {
+    width: 4rem;
+    height: 4rem;
+    margin-bottom: 0;
+  }
 `;
 
 const authorNameCss = css`
@@ -30,6 +49,10 @@ const authorNameCss = css`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+
+  @media (max-width: 600px) {
+    margin-bottom: 0;
+  }
 `;
 
 const AuthorName = styled.p`
@@ -54,6 +77,15 @@ const SignInTime = styled.p`
   font-size: 1.4rem;
   line-height: 1.2;
   color: var(--color-grey-500);
+
+  @media (max-width: 600px) {
+    display: none;
+  }
+
+  & span {
+    display: block;
+    text-align: center;
+  }
 `;
 
 export function Author({ author }: AuthorProps) {
@@ -73,10 +105,10 @@ export function Author({ author }: AuthorProps) {
           : ''}
       </AuthorRole>
       {author?.lastSignIn && (
-        <>
-          <SignInTime>last sign in:</SignInTime>
-          <SignInTime>{formatRelativeTime(author.lastSignIn)}</SignInTime>
-        </>
+        <SignInTime>
+          <span>last sign in: </span>
+          <span>{formatRelativeTime(author.lastSignIn)}</span>
+        </SignInTime>
       )}
     </StyledAuthor>
   );

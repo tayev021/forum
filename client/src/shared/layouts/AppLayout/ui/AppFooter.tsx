@@ -17,6 +17,12 @@ const Copyright = styled.div`
   justify-content: center;
   align-items: baseline;
   line-height: 1;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
 `;
 
 const LinkIcon = styled(HiLink)`

@@ -9,6 +9,11 @@ const StyledContainer = styled(Container)`
   grid-template-columns: minmax(28rem, 1fr) 24rem;
   gap: 2rem;
   padding: 4rem 2rem;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+    padding: 3rem 1rem;
+  }
 `;
 
 const Main = styled.div``;

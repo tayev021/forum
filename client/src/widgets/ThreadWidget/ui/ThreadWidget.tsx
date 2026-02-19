@@ -27,15 +27,8 @@ const StyledWidgetHeader = styled(Widget.Header)`
   box-shadow: var(--shadow-small);
 `;
 
-const RowContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, max-content);
-  justify-content: space-between;
-  gap: 2rem;
-`;
-
 const StyledSubscribeThread = styled(SubscribeThread)`
-  grid-area: 1/2/2/3;
+  align-self: end;
 `;
 
 export function ThreadWidget() {
@@ -89,23 +82,13 @@ export function ThreadWidget() {
                 )}
               </Widget.HeaderGroup>
             </StyledWidgetHeader>
-            <RowContainer>
-              <Pagination
-                baseUrl={`/threads/${thread.id}`}
-                currentPage={thread.page}
-                totalPages={thread.totalPages}
-              />
-              <StyledSubscribeThread thread={thread} />
-            </RowContainer>
+            <StyledSubscribeThread thread={thread} />
             <PostsList posts={thread.posts} />
-            <RowContainer>
-              <Pagination
-                baseUrl={`/threads/${thread.id}`}
-                currentPage={thread.page}
-                totalPages={thread.totalPages}
-              />
-              <StyledSubscribeThread thread={thread} />
-            </RowContainer>
+            <Pagination
+              baseUrl={`/threads/${thread.id}`}
+              currentPage={thread.page}
+              totalPages={thread.totalPages}
+            />
           </>
         )}
       </ThreadContainer>

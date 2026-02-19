@@ -6,6 +6,7 @@ export const Button = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-shrink: 0;
   color: var(--color-secondary);
   cursor: pointer;
 

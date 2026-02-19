@@ -7,8 +7,8 @@ interface AttachmentProps {
 }
 
 const Link = styled.a`
-  width: 10rem;
-  height: 10rem;
+  width: 5rem;
+  height: 5rem;
   display: block;
   border: 1px solid var(--color-grey-200);
   border-radius: 0.6rem;

@@ -9,7 +9,7 @@ interface SubscriptionProps {
 
 const StyledLink = styled(Link)`
   display: grid;
-  grid-template-columns: minmax(11rem, 1fr) 20rem;
+  grid-template-columns: minmax(11rem, 1fr) max-content;
   gap: 1rem;
   padding: 0.5rem;
   border-radius: 0.5rem;
@@ -19,6 +19,10 @@ const StyledLink = styled(Link)`
   &:hover {
     background-color: var(--color-grey-200);
   }
+
+  @media (max-width: 600px) {
+    grid-template-columns: minmax(11rem, 1fr);
+  }
 `;
 
 const Cell = styled.div`
@@ -27,6 +31,12 @@ const Cell = styled.div`
   text-overflow: ellipsis;
   color: var(--color-grey-500);
   overflow: hidden;
+
+  &:nth-child(2) {
+    @media (max-width: 600px) {
+      display: none;
+    }
+  }
 `;
 
 const Title = styled(Cell)`

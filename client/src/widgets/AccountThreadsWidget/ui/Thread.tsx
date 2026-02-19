@@ -24,6 +24,10 @@ const StyledLink = styled(Link)`
     grid-template-columns: minmax(10rem, 1fr) 12rem;
   }
 
+  @media (max-width: 600px) {
+    grid-template-columns: minmax(20rem, 1fr);
+  }
+
   &:hover {
     background-color: var(--color-grey-200);
   }
@@ -44,6 +48,12 @@ const Cell = styled.div`
 
   &:nth-child(3) {
     @media (max-width: 700px) {
+      display: none;
+    }
+  }
+
+  &:nth-child(4) {
+    @media (max-width: 600px) {
       display: none;
     }
   }

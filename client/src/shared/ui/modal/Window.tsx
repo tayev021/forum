@@ -30,9 +30,9 @@ const Overlay = styled.div`
 
 const StyledWindow = styled.div<StyledWindowProps>`
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 50vh;
+  left: 50vw;
+  transform: translate(calc(-50% - 0.5rem), -50%);
   transition: all 0.5s;
 `;
 

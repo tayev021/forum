@@ -41,6 +41,10 @@ const Time = styled.p`
   font-size: 1.4rem;
   white-space: nowrap;
   color: var(--color-grey-500);
+
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 
 const Content = styled.p`

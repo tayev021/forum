@@ -21,11 +21,12 @@ export function Window({ name, className = '', children }: WindowProps) {
   const ref = useOutsideClick<HTMLDivElement>(close);
 
   const bodyRect = document.body.getBoundingClientRect();
-  const top = `${window.scrollY + position.y}px`;
+
+  const top = window.scrollY + position.y;
   const left =
     position.x + 290 > bodyRect.width
-      ? `${Math.round(bodyRect.width - 290)}px`
-      : `${Math.round(position.x)}px`;
+      ? Math.round(bodyRect.width - 290)
+      : Math.round(position.x);
 
   if (name !== dropdownName) return null;
 
@@ -33,7 +34,7 @@ export function Window({ name, className = '', children }: WindowProps) {
     <StyledWindow
       ref={ref}
       className={className}
-      style={{ top: top, left: left }}
+      style={{ top: `${top}px`, left: `${left < 10 ? 10 : left}px` }}
       onClick={() => close()}
     >
       {children}

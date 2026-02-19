@@ -36,6 +36,7 @@ const Title = styled.h1`
 const Slogan = styled.p`
   font-size: 1.4rem;
   text-transform: uppercase;
+  text-align: center;
 `;
 
 export function AppHeader() {

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 const StyledNavList = styled.ul`
   display: flex;
+  justify-content: center;
 `;
 
 const StyledLink = styled(Link)`

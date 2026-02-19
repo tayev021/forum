@@ -62,6 +62,10 @@ const Main = styled.div`
   gap: 1rem;
   padding: 1rem;
   word-break: break-all;
+
+  @media (max-width: 600px) {
+    padding: 2rem 1rem;
+  }
 `;
 
 const Footer = styled.div`

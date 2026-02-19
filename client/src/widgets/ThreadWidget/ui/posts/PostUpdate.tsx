@@ -17,6 +17,10 @@ const StyledPostUpdate = styled.li`
   border: 1px solid var(--color-grey-300);
   background-color: var(--color-bg-secondary);
   box-shadow: var(--shadow-small);
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 export function PostUpdate({ ref, post, postContent }: PostUpdateProps) {

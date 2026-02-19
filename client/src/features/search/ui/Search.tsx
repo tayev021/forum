@@ -11,6 +11,10 @@ import { Authors } from './Authors';
 import { Threads } from './Threads';
 import { useLocation } from 'react-router';
 
+interface SearchProps {
+  className?: string;
+}
+
 interface IsOpenProp {
   $isOpen: boolean;
 }
@@ -20,7 +24,7 @@ const SearchContainer = styled.div`
   height: 2rem;
   position: relative;
   line-height: 1;
-  z-index: 100;
+  z-index: 300;
 `;
 
 const SearchWindow = styled.div<IsOpenProp>`
@@ -33,7 +37,7 @@ const SearchWindow = styled.div<IsOpenProp>`
   background-color: var(--color-bg);
   box-shadow: var(--shadow-medium);
   transition: all 0.3s ease;
-  z-index: 101;
+  z-index: 301;
 
   ${(props) =>
     props.$isOpen &&
@@ -42,6 +46,11 @@ const SearchWindow = styled.div<IsOpenProp>`
       top: -0.5rem;
       left: calc(-20% - 1rem);
       padding: 5rem 1rem 1rem 1rem;
+
+      @media (max-width: 600px) {
+        width: calc(100% + 1rem);
+        left: -0.5rem;
+      }
     `}
 `;
 
@@ -51,12 +60,23 @@ const InputRow = styled.div<IsOpenProp>`
   top: 0;
   left: 0;
   transition: all 0.2s ease;
-  z-index: 102;
+  z-index: 302;
+
+  @media (max-width: 600px) {
+    width: 70%;
+    min-width: 20rem;
+    left: 15%;
+  }
 
   ${(props) =>
     props.$isOpen &&
     ` width: 140%;
       left: -20%;
+
+      @media (max-width: 600px) {
+        width: 90%;
+        left: 5%;
+      }
     `}
 `;
 
@@ -177,7 +197,7 @@ const NoResults = styled.div`
   color: var(--color-rose-500);
 `;
 
-export function Search() {
+export function Search({ className }: SearchProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [option, setOption] = useState<Option>(options[0]);
@@ -220,7 +240,7 @@ export function Search() {
   }
 
   return (
-    <SearchContainer ref={refSearch}>
+    <SearchContainer className={className} ref={refSearch}>
       <InputRow $isOpen={isOpen}>
         <SearchIcon $isOpen={isOpen} />
         <Options $isOpen={isOpen}>

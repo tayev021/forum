@@ -26,6 +26,11 @@ const StyledForm = styled.form`
   border: 2px solid var(--color-primary);
   border-radius: 0.8rem;
   box-shadow: var(--shadow-medium);
+
+  @media (max-width: 600px) {
+    width: 27rem;
+    padding: 2rem 1rem;
+  }
 `;
 
 export function Form({ className, onSubmit, children }: FormProps) {

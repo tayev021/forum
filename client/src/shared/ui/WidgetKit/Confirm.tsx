@@ -8,6 +8,7 @@ interface WidgetConfirmProps {
 }
 
 const Window = styled.div`
+  width: 35rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -16,6 +17,11 @@ const Window = styled.div`
   border-radius: 0.4rem;
   background-color: var(--color-bg-secondary);
   box-shadow: var(--shadow-small);
+
+  @media (max-width: 600px) {
+    width: 26rem;
+    padding: 1.5rem;
+  }
 `;
 
 const Heading = styled.h4`
@@ -32,7 +38,7 @@ const Text = styled.p`
 const Actions = styled.div`
   display: flex;
   justify-content: center;
-  gap: 5rem;
+  justify-content: space-between;
 `;
 
 const Button = styled.button`

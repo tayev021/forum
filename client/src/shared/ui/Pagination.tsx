@@ -12,6 +12,8 @@ interface PaginationProps {
 
 interface PageLinkProps {
   $current?: boolean;
+  $next?: boolean;
+  $previous?: boolean;
 }
 
 const Container = styled.div`
@@ -40,12 +42,25 @@ const PageLink = styled(Link)<PageLinkProps>`
   font-weight: 500;
   line-height: 1;
 
+  &:hover {
+    transform: scale(1.05);
+  }
+
   ${(props) =>
     props.$current
       ? `
-        border-color: var(--color-primary); 
-        color: var(--color-text-secondary); 
-        background-color: var(--color-primary);`
+          border-color: var(--color-primary); 
+          color: var(--color-text-secondary); 
+          background-color: var(--color-primary);`
+      : ''};
+
+  ${(props) =>
+    props.$next || props.$previous
+      ? `
+          @media (max-width: 600px) {
+            display: none;
+          }
+        `
       : ''};
 `;
 
@@ -81,7 +96,7 @@ export function Pagination({
   return (
     <Container className={className}>
       {currentPage > 1 && (
-        <PageLink to={`${baseUrl}?page=${currentPage - 1}`}>
+        <PageLink to={`${baseUrl}?page=${currentPage - 1}`} $previous={true}>
           <HiChevronLeft /> Prev
         </PageLink>
       )}
@@ -89,7 +104,7 @@ export function Pagination({
       <Pages>{links}</Pages>
 
       {currentPage < totalPages && (
-        <PageLink to={`${baseUrl}?page=${currentPage + 1}`}>
+        <PageLink to={`${baseUrl}?page=${currentPage + 1}`} $next={true}>
           Next
           <HiChevronRight />
         </PageLink>

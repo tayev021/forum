@@ -13,8 +13,21 @@ interface ForumWidgetHeaderProps {
   forum: Forum;
 }
 
+const StyledHeader = styled(Widget.Header)`
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+`;
+
 const StyledHeaderGroup = styled(Widget.HeaderGroup)`
   overflow: visible;
+
+  &:nth-child(2) {
+    @media (max-width: 600px) {
+      justify-self: end;
+    }
+  }
 `;
 
 export function ForumWidgetHeader({ forum }: ForumWidgetHeaderProps) {
@@ -24,7 +37,7 @@ export function ForumWidgetHeader({ forum }: ForumWidgetHeaderProps) {
   const navigate = useNavigate();
 
   return (
-    <Widget.Header>
+    <StyledHeader>
       <Widget.HeaderGroup>
         <Widget.BackButton url="/" />
         <Widget.Title>{forum?.title} Forum</Widget.Title>
@@ -61,6 +74,6 @@ export function ForumWidgetHeader({ forum }: ForumWidgetHeaderProps) {
           </>
         )}
       </StyledHeaderGroup>
-    </Widget.Header>
+    </StyledHeader>
   );
 }

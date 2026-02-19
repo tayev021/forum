@@ -17,6 +17,7 @@ import { Report } from './Report';
 const ReportsList = styled.ul`
   display: flex;
   flex-direction: column;
+  gap: 1rem;
   padding: 1rem;
 `;
 

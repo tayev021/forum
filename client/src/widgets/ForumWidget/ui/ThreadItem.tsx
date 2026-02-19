@@ -15,6 +15,10 @@ const StyledLink = styled(Link)`
   border-radius: 0.5rem;
   cursor: pointer;
 
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+
   &:hover {
     background-color: var(--color-grey-200);
   }
@@ -26,6 +30,14 @@ const Cell = styled.div`
   text-overflow: ellipsis;
   color: var(--color-grey-500);
   overflow: hidden;
+
+  &:nth-child(2),
+  &:nth-child(3),
+  &:nth-child(4) {
+    @media (max-width: 600px) {
+      display: none;
+    }
+  }
 `;
 
 const TitleCell = styled(Cell)`

@@ -28,6 +28,11 @@ const Container = styled(Widget.Container)`
   padding: 2rem 0;
   border: none;
   overflow: hidden;
+
+  @media (max-width: 600px) {
+    position: relative;
+    top: 0;
+  }
 `;
 
 const List = styled.ul`

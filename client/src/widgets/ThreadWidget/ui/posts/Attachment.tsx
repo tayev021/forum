@@ -14,6 +14,11 @@ const Link = styled.a`
   border-radius: 0.6rem;
   overflow: hidden;
 
+  @media (max-width: 600px) {
+    width: 7rem;
+    height: 7rem;
+  }
+
   &:hover {
     transform: scale(1.04);
   }

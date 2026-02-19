@@ -15,6 +15,12 @@ const Actions = styled.div`
   grid-template-columns: repeat(3, 10rem);
   justify-content: space-between;
   gap: 2rem;
+
+  @media (max-width: 700px) {
+    grid-template-columns: 1fr;
+    justify-content: center;
+    gap: 1rem;
+  }
 `;
 
 const Button = styled.button`

@@ -12,6 +12,10 @@ const Container = styled.div`
   font-size: 1.6rem;
   line-height: 1.2;
   color: var(--color-white);
+
+  @media (max-width: 600px) {
+    gap: 1.5rem;
+  }
 `;
 
 const AccountLink = styled(Link)`
