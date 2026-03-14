@@ -1,110 +1,116 @@
 # Forum
 
-## Содержание
+[ [**English**](README.md) | [Ukrainian](README.uk.md) | [Russian](README.ru.md) ]
+
+## Table of Contents
 
 - [Forum](#forum)
-  - [Содержание](#содержание)
-  - [О проекте](#о-проекте)
-    - [Цели проекта](#цели-проекта)
-    - [Технологии](#технологии)
-    - [Структура проекта](#структура-проекта)
-      - [Клиент](#клиент)
-      - [Сервер](#сервер)
-      - [База Данных](#база-данных)
-    - [Роли и права пользователей](#роли-и-права-пользователей)
+  - [Table of Contents](#table-of-contents)
+  - [About the Project](#about-the-project)
+    - [Project Goals](#project-goals)
+    - [Technologies](#technologies)
+    - [Project structure](#project-structure)
+      - [Client](#client)
+      - [Server](#server)
+      - [Database](#database)
+    - [User roles and permissions](#user-roles-and-permissions)
     - [REST API Endpoints](#rest-api-endpoints)
-    - [Примеры работы (скриншоты)](#примеры-работы-скриншоты)
-  - [Установка](#установка)
-    - [База данных](#база-данных-1)
-    - [Сервер](#сервер-1)
-    - [Клиент](#клиент-1)
-  - [Использование](#использование)
-    - [Запуск сервера](#запуск-сервера)
-    - [Клиент](#клиент-2)
+    - [Examples of the Application (Screenshots)](#examples-of-the-application-screenshots)
+  - [Installation](#installation)
+    - [Database](#database-1)
+    - [Server](#server-1)
+    - [Client](#client-1)
+  - [Usage](#usage)
+    - [Running the Server](#running-the-server)
+    - [Client](#client-2)
 
-## О проекте
+## About the Project
 
-Этот проект - полнофункциональный веб-форум с клиент-серверной архитектурой.
-Серверная часть реализована на Node.js + Express + TypeScript с использованием архитектуры MVC. Клиентская часть построена на React + TypeScript с использованием Redux Toolkit и React Router по принципам Feature-Sliced Design. Проект демонстрирует построение полноценного REST API с взаимодействием клиента и сервера.
+This project is a full-featured web forum built with a client–server architecture.
+The server side is implemented using Node.js + Express + TypeScript following the MVC architecture. The client side is built with React + TypeScript using Redux Toolkit and React Router, organized according to Feature-Sliced Design principles.
 
-Форум позволяет:
+The project demonstrates the development of a complete REST API with full client–server communication.
 
-- регистрироваться и авторизоваться пользователям
+The forum allows users to:
 
-- публиковать посты, редактировать, добавлять изображения
+- register and log in
 
-- создавать и просматривать темы
+- publish posts, edit them, and add images
 
-- подписываться на понравившиеся темы и получать уведомления
+- create and browse topics
 
-- выполнять поиск по постам, авторам, темам
+- subscribe to favorite topics and receive notifications
 
-- репортить посты, нарушающие правила
+- search posts, authors, and topics
 
-- настраивать свой профиль
+- report posts that violate the rules
 
-- модерировать форум пользователям со специальными ролями (модератор, админ): банить посты и авторов, удалять запрещённый контент
+- customize their profile
 
-### Цели проекта
+- moderate the forum using special roles (moderator, admin): ban posts and authors, remove prohibited content
 
-Основная цель проекта - закрепить на практике знания по разработке fullstack-приложений.
+### Project Goals
 
-В рамках проекта были поставлены следующие задачи:
+The main goal of this project is to reinforce practical knowledge of full-stack application development.
 
-- отработать построение REST API на Node.js + Express
-- применить архитектуру MVC на сервере
-- реализовать аутентификацию и авторизацию с использованием JWT + Cookie
+The project included the following objectives:
 
-- закрепить работу с SQL (MySQL) базой данных через ORM Sequelize
+- practice building REST APIs using Node.js + Express
 
-- организовать клиентское приложение по принципам Feature-Sliced Design
+- apply the MVC architecture on the server
 
-- использовать Redux Toolkit для управления состояниями в клиентской части
+- implement authentication and authorization using JWT + Cookies
 
-- настроить взаимодействие frontend и backend
+- practice working with an SQL database (MySQL) via the Sequelize ORM
 
-- попрактиковаться в типизации с TypeScript как на сервере, так и на клиенте
+- organize the client application using Feature-Sliced Design
 
-- продумать структуру масштабируемого проекта
+- use Redux Toolkit for client-side state management
 
-Проект помог закрепить на практике знания по архитектуре, организации кода, работе с авторизацией и построению масштабируемых веб-приложений.
+- configure interaction between frontend and backend
 
-### Технологии
+- practice TypeScript typing on both the server and client
 
-Клиент:
+- design a scalable project structure
+
+This project helped reinforce knowledge of application architecture, code organization, authentication, and scalable web application development.
+
+### Technologies
+
+Client:
 
 - TypeScript
-- React (Hooks, Context API, Portal и др.)
+- React (Hooks, Context API, Portal, etc.)
 - Redux Toolkit
-- React библиотеки:
+- React libraries:
   - React Router (Declarative mode)
   - Styled Components (CSS-in-JS)
   - React Hot Toast
   - React Icons
-- Валидация: Zod
-- Архитектура: Feature-Sliced Design
-- Инструмент сборки: Vite
+- Validation: Zod
+- Architecture: Feature-Sliced Design
+- Tools: Vite
 - ESLint, Prettier
 
-Сервер:
+Server:
 
 - TypeScript
 - Node.js
 - Express.js
 - Sequelize ORM
 - JSON Web Token + Cookie
-- Валидация: Zod
-- Архитектура: MVC
-- Инструмент сборки: Vite
+- Validation: Zod
+- Architecture: MVC
+- Tools: Vite
 - ESLint, Prettier
 
-База данных:
+Database:
 
 - MySQL + MySQL Workbench
 
-### Структура проекта
+### Project structure
 
-#### Клиент
+#### Client
 
 ```
 └───client
@@ -211,7 +217,7 @@
     └───index.html
 ```
 
-#### Сервер
+#### Server
 
 ```
 └───server
@@ -233,209 +239,209 @@
     └───server.ts
 ```
 
-#### База Данных
+#### Database
 
 ![](readme-assets/db-diagram.jpg)
 
-### Роли и права пользователей
+### User roles and permissions
 
-|                                 | Гость | Пользователь | Модератор | Админ |
-| ------------------------------- | :---: | :----------: | :-------: | :---: |
-| Просмотр постов                 |  ✅   |      ✅      |    ✅     |  ✅   |
-| Просмотр тем                    |  ✅   |      ✅      |    ✅     |  ✅   |
-| Просмотр форумов                |  ✅   |      ✅      |    ✅     |  ✅   |
-| Просмотр категории              |  ✅   |      ✅      |    ✅     |  ✅   |
-| Просмотр профилей               |  ✅   |      ✅      |    ✅     |  ✅   |
-| Просмотр статистики             |  ✅   |      ✅      |    ✅     |  ✅   |
-| Создание поста                  |  ❌   |      ✅      |    ✅     |  ✅   |
-| Создание темы                   |  ❌   |      ✅      |    ✅     |  ✅   |
-| Создание форума                 |  ❌   |      ❌      |    ✅     |  ✅   |
-| Создание категории              |  ❌   |      ❌      |    ✅     |  ✅   |
-| Редактирование **своего** поста |  ❌   |      ✅      |    ✅     |  ✅   |
-| Редактирование темы             |  ❌   |      ❌      |    ✅     |  ✅   |
-| Редактирование форума           |  ❌   |      ❌      |    ✅     |  ✅   |
-| Редактирование категории        |  ❌   |      ❌      |    ✅     |  ✅   |
-| Удаление поста                  |  ❌   |      ❌      |    ✅     |  ✅   |
-| Удаление темы                   |  ❌   |      ❌      |    ❌     |  ✅   |
-| Удаление "пустого" форума       |  ❌   |      ❌      |    ❌     |  ✅   |
-| Удаление "пустой" категории     |  ❌   |      ❌      |    ❌     |  ✅   |
-| Удаление **своего** аккаунта    |  ❌   |      ✅      |    ❌     |  ❌   |
-| Подписка на тему                |  ❌   |      ✅      |    ✅     |  ✅   |
-| Лайк **чужого** поста           |  ❌   |      ✅      |    ✅     |  ✅   |
-| Репорт поста                    |  ❌   |      ✅      |    ❌     |  ❌   |
-| Отклонение репорта              |  ❌   |      ❌      |    ✅     |  ✅   |
-| Бан поста по репорту            |  ❌   |      ❌      |    ✅     |  ✅   |
-| Бан пользователя по репорту     |  ❌   |      ❌      |    ✅     |  ✅   |
+|                              | Guest | User | Moderator | Admin |
+| ---------------------------- | :---: | :--: | :-------: | :---: |
+| View posts                   |  ✅   |  ✅  |    ✅     |  ✅   |
+| View topics                  |  ✅   |  ✅  |    ✅     |  ✅   |
+| View forums                  |  ✅   |  ✅  |    ✅     |  ✅   |
+| View categories              |  ✅   |  ✅  |    ✅     |  ✅   |
+| View profiles                |  ✅   |  ✅  |    ✅     |  ✅   |
+| View statistics              |  ✅   |  ✅  |    ✅     |  ✅   |
+| Create a post                |  ❌   |  ✅  |    ✅     |  ✅   |
+| Create a topic               |  ❌   |  ✅  |    ✅     |  ✅   |
+| Create a forum               |  ❌   |  ❌  |    ✅     |  ✅   |
+| Create a category            |  ❌   |  ❌  |    ✅     |  ✅   |
+| Edit **own** post            |  ❌   |  ✅  |    ✅     |  ✅   |
+| Edit topic                   |  ❌   |  ❌  |    ✅     |  ✅   |
+| Edit forum                   |  ❌   |  ❌  |    ✅     |  ✅   |
+| Edit category                |  ❌   |  ❌  |    ✅     |  ✅   |
+| Delete post                  |  ❌   |  ❌  |    ✅     |  ✅   |
+| Delete topic                 |  ❌   |  ❌  |    ❌     |  ✅   |
+| Delete "empty" forum         |  ❌   |  ❌  |    ❌     |  ✅   |
+| Delete "empty" category      |  ❌   |  ❌  |    ❌     |  ✅   |
+| Delete **own** account       |  ❌   |  ✅  |    ❌     |  ❌   |
+| Subscribe to a topic         |  ❌   |  ✅  |    ✅     |  ✅   |
+| Like someone else's post     |  ❌   |  ✅  |    ✅     |  ✅   |
+| Report a post                |  ❌   |  ✅  |    ❌     |  ❌   |
+| Reject a report              |  ❌   |  ❌  |    ✅     |  ✅   |
+| Ban a post based on a report |  ❌   |  ❌  |    ✅     |  ✅   |
+| Ban a user based on a report |  ❌   |  ❌  |    ✅     |  ✅   |
 
 ### REST API Endpoints
 
 > [!TIP]
-> Сокращение для ролей:
+> Abbreviation for roles:
 >
-> - П = пользователь
-> - М = модератор
-> - А = админ
+> - U = user
+> - M = moderator
+> - A = admin
 
-| Метод  | URL                                   | Авторизован | Роли  | Комментарий                         |
-| :----: | :------------------------------------ | :---------: | :---: | :---------------------------------- |
-|  GET   | /api/v1/auth/me                       |     ✅      | П М А |                                     |
-|  POST  | /api/v1/auth/signin                   |     ❌      |   -   |                                     |
-|  POST  | /api/v1/auth/signup                   |     ❌      |   -   |                                     |
-|  POST  | /api/v1/auth/signout                  |     ✅      | П М А |                                     |
-|  GET   | /api/v1/users/:userId/posts           |     ❌      |   -   |                                     |
-|  GET   | /api/v1/users/:userId/threads         |     ❌      |   -   |                                     |
-|  GET   | /api/v1/users/subscriptions           |     ✅      | П М А | **Персональные** подписки           |
-|  GET   | /api/v1/users/notifications           |     ✅      | П М А | **Персональные** уведомления        |
-| PATCH  | /api/v1/users/bio                     |     ✅      | П М А | Обновление **своей** биографии      |
-| PATCH  | /api/v1/users/password                |     ✅      | П М А | Изменение **своего** пароля         |
-| PATCH  | /api/v1/users/avatar                  |     ✅      | П М А | Изменение **своего** аватара        |
-| DELETE | /api/v1/users                         |     ✅      |   П   | Удаление **своего** аккаунта        |
-|  GET   | /api/v1/authors/:authorId/profile     |     ❌      |   -   |                                     |
-|  GET   | /api/v1/authors/search                |     ❌      |   -   |                                     |
-|  GET   | /api/v1/posts/latest                  |     ❌      |   -   |                                     |
-|  GET   | /api/v1/posts/search                  |     ❌      |   -   |                                     |
-|  POST  | /api/v1/posts                         |     ✅      | П М А |                                     |
-|  POST  | /api/v1/posts/:postId/like            |     ✅      | П М А | Лайк поста **другого** автора       |
-|  POST  | /api/v1/posts/:postId/report          |     ✅      |   П   | Репорт поста **другого** автора     |
-| DELETE | /api/v1/posts/:postId                 |     ✅      |  М А  |                                     |
-| DELETE | /api/v1/attachments/:attachmentId     |     ✅      | П М А | Удаление вложений в **своем** посте |
-|  GET   | /api/v1/threads/search                |     ❌      |   -   |                                     |
-|  GET   | /api/v1/threads/:threadId             |     ❌      |   -   |                                     |
-|  POST  | /api/v1/threads                       |     ✅      | П М А |                                     |
-|  POST  | /api/v1/threads/:threadId/subscribe   |     ✅      | П М А |                                     |
-|  POST  | /api/v1/threads/:threadId/unsubscribe |     ✅      | П М А |                                     |
-| PATCH  | /api/v1/threads/:threadId             |     ✅      |  М А  |                                     |
-| DELETE | /api/v1/threads/:threadId             |     ✅      |   А   |                                     |
-|  GET   | /api/v1/forums/:forumId               |     ❌      |   -   |                                     |
-|  POST  | /api/v1/forums                        |     ✅      |  М А  |                                     |
-| PATCH  | /api/v1/forums/:forumId               |     ✅      |  М А  |                                     |
-| DELETE | /api/v1/forums/:forumId               |     ✅      |   А   |                                     |
-|  GET   | /api/v1/categories                    |     ❌      |   -   |                                     |
-|  POST  | /api/v1/categories                    |     ✅      |  М А  |                                     |
-| PATCH  | /api/v1/categories/:categoryId        |     ✅      |  М А  |                                     |
-| DELETE | /api/v1/categories/:categoryId        |     ✅      |   А   |                                     |
-|  GET   | /api/v1/reports                       |     ✅      |  М А  |                                     |
-|  POST  | /api/v1/reports/:reportId/reject      |     ✅      |  М А  |                                     |
-|  POST  | /api/v1/reports/:reportId/ban/post    |     ✅      |  М А  |                                     |
-|  POST  | /api/v1/reports/:reportId/ban/user    |     ✅      |  М А  |                                     |
-|  GET   | /api/v1/statistic                     |     ❌      |   -   |                                     |
+| Method | URL                                   | Authorized | Roles | Comment                               |
+| :----: | :------------------------------------ | :--------: | :---: | :------------------------------------ |
+|  GET   | /api/v1/auth/me                       |     ✅     | U М А |                                       |
+|  POST  | /api/v1/auth/signin                   |     ❌     |   -   |                                       |
+|  POST  | /api/v1/auth/signup                   |     ❌     |   -   |                                       |
+|  POST  | /api/v1/auth/signout                  |     ✅     | U М А |                                       |
+|  GET   | /api/v1/users/:userId/posts           |     ❌     |   -   |                                       |
+|  GET   | /api/v1/users/:userId/threads         |     ❌     |   -   |                                       |
+|  GET   | /api/v1/users/subscriptions           |     ✅     | U М А | **Personal** subscriptions            |
+|  GET   | /api/v1/users/notifications           |     ✅     | U М А | **Personal** notifications            |
+| PATCH  | /api/v1/users/bio                     |     ✅     | U М А | Updating **your** biography           |
+| PATCH  | /api/v1/users/password                |     ✅     | U М А | Change **your** password              |
+| PATCH  | /api/v1/users/avatar                  |     ✅     | U М А | Changing **your** avatar              |
+| DELETE | /api/v1/users                         |     ✅     |   U   | Deleting **your** account             |
+|  GET   | /api/v1/authors/:authorId/profile     |     ❌     |   -   |                                       |
+|  GET   | /api/v1/authors/search                |     ❌     |   -   |                                       |
+|  GET   | /api/v1/posts/latest                  |     ❌     |   -   |                                       |
+|  GET   | /api/v1/posts/search                  |     ❌     |   -   |                                       |
+|  POST  | /api/v1/posts                         |     ✅     | U М А |                                       |
+|  POST  | /api/v1/posts/:postId/like            |     ✅     | U М А | Like a post by **another** author     |
+|  POST  | /api/v1/posts/:postId/report          |     ✅     |   U   | Report a post by **another** author   |
+| DELETE | /api/v1/posts/:postId                 |     ✅     |  М А  |                                       |
+| DELETE | /api/v1/attachments/:attachmentId     |     ✅     | U М А | Removing attachments in **your** post |
+|  GET   | /api/v1/threads/search                |     ❌     |   -   |                                       |
+|  GET   | /api/v1/threads/:threadId             |     ❌     |   -   |                                       |
+|  POST  | /api/v1/threads                       |     ✅     | U М А |                                       |
+|  POST  | /api/v1/threads/:threadId/subscribe   |     ✅     | U М А |                                       |
+|  POST  | /api/v1/threads/:threadId/unsubscribe |     ✅     | U М А |                                       |
+| PATCH  | /api/v1/threads/:threadId             |     ✅     |  М А  |                                       |
+| DELETE | /api/v1/threads/:threadId             |     ✅     |   А   |                                       |
+|  GET   | /api/v1/forums/:forumId               |     ❌     |   -   |                                       |
+|  POST  | /api/v1/forums                        |     ✅     |  М А  |                                       |
+| PATCH  | /api/v1/forums/:forumId               |     ✅     |  М А  |                                       |
+| DELETE | /api/v1/forums/:forumId               |     ✅     |   А   |                                       |
+|  GET   | /api/v1/categories                    |     ❌     |   -   |                                       |
+|  POST  | /api/v1/categories                    |     ✅     |  М А  |                                       |
+| PATCH  | /api/v1/categories/:categoryId        |     ✅     |  М А  |                                       |
+| DELETE | /api/v1/categories/:categoryId        |     ✅     |   А   |                                       |
+|  GET   | /api/v1/reports                       |     ✅     |  М А  |                                       |
+|  POST  | /api/v1/reports/:reportId/reject      |     ✅     |  М А  |                                       |
+|  POST  | /api/v1/reports/:reportId/ban/post    |     ✅     |  М А  |                                       |
+|  POST  | /api/v1/reports/:reportId/ban/user    |     ✅     |  М А  |                                       |
+|  GET   | /api/v1/statistic                     |     ❌     |   -   |                                       |
 
-### Примеры работы (скриншоты)
+### Examples of the Application (Screenshots)
 
-Демонстрация адаптивного дизайна с переключением светлой и темной темы:
+Demonstration of responsive design with light and dark theme switching:
 
 ![](readme-assets/start-wide-screen.gif)
 ![](readme-assets/start-tablet-mobile-screen.gif)
 
-Регистрация пользователя с валидацией на стороне клиента и сервера:
+User registration with client-side and server-side validation:
 
 ![](readme-assets/signup.gif)
 
-Изменение аватара и биографии в аккаунте:
+Updating avatar and biography in the account:
 
 ![](readme-assets/update-avatar-bio.gif)
 
-Создание новой темы и первого поста с прикреплением изображений:
+Creating a new topic and the first post with attached images:
 
 ![](readme-assets/create-thread.gif)
 
-Редактирование поста - изменение текста, выборочное удаление прикрепленных изображений и добавление новых:
+Editing a post - changing the text, selectively removing attached images, and adding new ones:
 
 ![](readme-assets/update-post.gif)
 
-Лайк постов и подписка на тему:
+Liking posts and subscribing to a topic:
 
 ![](readme-assets/like-subscribe.gif)
 
-Пользователь получает уведомление, если в подписанной теме появляется новый пост. Уведомления отображаются на панели и на странице аккаунта. При нажатии на уведомление открывается страница темы с первым непрочитанным постом, страница проматывается к нему:
+A user receives a notification when a new post appears in a subscribed topic. Notifications are displayed in the panel and on the account page. When a notification is clicked, the topic page opens at the first unread post and the page scrolls to it:
 
 ![](readme-assets/notifications.gif)
 
-Пример репорта постов:
+Example of reporting posts:
 
 ![](readme-assets/report.gif)
 
-Администратор (или модератор) рассматривает репорты и может отвергать их, банить пост или пользователя. В репорте отображается информация о причине, времени, репортёре и о самом посте:
+An administrator (or moderator) reviews reports and can reject them, ban the post, or ban the user. The report displays information about the reason, time, reporter, and the post itself:
 
 ![](readme-assets/report-review.gif)
 
-Доступен поиск по всем постам, темам, авторам:
+Search is available across all posts, topics, and authors:
 
 ![](readme-assets/search.gif)
 
-Администратор может создавать, редактировать категории и форумы, удалять пустые:
+An administrator can create and edit categories and forums, and delete empty ones:
 
 ![](readme-assets/categories.gif)
 
-## Установка
+## Installation
 
-### База данных
-
-> [!NOTE]
-> Для работы с MySQL необходимо установить MySQL Server и MySQL Workbench.
+### Database
 
 > [!NOTE]
-> Оставить по умолчанию адрес сервера `localhost:3306`, соединение с `User: root` и `Password: 1111`.
+> To work with MySQL, you need to install MySQL Server and MySQL Workbench.
+
+> [!NOTE]
+> Leave the server address as the default `localhost:3306`, with the connection `User: root` and `Password: 1111`.
 >
-> Если адрес/порт или User/Password другой, необходимо обновить на сервере файл `.env` с соответствующими полями.
+> If the address/port or User/Password are different, you need to update the `.env` file on the server with the corresponding fields.
 
-Для импорта схем и данных БД необходимо:
+To import the database schema and data:
 
-1. В MySQL Workbench установить соединение с `User: root` и `Password: 1111`
-2. Открыть `Server` -> `Data Import`
-3. Отметить `Import from Self-Contained File`
-4. Выбрать файл `/db-backup/forum-db-backup.sql`
-5. В разделе `Default Target Schema` нажать `New…` и создать новую схему с именем `forum`
-6. Далее выбрать `Import Progress` нажать `Start Import`
+1. In MySQL Workbench, create a connection with `User: root` and `Password: 1111`
+2. Open `Server` -> `Data Import`
+3. Select `Import from Self-Contained File`
+4. Choose the file `/db-backup/forum-db-backup.sql`
+5. In the `Default Target Schema` section click `New…` and create a new schema named `forum`
+6. Then select `Import Progress` and click `Start Import`
 
-### Сервер
+### Server
 
-Перейти в папку `server` из корня проекта:
+Go to the `server` folder from the project root:
 
 ```
 cd server
 ```
 
-Для установки зависимостей:
+Install dependencies:
 
 ```
 npm i
 ```
 
-### Клиент
+### Client
 
-Перейти в папку `client` из корня проекта:
+Go to the `client` folder from the project root:
 
 ```
 cd client
 ```
 
-Для установки зависимостей:
+Install dependencies:
 
 ```
 npm i
 ```
 
-## Использование
+## Usage
 
-### Запуск сервера
+### Running the Server
 
-Перейти в папку `server` из корня проекта. Запустить сервер:
-
-```
-npm run dev
-```
-
-> [!TIP]
-> По умолчанию адрес сервера `localhost:3000`
-
-### Клиент
-
-Перейти в папку `client` из корня проекта. Выполнить:
+Go to the `server` folder from the project root and start the server:
 
 ```
 npm run dev
 ```
 
 > [!TIP]
-> По умолчанию в браузере можно открыть по адресу `localhost:5173`
+> The default server address is `localhost:3000`
+
+### Client
+
+Go to the `client` folder from the project root and run:
+
+```
+npm run dev
+```
+
+> [!TIP]
+> By default, the application can be opened in the browser at `localhost:5173`
