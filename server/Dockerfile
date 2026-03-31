@@ -20,4 +20,5 @@ WORKDIR /app
 COPY package*.json .
 RUN npm ci --omit=dev
 COPY --from=build /app/dist ./dist
+COPY --from=build /app/public ./public
 CMD ["node", "dist/server.js"]
