@@ -1,8 +1,13 @@
 import dotenv from 'dotenv';
-dotenv.config();
+import path from 'path';
+dotenv.config({
+  path:
+    process.env.NODE_ENV === 'docker'
+      ? path.resolve(__dirname, './../../.env')
+      : path.resolve(__dirname, './../.env.local'),
+});
 import express from 'express';
 import morgan from 'morgan';
-import path from 'path';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import { rootRouter } from './routes/rootRouter';
@@ -14,7 +19,7 @@ app.use(morgan('dev'));
 app.use(express.static(path.join(process.cwd(), 'public')));
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({ origin: process.env.ORIGIN, credentials: true }));
+app.use(cors({ origin: true, credentials: true }));
 
 app.use('/api/v1/', rootRouter);
 
