@@ -15,8 +15,6 @@ import { globalErrorHandler } from './controllers/errorController';
 
 const app = express();
 
-console.log('CORS origin:', process.env.ORIGIN);
-
 app.set('trust proxy', 1);
 
 app.use(cors({ origin: process.env.ORIGIN, credentials: true }));
