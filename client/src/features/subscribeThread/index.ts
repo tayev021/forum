@@ -1,3 +1,3 @@
-import { SubscribeThread } from './ui/subscribeThread';
+import { SubscribeThread } from './ui/SubscribeThread';
 
 export { SubscribeThread };

@@ -1,4 +1,4 @@
-import type { UserRole } from '../../model/types/UserRole';
+import type { UserRole } from '../../../../shared/types/UserRole';
 import { useUser } from './useUser';
 
 export function useRestrictTo(roles: UserRole[]): boolean {

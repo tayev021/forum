@@ -1,3 +1,3 @@
-import { UpdateCategoryTitle } from './ui/updateCategoryTitle';
+import { UpdateCategoryTitle } from './ui/UpdateCategoryTitle';
 
 export { UpdateCategoryTitle };
