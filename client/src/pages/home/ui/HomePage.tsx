@@ -11,7 +11,7 @@ const StyledContainer = styled(Container)`
   padding: 4rem 2rem;
 
   @media (max-width: 600px) {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(20rem, 60rem);
     padding: 3rem 1rem;
   }
 `;
