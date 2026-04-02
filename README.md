@@ -1,7 +1,5 @@
 # Forum
 
-[ [**English**](README.md) | [Ukrainian](README.uk.md) | [Russian](README.ru.md) ]
-
 ## Table of Contents
 
 - [Forum](#forum)
@@ -16,13 +14,19 @@
     - [User roles and permissions](#user-roles-and-permissions)
     - [REST API Endpoints](#rest-api-endpoints)
     - [Examples of the Application (Screenshots)](#examples-of-the-application-screenshots)
-  - [Installation](#installation)
-    - [Database](#database-1)
-    - [Server](#server-1)
-    - [Client](#client-1)
   - [Usage](#usage)
-    - [Running the Server](#running-the-server)
-    - [Client](#client-2)
+    - [Running with Docker Compose](#running-with-docker-compose)
+      - [Setup](#setup)
+      - [Running the application](#running-the-application)
+      - [Stop the application](#stop-the-application)
+    - [Running with Local Environment](#running-with-local-environment)
+      - [Installation](#installation)
+        - [Database](#database-1)
+        - [Server](#server-1)
+        - [Client](#client-1)
+      - [Running](#running)
+        - [Server](#server-2)
+        - [Client](#client-2)
 
 ## About the Project
 
@@ -49,6 +53,14 @@ The forum allows users to:
 
 - moderate the forum using special roles (moderator, admin): ban posts and authors, remove prohibited content
 
+In addition, the project includes containerization and deployment infrastructure.
+
+The application is fully dockerized using Docker and Docker Compose, enabling consistent local development and simplified environment setup. CI/CD pipelines are configured using GitHub Actions to automate linting, image building, and deployment processes.
+
+Docker images are built and published to Docker Hub, and the application is deployed on Railway using container-based infrastructure.
+
+This setup demonstrates practical experience in modern DevOps workflows, including containerization, automated pipelines, and cloud deployment.
+
 ### Project Goals
 
 The main goal of this project is to reinforce practical knowledge of full-stack application development.
@@ -72,6 +84,16 @@ The project included the following objectives:
 - practice TypeScript typing on both the server and client
 
 - design a scalable project structure
+
+- practice containerizing applications using Docker (client, server, database)
+
+- configure multi-container environments using Docker Compose
+
+- automate workflows with GitHub Actions (CI/CD)
+
+- build and publish Docker images to Docker Hub
+
+- deploy containerized applications to a cloud platform (Railway)
 
 This project helped reinforce knowledge of application architecture, code organization, authentication, and scalable web application development.
 
@@ -107,6 +129,14 @@ Server:
 Database:
 
 - MySQL + MySQL Workbench
+
+DevOps:
+
+- Docker
+- Docker Compose
+- Docker Hub
+- GitHub Actions (CI/CD pipelines)
+- Railway (deployment)
 
 ### Project structure
 
@@ -373,9 +403,41 @@ An administrator can create and edit categories and forums, and delete empty one
 
 ![](readme-assets/categories.gif)
 
-## Installation
+## Usage
 
-### Database
+### Running with Docker Compose
+
+#### Setup
+
+Requirements:
+
+- Docker
+- Docker Compose
+- `.env` file
+- Ports `:8080` and `:3000` must be available
+
+#### Running the application
+
+From the project root:
+
+```
+docker compose up -d --build
+```
+
+> [!WARNING]
+> In rare cases, the server starts faster than the database. You need to restart the `server` container in Docker Desktop.
+
+#### Stop the application
+
+```
+docker compose down
+```
+
+### Running with Local Environment
+
+#### Installation
+
+##### Database
 
 > [!NOTE]
 > To work with MySQL, you need to install MySQL Server and MySQL Workbench.
@@ -383,18 +445,18 @@ An administrator can create and edit categories and forums, and delete empty one
 > [!NOTE]
 > Leave the server address as the default `localhost:3306`, with the connection `User: root` and `Password: 1111`.
 >
-> If the address/port or User/Password are different, you need to update the `.env` file on the server with the corresponding fields.
+> If the address/port or User/Password are different, you need to update the `.env.local` file on the server with the corresponding fields.
 
 To import the database schema and data:
 
 1. In MySQL Workbench, create a connection with `User: root` and `Password: 1111`
 2. Open `Server` -> `Data Import`
 3. Select `Import from Self-Contained File`
-4. Choose the file `/db-backup/forum-db-backup.sql`
+4. Choose the file `/db/dump.sql`
 5. In the `Default Target Schema` section click `New…` and create a new schema named `forum`
 6. Then select `Import Progress` and click `Start Import`
 
-### Server
+##### Server
 
 Go to the `server` folder from the project root:
 
@@ -408,7 +470,7 @@ Install dependencies:
 npm i
 ```
 
-### Client
+##### Client
 
 Go to the `client` folder from the project root:
 
@@ -422,9 +484,9 @@ Install dependencies:
 npm i
 ```
 
-## Usage
+#### Running
 
-### Running the Server
+##### Server
 
 Go to the `server` folder from the project root and start the server:
 
@@ -433,9 +495,9 @@ npm run dev
 ```
 
 > [!TIP]
-> The default server address is `localhost:3000`
+> The default server address is `localhost:8080`
 
-### Client
+##### Client
 
 Go to the `client` folder from the project root and run:
 
@@ -444,4 +506,4 @@ npm run dev
 ```
 
 > [!TIP]
-> By default, the application can be opened in the browser at `localhost:5173`
+> By default, the application can be opened in the browser at `localhost:3000`
