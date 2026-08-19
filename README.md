@@ -13,7 +13,7 @@
       - [Database](#database)
     - [User roles and permissions](#user-roles-and-permissions)
     - [REST API Endpoints](#rest-api-endpoints)
-    - [Examples of the Application (Screenshots)](#examples-of-the-application-screenshots)
+    - [Examples of the Application (GIFs and Screenshots)](#examples-of-the-application-gifs-and-screenshots)
   - [Usage](#usage)
     - [Running with Docker Compose](#running-with-docker-compose)
       - [Setup](#setup)
@@ -356,7 +356,7 @@ DevOps:
 |  POST  | /api/v1/reports/:reportId/ban/user    |     ✅     |  М А  |                                       |
 |  GET   | /api/v1/statistic                     |     ❌     |   -   |                                       |
 
-### Examples of the Application (Screenshots)
+### Examples of the Application (GIFs and Screenshots)
 
 Demonstration of responsive design with light and dark theme switching:
 
